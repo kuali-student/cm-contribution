@@ -254,7 +254,7 @@
                 <ref bean="loClient"/>
                 <ref bean="cluClient"/>
                 <ref bean="lrcClient"/>
-                <ref bean="orgClient"/>
+                <ref bean="orgSearchClient"/>
                 <ref bean="enumServiceClient"/>
                 <ref bean="atpClient"/>
                 <ref bean="statementServiceClient"/>
@@ -342,6 +342,11 @@
                   value="org.kuali.student.r2.core.organization.service.OrganizationService"/>
         <property name="serviceQName"
                   value="{http://student.kuali.org/wsdl/organization}OrganizationService"/>
+    </bean>
+
+    <bean id="orgSearchClient" class="org.kuali.rice.ksb.messaging.KSBClientProxyFactoryBean">
+        <property name="serviceEndpointInterface" value="org.kuali.student.r2.core.search.service.SearchService" />
+        <property name="serviceQName" value="{http://student.kuali.org/wsdl/organizationsearch}OrganizationSearchService" />
     </bean>
 
     <bean id="enumServiceClient"

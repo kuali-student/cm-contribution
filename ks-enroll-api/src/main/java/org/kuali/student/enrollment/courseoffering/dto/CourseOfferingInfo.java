@@ -378,6 +378,11 @@ public class CourseOfferingInfo
         this.unitsDeploymentOrgIds = unitsDeploymentOrgIds;
     }
 
+    @Deprecated
+    public void setUnitsDeployment(List<String> unitsDeployment) {
+        this.unitsDeploymentOrgIds = unitsDeployment;
+    }
+
     @Override
     public List<String> getUnitsContentOwnerOrgIds() {
         if (null == this.unitsContentOwnerOrgIds) {
@@ -389,6 +394,11 @@ public class CourseOfferingInfo
 
     public void setUnitsContentOwnerOrgIds(List<String> unitsContentOwnerOrgIds) {
         this.unitsContentOwnerOrgIds = unitsContentOwnerOrgIds;
+    }
+
+    @Deprecated
+    public void setUnitsContentOwner(List<String> unitsContentOwner) {
+        this.unitsContentOwnerOrgIds = unitsContentOwner;
     }
 
     @Override

@@ -104,14 +104,11 @@ public class ColocatedOfferingSetInfo
 
     @Override
     public List<String> getActivityOfferingIds() {
-        if (activityOfferingIds == null){
-            activityOfferingIds = new ArrayList<String>();
-        }
         return activityOfferingIds;
     }
 
     public void setActivityOfferingIds(List<String> activityOferingIds) {
-        this.activityOfferingIds = activityOferingIds;
+        this.activityOfferingIds = activityOfferingIds;
     }
 
     @Deprecated

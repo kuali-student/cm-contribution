@@ -1,7 +1,6 @@
 package org.kuali.student.r2.core.class1.atp.service.decorators;
 
 import org.apache.commons.lang.StringUtils;
-import org.kuali.rice.core.api.resourceloader.GlobalResourceLoader;
 import org.kuali.student.r2.common.constants.CommonServiceConstants;
 import org.kuali.student.r2.common.datadictionary.DataDictionaryValidator;
 import org.kuali.student.r2.common.datadictionary.service.DataDictionaryService;
@@ -13,20 +12,14 @@ import org.kuali.student.r2.common.infc.HoldsValidator;
 import org.kuali.student.r2.core.atp.dto.AtpAtpRelationInfo;
 import org.kuali.student.r2.core.atp.dto.AtpInfo;
 import org.kuali.student.r2.core.atp.dto.MilestoneInfo;
-import org.kuali.student.r2.core.class1.type.service.TypeService;
 import org.kuali.student.r2.core.class1.util.ValidationUtils;
-import org.kuali.student.r2.core.constants.AtpServiceConstants;
-import org.kuali.student.r2.core.constants.TypeServiceConstants;
 
-import javax.xml.namespace.QName;
 import java.util.Date;
 import java.util.List;
 
 public class AtpServiceValidationDecorator extends AtpServiceDecorator implements HoldsValidator, HoldsDataDictionaryService {
     private DataDictionaryValidator validator;
     private DataDictionaryService dataDictionaryService;
-
-    protected TypeService typeService;
 
     @Override
     public DataDictionaryValidator getValidator() {
@@ -118,9 +111,9 @@ public class AtpServiceValidationDecorator extends AtpServiceDecorator implement
     throws DoesNotExistException, InvalidParameterException,
     MissingParameterException, OperationFailedException, PermissionDeniedException {
 
-        List<ValidationResultInfo> errors = ValidationUtils.validateTypeKey(atpTypeKey, AtpServiceConstants.REF_OBJECT_URI_ATP, getTypeService(), context);
+        List<ValidationResultInfo> errors;
 
-        errors.addAll(ValidationUtils.validateInfo(validator, validationType, atpInfo, context));
+        errors = ValidationUtils.validateInfo(validator, validationType, atpInfo, context);
         List<ValidationResultInfo> nextDecorationErrors = getNextDecorator().validateAtp(validationType, atpTypeKey, atpInfo, context);
         if (null != nextDecorationErrors) {
             errors.addAll(nextDecorationErrors);
@@ -150,15 +143,15 @@ public class AtpServiceValidationDecorator extends AtpServiceDecorator implement
     }
 
     private void _atpAtpRelationFullValidation(AtpAtpRelationInfo atpAtpRelationInfo, ContextInfo context) throws DataValidationErrorException, OperationFailedException, InvalidParameterException,
-            MissingParameterException, PermissionDeniedException {
-        try {
-            List<ValidationResultInfo> errors = this.validateAtpAtpRelation(DataDictionaryValidator.ValidationType.FULL_VALIDATION.toString(), atpAtpRelationInfo.getAtpId(), atpAtpRelationInfo.getRelatedAtpId(), atpAtpRelationInfo.getTypeKey(), atpAtpRelationInfo, context);
-            if (!errors.isEmpty()) {
-                throw new DataValidationErrorException("Error(s) occurred validating atp-atp relation", errors);
-            }
-        } catch (DoesNotExistException ex) {
-            throw new OperationFailedException("Error validating atp-atp relation", ex);
-        }
+            MissingParameterException {
+//        try {
+//            List<ValidationResultInfo> errors = this.validateAtpAtpRelation(DataDictionaryValidator.ValidationType.FULL_VALIDATION.toString(), atpAtpRelationInfo, context);
+//            if (!errors.isEmpty()) {
+//                throw new DataValidationErrorException("Error(s) occurred validating atp-atp relation", errors);
+//            }
+//        } catch (DoesNotExistException ex) {
+//            throw new OperationFailedException("Error validating atp-atp relation", ex);
+//        }
     }
 
     @Override
@@ -169,8 +162,7 @@ public class AtpServiceValidationDecorator extends AtpServiceDecorator implement
 
         List<ValidationResultInfo> errors;
         try {
-            errors = ValidationUtils.validateTypeKey(atpAtpRelationTypeKey, AtpServiceConstants.REF_OBJECT_URI_ATP_ATP_RELATION, getTypeService(), context);
-            errors.addAll(ValidationUtils.validateInfo(validator, validationTypeKey, atpAtpRelationInfo, context));
+            errors = ValidationUtils.validateInfo(validator, validationTypeKey, atpAtpRelationInfo, context);
             List<ValidationResultInfo> nextDecorationErrors = getNextDecorator().validateAtpAtpRelation(validationTypeKey, atpId, atpPeerKey, atpAtpRelationTypeKey, atpAtpRelationInfo, context);
             if (null != nextDecorationErrors) {
                 errors.addAll(nextDecorationErrors);
@@ -240,8 +232,7 @@ public class AtpServiceValidationDecorator extends AtpServiceDecorator implement
 
         List<ValidationResultInfo> errors;
         try {
-            errors = ValidationUtils.validateTypeKey(milestoneInfo.getTypeKey(), AtpServiceConstants.REF_OBJECT_URI_MILESTONE, getTypeService(), context);
-            errors.addAll(ValidationUtils.validateInfo(validator, validationType, milestoneInfo, context));
+            errors = ValidationUtils.validateInfo(validator, validationType, milestoneInfo, context);
             List<ValidationResultInfo> nextDecoratorErrors = getNextDecorator().validateMilestone(validationType, milestoneInfo, context);
             if (null != nextDecoratorErrors) {
                 errors.addAll(nextDecoratorErrors);
@@ -263,17 +254,6 @@ public class AtpServiceValidationDecorator extends AtpServiceDecorator implement
 
         return getNextDecorator().getMilestone(milestoneId, context);
 
-    }
-
-    public TypeService getTypeService() {
-        if(typeService == null){
-            typeService = (TypeService) GlobalResourceLoader.getService(new QName(TypeServiceConstants.NAMESPACE, TypeServiceConstants.SERVICE_NAME_LOCAL_PART));
-        }
-        return typeService;
-    }
-
-    public void setTypeService(TypeService typeService) {
-        this.typeService = typeService;
     }
 
 }

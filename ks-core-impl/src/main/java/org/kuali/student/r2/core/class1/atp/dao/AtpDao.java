@@ -1,12 +1,13 @@
 package org.kuali.student.r2.core.class1.atp.dao;
 
-import org.kuali.student.r2.common.dao.GenericEntityDao;
-import org.kuali.student.r2.core.class1.atp.model.AtpEntity;
+import static javax.persistence.TemporalType.DATE;
 
 import java.util.Date;
 import java.util.List;
 
-import static javax.persistence.TemporalType.DATE;
+
+import org.kuali.student.r2.core.class1.atp.model.AtpEntity;
+import org.kuali.student.r2.common.dao.GenericEntityDao;
 
 public class AtpDao extends GenericEntityDao<AtpEntity> {
 
@@ -14,10 +15,6 @@ public class AtpDao extends GenericEntityDao<AtpEntity> {
     public List<AtpEntity> getByAtpTypeId(String atpType) {
         return em.createQuery("from AtpEntity a where a.atpType=:atpType").setParameter("atpType", atpType)
                 .getResultList();
-    }
-
-    public List<AtpEntity> getByCode(String code) {
-        return em.createNamedQuery("Atp.findByCode").setParameter("code", code).getResultList();
     }
 
     public List<AtpEntity> getByDate(Date searchDate) {

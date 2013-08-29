@@ -28,9 +28,10 @@
 	<context:annotation-config/>
 
     <import resource="classpath:META-INF/default-property-config-context-test.xml"/>
-    <!-- TODO OSR -->
-    <!--<import resource="classpath:ks-core-impl-test-data-dictionary-services-configuration.xml"/>
-    <import resource="classpath:ks-core-impl-test-data-dictionary-validator-configuration.xml"/>-->
+    <!--
+    <import resource="classpath:ks-data-dictionary-services-configuration.xml"/>
+	<import resource="classpath:ks-data-dictionary-validator-configuration.xml"/>
+	-->
 	<import resource="classpath:search-test-context.xml"/>
 	
 	<!--  Preloaded data -->
@@ -78,8 +79,6 @@
             value="${jdbc.xaDataSourceClassName}" />
         <property name="xaProperties" value="${propertiesPrefix.jdbc.xaDataSourceProperties}"/>
         <property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
-        <property name="minPoolSize" value="${jdbc.minPoolSize}" />
-        <property name="testQuery" value="${jdbc.testQuery}" />
     </bean>
 
     <bean id="vendorAdapter" class="${jpa.vendorAdapter}" depends-on="propertyConfigurer">
@@ -167,7 +166,7 @@
     </bean>
 
     <bean id="orgSearchServiceImpl"
-          class="org.kuali.student.r2.core.class1.search.OrganizationSearchServiceImpl">
+          class="org.kuali.student.r2.core.search.OrganizationSearchServiceImpl">
         <property name="searchManager" ref="orgSearchManager" />
         <property name="typeService" ref="typeServiceImpl" />
         <property name="searchOperations">

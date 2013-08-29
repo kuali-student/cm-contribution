@@ -13,8 +13,8 @@
     <context:annotation-config/>
 
     <import resource="classpath:META-INF/default-property-config-context-test.xml"/>
-    <import resource="classpath:ks-enroll-api-data-dictionary-services-configuration.xml"/>
-	<import resource="classpath:ks-enroll-api-data-dictionary-validator-configuration.xml"/>
+    <import resource="classpath:ks-data-dictionary-services-configuration.xml"/>
+	<import resource="classpath:ks-data-dictionary-validator-configuration.xml"/>
 	    <!--  Preloaded data -->
     <bean id="dataLoadListener" class="org.kuali.student.common.util.jpa.LoadSqlListener">
         <property name="jtaTxManager" ref="JtaTxManager"/>
@@ -60,8 +60,6 @@
             value="${jdbc.xaDataSourceClassName}" />
         <property name="xaProperties" value="${propertiesPrefix.jdbc.xaDataSourceProperties}"/>
         <property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
-        <property name="minPoolSize" value="${jdbc.minPoolSize}" />
-        <property name="testQuery" value="${jdbc.testQuery}" />
     </bean>
 
     <bean id="vendorAdapter" class="${jpa.vendorAdapter}" depends-on="propertyConfigurer">
@@ -72,7 +70,7 @@
     </bean>
 
     <bean id="debugMode" class="java.lang.Boolean">
-        <constructor-arg value="false" />
+        <constructor-arg value="true" />
     </bean>
 
     <!-- Default JPA EntityManagerFactory -->

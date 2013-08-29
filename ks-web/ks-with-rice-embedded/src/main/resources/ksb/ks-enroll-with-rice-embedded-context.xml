@@ -734,7 +734,7 @@
         <property name="genericEntityDao" ref="searchDao"/>
     </bean>
 
-    <bean id="courseOfferingHistorySearchImpl" class="org.kuali.student.r2.core.class1.search.CourseOfferingHistorySearchImpl">
+    <bean id="courseOfferingHistorySearchImpl" class="org.kuali.student.r2.core.search.CourseOfferingHistorySearchImpl">
         <property name="genericEntityDao" ref="searchDao"/>
         <property name="noOfYears" value="5"/>
     </bean>

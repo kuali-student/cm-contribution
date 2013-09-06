@@ -826,6 +826,234 @@
             <index-column name="OWNER_ID"/>
         </index>
     </table>
+    <table name="KSEN_ORG">
+        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="CREATEID" size="255" type="VARCHAR"/>
+        <column name="CREATETIME" type="TIMESTAMP"/>
+        <column name="UPDATEID" size="255" type="VARCHAR"/>
+        <column name="UPDATETIME" type="TIMESTAMP"/>
+        <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
+        <column name="EFF_DT" type="TIMESTAMP"/>
+        <column name="EXPIR_DT" type="TIMESTAMP"/>
+        <column name="LONG_DESCR_PLAIN" size="2000" type="VARCHAR"/>
+        <column name="LONG_NAME" size="255" type="VARCHAR"/>
+        <column name="SHORT_DESCR_PLAIN" size="500" type="VARCHAR"/>
+        <column name="SHORT_NAME" size="255" type="VARCHAR"/>
+        <column name="ORG_STATE" size="255" type="VARCHAR"/>
+        <column name="ORG_TYPE" size="255" type="VARCHAR"/>
+        <column name="OBJ_ID" size="36" type="VARCHAR"/>
+        <column name="LONG_DESCR_FORMATTED" size="4000" type="VARCHAR"/>
+        <column name="SORT_NAME" size="255" type="VARCHAR"/>
+        <column name="SHORT_DESCR_FORMATTED" size="4000" type="VARCHAR"/>
+        <index name="KSOR_ORG_I1">
+            <index-column name="ORG_TYPE"/>
+        </index>
+    </table>
+    <table name="KSEN_ORG_ATTR">
+        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="ATTR_KEY" size="255" type="VARCHAR"/>
+        <column name="ATTR_VALUE" size="4000" type="VARCHAR"/>
+        <column name="OWNER_ID" size="255" type="VARCHAR"/>
+        <column name="OBJ_ID" size="36" type="VARCHAR"/>
+        <foreign-key foreignTable="KSEN_ORG" name="KSOR_ORG_ATTR_FK1">
+            <reference foreign="ID" local="OWNER_ID"/>
+        </foreign-key>
+        <index name="KSOR_ORG_ATTR_I1">
+            <index-column name="OWNER_ID"/>
+        </index>
+    </table>
+    <table name="KSEN_ORG_CD">
+        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="OBJ_ID" size="36" type="VARCHAR"/>
+        <column name="ORG_CD_TYPE" required="true" size="255" type="VARCHAR"/>
+        <column name="ORG_CD_STATE" required="true" size="255" type="VARCHAR"/>
+        <column name="ORG_ID" required="true" size="255" type="VARCHAR"/>
+        <column name="VALUE" required="true" size="255" type="VARCHAR"/>
+        <column name="DESCR_PLAIN" size="4000" type="VARCHAR"/>
+        <column name="DESCR_FORMATTED" size="4000" type="VARCHAR"/>
+        <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
+        <column name="CREATETIME" required="true" type="TIMESTAMP"/>
+        <column name="CREATEID" required="true" size="255" type="VARCHAR"/>
+        <column name="UPDATETIME" type="TIMESTAMP"/>
+        <column name="UPDATEID" size="255" type="VARCHAR"/>
+    </table>
+    <table name="KSEN_ORG_CD_ATTR">
+        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="OBJ_ID" size="36" type="VARCHAR"/>
+        <column name="ATTR_KEY" size="255" type="VARCHAR"/>
+        <column name="ATTR_VALUE" size="4000" type="VARCHAR"/>
+        <column name="OWNER_ID" size="255" type="VARCHAR"/>
+    </table>
+    <table name="KSEN_ORG_HIRCHY">
+        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="DESCR_PLAIN" size="2000" type="VARCHAR"/>
+        <column name="EFF_DT" type="TIMESTAMP"/>
+        <column name="EXPIR_DT" type="TIMESTAMP"/>
+        <column name="NAME" size="255" type="VARCHAR"/>
+        <column name="ROOT_ORG_ID" size="255" type="VARCHAR"/>
+        <column name="OBJ_ID" size="36" type="VARCHAR"/>
+        <column name="VER_NBR" size="19" type="DECIMAL"/>
+        <column name="ORG_HIRCHY_TYPE" required="true" size="255" type="VARCHAR"/>
+        <column name="ORG_HIRCHY_STATE" required="true" size="255" type="VARCHAR"/>
+        <column name="DESCR_FORMATTED" size="4000" type="VARCHAR"/>
+        <column name="CREATETIME" required="true" type="TIMESTAMP"/>
+        <column name="CREATEID" required="true" size="255" type="VARCHAR"/>
+        <column name="UPDATETIME" type="TIMESTAMP"/>
+        <column name="UPDATEID" size="255" type="VARCHAR"/>
+        <foreign-key foreignTable="KSEN_ORG" name="KSOR_ORG_HIRCHY_FK1">
+            <reference foreign="ID" local="ROOT_ORG_ID"/>
+        </foreign-key>
+        <index name="KSOR_ORG_HIRCHY_I1">
+            <index-column name="ROOT_ORG_ID"/>
+        </index>
+    </table>
+    <table name="KSEN_ORG_HIRCHY_ATTR">
+        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="ATTR_KEY" size="255" type="VARCHAR"/>
+        <column name="ATTR_VALUE" size="4000" type="VARCHAR"/>
+        <column name="OWNER_ID" size="255" type="VARCHAR"/>
+        <column name="OBJ_ID" size="36" type="VARCHAR"/>
+        <foreign-key foreignTable="KSEN_ORG_HIRCHY" name="KSOR_ORG_HIRCHY_ATTR_FK1">
+            <reference foreign="ID" local="OWNER_ID"/>
+        </foreign-key>
+        <index name="KSOR_ORG_HIRCHY_ATTR_I1">
+            <index-column name="OWNER_ID"/>
+        </index>
+    </table>
+    <table name="KSEN_ORG_HIRCHY_OORT">
+        <column name="ORG_HIRCHY_ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="ORG_ORG_RELTN_TYPE_ID" primaryKey="true"
+            size="255" type="VARCHAR"/>
+    </table>
+    <table name="KSEN_ORG_ORG_RELTN">
+        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="CREATEID" size="255" type="VARCHAR"/>
+        <column name="CREATETIME" type="TIMESTAMP"/>
+        <column name="UPDATEID" size="255" type="VARCHAR"/>
+        <column name="UPDATETIME" type="TIMESTAMP"/>
+        <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
+        <column name="EFF_DT" type="TIMESTAMP"/>
+        <column name="EXPIR_DT" type="TIMESTAMP"/>
+        <column name="ORG_RELTN_STATE" size="255" type="VARCHAR"/>
+        <column name="ORG_ID" size="255" type="VARCHAR"/>
+        <column name="RELATED_ORG_ID" size="255" type="VARCHAR"/>
+        <column name="ORG_RELTN_TYPE" size="255" type="VARCHAR"/>
+        <column name="OBJ_ID" size="36" type="VARCHAR"/>
+        <foreign-key foreignTable="KSEN_ORG" name="KSOR_ORG_ORG_RELTN_FK2">
+            <reference foreign="ID" local="RELATED_ORG_ID"/>
+        </foreign-key>
+        <foreign-key foreignTable="KSEN_ORG" name="KSOR_ORG_ORG_RELTN_FK1">
+            <reference foreign="ID" local="ORG_ID"/>
+        </foreign-key>
+        <index name="KSOR_ORG_ORG_RELTN_I1">
+            <index-column name="ORG_ID"/>
+        </index>
+        <index name="KSOR_ORG_ORG_RELTN_I2">
+            <index-column name="RELATED_ORG_ID"/>
+        </index>
+        <index name="KSOR_ORG_ORG_RELTN_I3">
+            <index-column name="ORG_RELTN_TYPE"/>
+        </index>
+    </table>
+    <table name="KSEN_ORG_ORG_REL_ATTR">
+        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="ATTR_KEY" size="255" type="VARCHAR"/>
+        <column name="ATTR_VALUE" size="4000" type="VARCHAR"/>
+        <column name="OWNER_ID" size="255" type="VARCHAR"/>
+        <column name="OBJ_ID" size="36" type="VARCHAR"/>
+        <foreign-key foreignTable="KSEN_ORG_ORG_RELTN" name="KSOR_ORG_ORG_RELTN_ATTR_FK1">
+            <reference foreign="ID" local="OWNER_ID"/>
+        </foreign-key>
+        <index name="KSOR_ORG_ORG_RELTN_ATTR_I1">
+            <index-column name="OWNER_ID"/>
+        </index>
+    </table>
+    <table name="KSEN_ORG_PERS_RELTN">
+        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="CREATEID" size="255" type="VARCHAR"/>
+        <column name="CREATETIME" type="TIMESTAMP"/>
+        <column name="UPDATEID" size="255" type="VARCHAR"/>
+        <column name="UPDATETIME" type="TIMESTAMP"/>
+        <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
+        <column name="EFF_DT" type="TIMESTAMP"/>
+        <column name="EXPIR_DT" type="TIMESTAMP"/>
+        <column name="PERS_ID" size="255" type="VARCHAR"/>
+        <column name="ORG_PERS_RELTN_STATE" size="255" type="VARCHAR"/>
+        <column name="ORG_ID" size="255" type="VARCHAR"/>
+        <column name="ORG_PERS_RELTN_TYPE" size="255" type="VARCHAR"/>
+        <column name="OBJ_ID" size="36" type="VARCHAR"/>
+        <foreign-key foreignTable="KSEN_ORG" name="KSOR_ORG_PERS_RELTN_FK1">
+            <reference foreign="ID" local="ORG_ID"/>
+        </foreign-key>
+        <unique name="SYS_C0011691">
+            <unique-column name="ORG_PERS_RELTN_TYPE"/>
+            <unique-column name="ORG_ID"/>
+            <unique-column name="PERS_ID"/>
+        </unique>
+        <index name="KSOR_ORG_PERS_RELTN_I1">
+            <index-column name="ORG_ID"/>
+        </index>
+        <index name="KSOR_ORG_PERS_RELTN_I2">
+            <index-column name="ORG_PERS_RELTN_TYPE"/>
+        </index>
+    </table>
+    <table name="KSEN_ORG_PERS_REL_ATTR">
+        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="ATTR_KEY" size="255" type="VARCHAR"/>
+        <column name="ATTR_VALUE" size="4000" type="VARCHAR"/>
+        <column name="OWNER_ID" size="255" type="VARCHAR"/>
+        <column name="OBJ_ID" size="36" type="VARCHAR"/>
+        <foreign-key foreignTable="KSEN_ORG_PERS_RELTN" name="KSOR_ORG_PERS_RELTN_ATTR_FK1">
+            <reference foreign="ID" local="OWNER_ID"/>
+        </foreign-key>
+        <index name="KSOR_ORG_PERS_RELTN_ATTR_I1">
+            <index-column name="OWNER_ID"/>
+        </index>
+    </table>
+    <table name="KSEN_ORG_POS_RESTR">
+        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="CREATEID" size="255" type="VARCHAR"/>
+        <column name="CREATETIME" type="TIMESTAMP"/>
+        <column name="UPDATEID" size="255" type="VARCHAR"/>
+        <column name="UPDATETIME" type="TIMESTAMP"/>
+        <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
+        <column name="DESCR_PLAIN" size="2000" type="VARCHAR"/>
+        <column name="MIN_NUM_REL" size="22" type="DECIMAL"/>
+        <column name="STD_DUR_TYPE" size="255" type="VARCHAR"/>
+        <column name="STD_DUR_TIME_QTY" size="22" type="DECIMAL"/>
+        <column name="TITLE" size="255" type="VARCHAR"/>
+        <column name="ORG_ID" size="255" type="VARCHAR"/>
+        <column name="ORG_PERS_RELTN_TYPE" size="255" type="VARCHAR"/>
+        <column name="OBJ_ID" size="36" type="VARCHAR"/>
+        <column name="DESCR_FORMATTED" size="4000" type="VARCHAR"/>
+        <column name="MAX_NUM_REL" size="22" type="DECIMAL"/>
+        <foreign-key foreignTable="KSEN_ORG" name="KSOR_ORG_POS_RESTR_FK2">
+            <reference foreign="ID" local="ORG_ID"/>
+        </foreign-key>
+        <unique name="SYS_C0011701">
+            <unique-column name="ORG_ID"/>
+            <unique-column name="ORG_PERS_RELTN_TYPE"/>
+        </unique>
+        <index name="KSOR_ORG_POS_RESTR_I1">
+            <index-column name="ORG_PERS_RELTN_TYPE"/>
+        </index>
+        <index name="KSOR_ORG_POS_RESTR_I2">
+            <index-column name="ORG_ID"/>
+        </index>
+    </table>
+    <table name="KSEN_ORG_POS_RESTR_ATTR">
+        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
+        <column name="ATTR_KEY" size="255" type="VARCHAR"/>
+        <column name="ATTR_VALUE" size="4000" type="VARCHAR"/>
+        <column name="OWNER_ID" size="255" type="VARCHAR"/>
+        <column name="OBJ_ID" size="36" type="VARCHAR"/>
+        <foreign-key foreignTable="KSEN_ORG_POS_RESTR" name="KSOR_ORG_POS_RESTR_ATTR_FK1">
+            <reference foreign="ID" local="OWNER_ID"/>
+        </foreign-key>
+        <index name="KSOR_ORG_POS_RESTR_ATTR_I1">
+            <index-column name="OWNER_ID"/>
+        </index>
+    </table>
     <table name="KSEN_PROCESS">
         <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
         <column name="OBJ_ID" size="36" type="VARCHAR"/>
@@ -2732,339 +2960,6 @@
         <column name="MSG_VALUE" size="2000" type="VARCHAR"/>
         <column name="OBJ_ID" size="36" type="VARCHAR"/>
         <column name="VER_NBR" size="19" type="DECIMAL"/>
-    </table>
-    <table name="KSOR_ORG">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="CREATEID" size="255" type="VARCHAR"/>
-        <column name="CREATETIME" type="TIMESTAMP"/>
-        <column name="UPDATEID" size="255" type="VARCHAR"/>
-        <column name="UPDATETIME" type="TIMESTAMP"/>
-        <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
-        <column name="EFF_DT" type="TIMESTAMP"/>
-        <column name="EXPIR_DT" type="TIMESTAMP"/>
-        <column name="LNG_DESCR" size="2000" type="VARCHAR"/>
-        <column name="LNG_NAME" size="255" type="VARCHAR"/>
-        <column name="SHRT_DESCR" size="500" type="VARCHAR"/>
-        <column name="SHRT_NAME" size="255" type="VARCHAR"/>
-        <column name="ST" size="255" type="VARCHAR"/>
-        <column name="TYPE" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <foreign-key foreignTable="KSOR_ORG_TYPE" name="KSOR_ORG_FK1">
-            <reference foreign="TYPE_KEY" local="TYPE"/>
-        </foreign-key>
-        <index name="KSOR_ORG_I1">
-            <index-column name="TYPE"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_ATTR">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="ATTR_NAME" size="255" type="VARCHAR"/>
-        <column name="ATTR_VALUE" size="2000" type="VARCHAR"/>
-        <column name="OWNER" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <column name="VER_NBR" size="19" type="DECIMAL"/>
-        <foreign-key foreignTable="KSOR_ORG" name="KSOR_ORG_ATTR_FK1">
-            <reference foreign="ID" local="OWNER"/>
-        </foreign-key>
-        <index name="KSOR_ORG_ATTR_I1">
-            <index-column name="OWNER"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_HIRCHY">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="DESCR" size="2000" type="VARCHAR"/>
-        <column name="EFF_DT" type="TIMESTAMP"/>
-        <column name="EXPIR_DT" type="TIMESTAMP"/>
-        <column name="NAME" size="255" type="VARCHAR"/>
-        <column name="ROOT_ORG" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <column name="VER_NBR" size="19" type="DECIMAL"/>
-        <foreign-key foreignTable="KSOR_ORG" name="KSOR_ORG_HIRCHY_FK1">
-            <reference foreign="ID" local="ROOT_ORG"/>
-        </foreign-key>
-        <index name="KSOR_ORG_HIRCHY_I1">
-            <index-column name="ROOT_ORG"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_HIRCHY_ATTR">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="ATTR_NAME" size="255" type="VARCHAR"/>
-        <column name="ATTR_VALUE" size="2000" type="VARCHAR"/>
-        <column name="OWNER" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <column name="VER_NBR" size="19" type="DECIMAL"/>
-        <foreign-key foreignTable="KSOR_ORG_HIRCHY" name="KSOR_ORG_HIRCHY_ATTR_FK1">
-            <reference foreign="ID" local="OWNER"/>
-        </foreign-key>
-        <index name="KSOR_ORG_HIRCHY_ATTR_I1">
-            <index-column name="OWNER"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_HIRCHY_JN_ORG_TYPE">
-        <column name="ORG_HIRCHY_ID" required="true" size="255" type="VARCHAR"/>
-        <column name="ORG_TYPE_ID" required="true" size="255" type="VARCHAR"/>
-        <foreign-key foreignTable="KSOR_ORG_TYPE" name="KSOR_ORG_HIRCHY_JN_ORG_TYP_FK2">
-            <reference foreign="TYPE_KEY" local="ORG_TYPE_ID"/>
-        </foreign-key>
-        <foreign-key foreignTable="KSOR_ORG_HIRCHY" name="KSOR_ORG_HIRCHY_JN_ORG_TYP_FK1">
-            <reference foreign="ID" local="ORG_HIRCHY_ID"/>
-        </foreign-key>
-        <index name="KSOR_ORG_HIRCHY_JN_ORG_TYP_I1">
-            <index-column name="ORG_HIRCHY_ID"/>
-        </index>
-        <index name="KSOR_ORG_HIRCHY_JN_ORG_TYP_I2">
-            <index-column name="ORG_TYPE_ID"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_JN_ORG_PERS_REL_TYPE">
-        <column name="ORG_ID" required="true" size="255" type="VARCHAR"/>
-        <column name="ORG_PERS_RELTN_TYPE_ID" required="true" size="255" type="VARCHAR"/>
-        <foreign-key foreignTable="KSOR_ORG_PERS_RELTN_TYPE" name="KSOR_ORG_JN_ORG_PERREL_TYP_FK1">
-            <reference foreign="TYPE_KEY" local="ORG_PERS_RELTN_TYPE_ID"/>
-        </foreign-key>
-        <foreign-key foreignTable="KSOR_ORG" name="KSOR_ORG_JN_ORG_PERREL_TYP_FK2">
-            <reference foreign="ID" local="ORG_ID"/>
-        </foreign-key>
-        <index name="KSOR_ORG_JN_ORG_PERREL_TYP_I1">
-            <index-column name="ORG_PERS_RELTN_TYPE_ID"/>
-        </index>
-        <index name="KSOR_ORG_JN_ORG_PERREL_TYP_I2">
-            <index-column name="ORG_ID"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_ORG_RELTN">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="CREATEID" size="255" type="VARCHAR"/>
-        <column name="CREATETIME" type="TIMESTAMP"/>
-        <column name="UPDATEID" size="255" type="VARCHAR"/>
-        <column name="UPDATETIME" type="TIMESTAMP"/>
-        <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
-        <column name="EFF_DT" type="TIMESTAMP"/>
-        <column name="EXPIR_DT" type="TIMESTAMP"/>
-        <column name="ST" size="255" type="VARCHAR"/>
-        <column name="ORG" size="255" type="VARCHAR"/>
-        <column name="RELATED_ORG" size="255" type="VARCHAR"/>
-        <column name="TYPE" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <foreign-key foreignTable="KSOR_ORG" name="KSOR_ORG_ORG_RELTN_FK2">
-            <reference foreign="ID" local="RELATED_ORG"/>
-        </foreign-key>
-        <foreign-key foreignTable="KSOR_ORG" name="KSOR_ORG_ORG_RELTN_FK1">
-            <reference foreign="ID" local="ORG"/>
-        </foreign-key>
-        <foreign-key foreignTable="KSOR_ORG_ORG_RELTN_TYPE" name="KSOR_ORG_ORG_RELTN_FK3">
-            <reference foreign="TYPE_KEY" local="TYPE"/>
-        </foreign-key>
-        <index name="KSOR_ORG_ORG_RELTN_I1">
-            <index-column name="ORG"/>
-        </index>
-        <index name="KSOR_ORG_ORG_RELTN_I2">
-            <index-column name="RELATED_ORG"/>
-        </index>
-        <index name="KSOR_ORG_ORG_RELTN_I3">
-            <index-column name="TYPE"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_ORG_RELTN_ATTR">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="ATTR_NAME" size="255" type="VARCHAR"/>
-        <column name="ATTR_VALUE" size="2000" type="VARCHAR"/>
-        <column name="OWNER" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <column name="VER_NBR" size="19" type="DECIMAL"/>
-        <foreign-key foreignTable="KSOR_ORG_ORG_RELTN" name="KSOR_ORG_ORG_RELTN_ATTR_FK1">
-            <reference foreign="ID" local="OWNER"/>
-        </foreign-key>
-        <index name="KSOR_ORG_ORG_RELTN_ATTR_I1">
-            <index-column name="OWNER"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_ORG_RELTN_TYPE">
-        <column name="TYPE_KEY" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="TYPE_DESC" size="2000" type="VARCHAR"/>
-        <column name="EFF_DT" type="TIMESTAMP"/>
-        <column name="EXPIR_DT" type="TIMESTAMP"/>
-        <column name="NAME" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <column name="REV_DESCR" size="255" type="VARCHAR"/>
-        <column name="REV_NAME" size="255" type="VARCHAR"/>
-        <column name="ORG_HIRCHY" size="255" type="VARCHAR"/>
-        <column name="VER_NBR" size="19" type="DECIMAL"/>
-        <foreign-key foreignTable="KSOR_ORG_HIRCHY" name="KSOR_ORG_ORG_RELTN_TYPE_FK1">
-            <reference foreign="ID" local="ORG_HIRCHY"/>
-        </foreign-key>
-        <index name="KSOR_ORG_ORG_RELTN_TYPE_I1">
-            <index-column name="ORG_HIRCHY"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_ORG_RELTN_TYPE_ATTR">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="ATTR_NAME" size="255" type="VARCHAR"/>
-        <column name="ATTR_VALUE" size="2000" type="VARCHAR"/>
-        <column name="OWNER" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <column name="VER_NBR" size="19" type="DECIMAL"/>
-        <foreign-key foreignTable="KSOR_ORG_ORG_RELTN_TYPE" name="KSOR_ORG_ORG_REL_TYP_ATTR_FK1">
-            <reference foreign="TYPE_KEY" local="OWNER"/>
-        </foreign-key>
-        <index name="KSOR_ORG_ORG_REL_TYP_ATTR_I1">
-            <index-column name="OWNER"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_PERS_RELTN">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="CREATEID" size="255" type="VARCHAR"/>
-        <column name="CREATETIME" type="TIMESTAMP"/>
-        <column name="UPDATEID" size="255" type="VARCHAR"/>
-        <column name="UPDATETIME" type="TIMESTAMP"/>
-        <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
-        <column name="EFF_DT" type="TIMESTAMP"/>
-        <column name="EXPIR_DT" type="TIMESTAMP"/>
-        <column name="PERS_ID" size="255" type="VARCHAR"/>
-        <column name="ST" size="255" type="VARCHAR"/>
-        <column name="ORG" size="255" type="VARCHAR"/>
-        <column name="ORG_PERS_RELTN_TYPE" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <foreign-key foreignTable="KSOR_ORG_PERS_RELTN_TYPE" name="KSOR_ORG_PERS_RELTN_FK2">
-            <reference foreign="TYPE_KEY" local="ORG_PERS_RELTN_TYPE"/>
-        </foreign-key>
-        <foreign-key foreignTable="KSOR_ORG" name="KSOR_ORG_PERS_RELTN_FK1">
-            <reference foreign="ID" local="ORG"/>
-        </foreign-key>
-        <unique name="SYS_C0011691">
-            <unique-column name="ORG_PERS_RELTN_TYPE"/>
-            <unique-column name="ORG"/>
-            <unique-column name="PERS_ID"/>
-        </unique>
-        <index name="KSOR_ORG_PERS_RELTN_I1">
-            <index-column name="ORG"/>
-        </index>
-        <index name="KSOR_ORG_PERS_RELTN_I2">
-            <index-column name="ORG_PERS_RELTN_TYPE"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_PERS_RELTN_ATTR">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="ATTR_NAME" size="255" type="VARCHAR"/>
-        <column name="ATTR_VALUE" size="2000" type="VARCHAR"/>
-        <column name="OWNER" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <column name="VER_NBR" size="19" type="DECIMAL"/>
-        <foreign-key foreignTable="KSOR_ORG_PERS_RELTN" name="KSOR_ORG_PERS_RELTN_ATTR_FK1">
-            <reference foreign="ID" local="OWNER"/>
-        </foreign-key>
-        <index name="KSOR_ORG_PERS_RELTN_ATTR_I1">
-            <index-column name="OWNER"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_PERS_RELTN_TYPE">
-        <column name="TYPE_KEY" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="TYPE_DESC" size="2000" type="VARCHAR"/>
-        <column name="EFF_DT" type="TIMESTAMP"/>
-        <column name="EXPIR_DT" type="TIMESTAMP"/>
-        <column name="NAME" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <column name="VER_NBR" size="19" type="DECIMAL"/>
-    </table>
-    <table name="KSOR_ORG_PERS_RELTN_TYPE_ATTR">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="ATTR_NAME" size="255" type="VARCHAR"/>
-        <column name="ATTR_VALUE" size="2000" type="VARCHAR"/>
-        <column name="OWNER" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <column name="VER_NBR" size="19" type="DECIMAL"/>
-        <foreign-key foreignTable="KSOR_ORG_PERS_RELTN_TYPE" name="KSOR_ORG_PERS_REL_TYP_ATTR_FK1">
-            <reference foreign="TYPE_KEY" local="OWNER"/>
-        </foreign-key>
-        <index name="KSOR_ORG_PERS_REL_TYP_ATTR_I1">
-            <index-column name="OWNER"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_POS_RESTR">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="CREATEID" size="255" type="VARCHAR"/>
-        <column name="CREATETIME" type="TIMESTAMP"/>
-        <column name="UPDATEID" size="255" type="VARCHAR"/>
-        <column name="UPDATETIME" type="TIMESTAMP"/>
-        <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
-        <column name="DESCR" size="2000" type="VARCHAR"/>
-        <column name="MAX_NUM_RELTN" size="255" type="VARCHAR"/>
-        <column name="MIN_NUM_RELTN" size="10" type="DECIMAL"/>
-        <column name="ATP_DUR_TYP_KEY" size="255" type="VARCHAR"/>
-        <column name="TM_QUANTITY" size="10" type="DECIMAL"/>
-        <column name="TTL" size="255" type="VARCHAR"/>
-        <column name="ORG" size="255" type="VARCHAR"/>
-        <column name="PERS_RELTN_TYPE" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <foreign-key foreignTable="KSOR_ORG" name="KSOR_ORG_POS_RESTR_FK2">
-            <reference foreign="ID" local="ORG"/>
-        </foreign-key>
-        <foreign-key foreignTable="KSOR_ORG_PERS_RELTN_TYPE" name="KSOR_ORG_POS_RESTR_FK1">
-            <reference foreign="TYPE_KEY" local="PERS_RELTN_TYPE"/>
-        </foreign-key>
-        <unique name="SYS_C0011701">
-            <unique-column name="ORG"/>
-            <unique-column name="PERS_RELTN_TYPE"/>
-        </unique>
-        <index name="KSOR_ORG_POS_RESTR_I1">
-            <index-column name="PERS_RELTN_TYPE"/>
-        </index>
-        <index name="KSOR_ORG_POS_RESTR_I2">
-            <index-column name="ORG"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_POS_RESTR_ATTR">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="ATTR_NAME" size="255" type="VARCHAR"/>
-        <column name="ATTR_VALUE" size="2000" type="VARCHAR"/>
-        <column name="OWNER" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <column name="VER_NBR" size="19" type="DECIMAL"/>
-        <foreign-key foreignTable="KSOR_ORG_POS_RESTR" name="KSOR_ORG_POS_RESTR_ATTR_FK1">
-            <reference foreign="ID" local="OWNER"/>
-        </foreign-key>
-        <index name="KSOR_ORG_POS_RESTR_ATTR_I1">
-            <index-column name="OWNER"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_TYPE">
-        <column name="TYPE_KEY" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="TYPE_DESC" size="2000" type="VARCHAR"/>
-        <column name="EFF_DT" type="TIMESTAMP"/>
-        <column name="EXPIR_DT" type="TIMESTAMP"/>
-        <column name="NAME" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <column name="VER_NBR" size="19" type="DECIMAL"/>
-    </table>
-    <table name="KSOR_ORG_TYPE_ATTR">
-        <column name="ID" primaryKey="true" size="255" type="VARCHAR"/>
-        <column name="ATTR_NAME" size="255" type="VARCHAR"/>
-        <column name="ATTR_VALUE" size="2000" type="VARCHAR"/>
-        <column name="OWNER" size="255" type="VARCHAR"/>
-        <column name="OBJ_ID" size="36" type="VARCHAR"/>
-        <column name="VER_NBR" size="19" type="DECIMAL"/>
-        <foreign-key foreignTable="KSOR_ORG_TYPE" name="KSOR_ORG_TYPE_ATTR_FK1">
-            <reference foreign="TYPE_KEY" local="OWNER"/>
-        </foreign-key>
-        <index name="KSOR_ORG_TYPE_ATTR_I1">
-            <index-column name="OWNER"/>
-        </index>
-    </table>
-    <table name="KSOR_ORG_TYPE_JN_ORG_PERRL_TYP">
-        <column name="ORG_TYPE_ID" required="true" size="255" type="VARCHAR"/>
-        <column name="ORG_PERS_RELTN_TYPE_ID" required="true" size="255" type="VARCHAR"/>
-        <foreign-key foreignTable="KSOR_ORG_PERS_RELTN_TYPE" name="KSOR_ORGTYP_JN_ORGPREL_TYP_FK1">
-            <reference foreign="TYPE_KEY" local="ORG_PERS_RELTN_TYPE_ID"/>
-        </foreign-key>
-        <foreign-key foreignTable="KSOR_ORG_TYPE" name="KSOR_ORGTYP_JN_ORGPREL_TYP_FK2">
-            <reference foreign="TYPE_KEY" local="ORG_TYPE_ID"/>
-        </foreign-key>
-        <index name="KSOR_ORGTYP_JN_ORGPREL_TYP_I1">
-            <index-column name="ORG_PERS_RELTN_TYPE_ID"/>
-        </index>
-        <index name="KSOR_ORGTYP_JN_ORGPREL_TYP_I2">
-            <index-column name="ORG_TYPE_ID"/>
-        </index>
     </table>
     <table name="KSPR_PROPOSAL">
         <column name="PROPOSAL_ID" primaryKey="true" size="255" type="VARCHAR"/>

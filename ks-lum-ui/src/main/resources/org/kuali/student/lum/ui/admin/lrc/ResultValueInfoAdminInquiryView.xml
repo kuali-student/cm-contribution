@@ -23,7 +23,7 @@
 	<import resource="classpath:UifKSDefinitions.xml"/>
 	<!-- **********************************************
 	Paste bean definition below into the list of dataDictionaryPackages of org.kuali.rice.krad.bo.ModuleConfiguration 
-	<value>classpath:org/kuali/student/ui/admin/lrc/ResultValueInfoAdminInquiryView.xml</value>
+	<value>classpath:org/kuali/student/lum/ui/admin/lrc/ResultValueInfoAdminInquiryView.xml</value>
 	********************************************** -->
 	<!-- InquiryView -->
 	<bean id="KS-ResultValueInfo-AdminInquiryView" parent="KS-Uif-InquiryView"

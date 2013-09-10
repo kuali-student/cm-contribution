@@ -112,7 +112,8 @@
     <param name="rice.KS-SYS.additionalSpringFiles">${ks.projects},${ks.bundled.context},${ks.authentication.context},${ks.institutional.context}</param>
 	-->
 	
-	<param name="rice.kim.additionalSpringFiles">classpath:ks-kim-context.xml</param>
+    <param name="rice.kim.additionalSpringFiles">classpath:ks-kim-context.xml</param>
+
 
     <param name="ks.rice.label">RICE</param>
     <param name="ks.rice.url">${application.url}</param>
@@ -160,6 +161,12 @@
 
 	<param name="ks.lum.gwt.cache.config.file">classpath:ks-lum-gwt-ehcache.xml</param>
     <param name="ks.lum.gwt.metadata.enable.caching">true</param>
+    
+   <!-- change/override this to kradScriptFiles for a non minified javascript version -->
+    <param name="krad.js.scriptfiles">classpath:UifKRADJavascriptFiles.xml</param>
+    <!--
+    <param name="krad.js.scriptfiles">classpath:UifKRADJavascriptFilesMinified.xml</param>
+    -->
 
     <!-- default config files -->
     <param name="config.location">${user.home}/kuali/main/${environment}/ks-config.xml</param>

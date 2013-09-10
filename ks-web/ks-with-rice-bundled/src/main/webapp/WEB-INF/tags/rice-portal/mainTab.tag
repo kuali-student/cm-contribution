@@ -29,11 +29,11 @@
 --%>
 
 <%--Disabled old KS Maint Docs as they are currently not functioning after Rice upgrade and provide little functionality--%>
-<%--
+
 <td class="content" valign="top">
     <mainChannel:ksMaintenance />
 </td>
---%>
+
 <td class="content" valign="top">
 	<mainChannel:workflow />
 	<mainChannel:notification />

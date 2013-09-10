@@ -45,10 +45,14 @@
 		<filter-class>org.displaytag.filter.ResponseOverrideFilter</filter-class>
 	</filter>
 
-	<filter>
+<!--        <filter>
 	  <filter-name>BootstrapFilter</filter-name>
-	  <filter-class>org.kuali.rice.kew.web.BootstrapFilter</filter-class>
-	</filter>
+	  <filter-class>org.kuali.rice.krad.web.filter.BootstrapFilter</filter-class>
+	</filter>-->
+        <filter>
+          <filter-name>BootstrapFilter</filter-name>
+          <filter-class>org.kuali.rice.kew.web.BootstrapFilter</filter-class>
+        </filter>
 
     <filter>
 		<filter-name>UserLoginFilter</filter-name>
@@ -59,7 +63,6 @@
 <filter-name>UserPreferencesFilter</filter-name>
 <filter-class>org.kuali.rice.kew.web.UserPreferencesFilter</filter-class>
 </filter>
-
 <filter-mapping>
 <filter-name>HideWebInfFilter</filter-name>
 <url-pattern>/*</url-pattern>

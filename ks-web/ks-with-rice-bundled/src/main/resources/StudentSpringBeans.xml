@@ -73,7 +73,17 @@
                 <value>classpath:org/kuali/student/lum/ui/admin/lrc/ResultValueInfoAdminInquiryView.xml</value>
                 <value>classpath:org/kuali/student/lum/ui/admin/lrc/ResultValuesGroupInfoAdminLookupView.xml</value>
                 <value>classpath:org/kuali/student/lum/ui/admin/lrc/ResultValuesGroupInfoAdminInquiryView.xml</value>
-
+                <!-- organization -->
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgHierarchyInfoAdminInquiryView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgHierarchyInfoAdminLookupView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgInfoAdminInquiryView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgInfoAdminLookupView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgOrgRelationInfoAdminInquiryView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgOrgRelationInfoAdminLookupView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminInquiryView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminLookupView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminInquiryView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminLookupView.xml</value>
             </list>
         </property>
         <property name="packagePrefixes">
@@ -92,7 +102,7 @@
 
     <!-- OrgAdmin Derived role (AdministrativeOfficer of this org) -->
     <bean id="ksOrgAdminRoleTypeService"
-              class="org.kuali.student.lum.kim.role.type.OrgDerivedRoleTypeServiceImpl">
+          class="org.kuali.student.lum.kim.role.type.OrgDerivedRoleTypeServiceImpl">
         <property name="includedOrgPersonRelationTypes">
             <list>
                 <value>kuali.org.PersonRelation.Chair</value>
@@ -103,7 +113,7 @@
 
     <!-- Org Derived role (anyone that's related to this org -->
     <bean id="ksOrgCommitteeRoleTypeService"
-              class="org.kuali.student.lum.kim.role.type.OrgDerivedRoleTypeServiceImpl">
+          class="org.kuali.student.lum.kim.role.type.OrgDerivedRoleTypeServiceImpl">
         <property name="excludedOrgPersonRelationTypes">
             <list>
                 <value>kuali.org.PersonRelation.Chair</value>

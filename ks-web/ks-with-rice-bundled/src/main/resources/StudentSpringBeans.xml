@@ -16,9 +16,9 @@
 -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
                            http://www.springframework.org/schema/tx
                            http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
@@ -27,18 +27,18 @@
 
     <bean id="kualiModuleService" class="org.kuali.rice.krad.service.impl.KualiModuleServiceImpl" />
 
-	<bean id="studentRiceModule" class="org.kuali.rice.krad.service.impl.ModuleServiceBase">
-		<property name="moduleConfiguration" ref="studentRiceModuleConfiguration" />
-		<property name="kualiModuleService" ref="kualiModuleService" />
-	</bean>
+    <bean id="studentRiceModule" class="org.kuali.rice.krad.service.impl.ModuleServiceBase">
+        <property name="moduleConfiguration" ref="studentRiceModuleConfiguration" />
+        <property name="kualiModuleService" ref="kualiModuleService" />
+    </bean>
 
-	<bean id="studentRiceModuleConfiguration" class="org.kuali.rice.krad.bo.ModuleConfiguration">
-		<property name="namespaceCode" value="KS-SYS" />
-		<property name="initializeDataDictionary" value="true" />
-		<property name="dataDictionaryPackages">
-			<list>
+    <bean id="studentRiceModuleConfiguration" class="org.kuali.rice.krad.bo.ModuleConfiguration">
+        <property name="namespaceCode" value="KS-SYS" />
+        <property name="initializeDataDictionary" value="true" />
+        <property name="dataDictionaryPackages">
+            <list>
                 <!-- rice and basic ks xmls -->
-				<value>classpath:org/kuali/rice/student/bo</value>
+                <value>classpath:org/kuali/rice/student/bo</value>
 
                 <!-- KIM Attributes -->
                 <value>classpath:org/kuali/rice/student/bo/KualiStudentKimAttributes.xml</value>
@@ -53,6 +53,12 @@
                 <value>classpath:org/kuali/student/core/ui/admin/state/StateInfoAdminInquiryView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/state/LifecycleInfoAdminLookupView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/state/LifecycleInfoAdminInquiryView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/state/StateChangeInfoAdminInquiryView.xml</value> 
+                <value>classpath:org/kuali/student/core/ui/admin/state/StateChangeInfoAdminLookupView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/state/StateConstraintInfoAdminInquiryView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/state/StateConstraintInfoAdminLookupView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/state/StatePropagationInfoAdminInquiryView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/state/StatePropagationInfoAdminLookupView.xml</value>
                 <!-- atp -->
                 <value>classpath:org/kuali/student/core/ui/admin/atp/AtpAtpRelationInfoAdminLookupView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/atp/AtpAtpRelationInfoAdminInquiryView.xml</value>
@@ -69,12 +75,12 @@
                 <value>classpath:org/kuali/student/lum/ui/admin/lrc/ResultValuesGroupInfoAdminInquiryView.xml</value>
 
             </list>
-		</property>
-		<property name="packagePrefixes">
-			<list>
-				<value>org.kuali.rice.student.</value>
-			</list>
-		</property>
+        </property>
+        <property name="packagePrefixes">
+            <list>
+                <value>org.kuali.rice.student.</value>
+            </list>
+        </property>
         <!-- add in the student attributes to the kim module configuration -->
         <property name="externalizableBusinessObjectImplementations">
             <map>
@@ -82,32 +88,32 @@
                        value="org.kuali.rice.student.bo.KualiStudentKimAttributes"/>
             </map>
         </property>
-	</bean>
+    </bean>
 
-	<!-- OrgAdmin Derived role (AdministrativeOfficer of this org) -->
-	<bean id="ksOrgAdminRoleTypeService"
-		class="org.kuali.student.lum.kim.role.type.OrgDerivedRoleTypeServiceImpl">
-		<property name="includedOrgPersonRelationTypes">
-			<list>
-				<value>kuali.org.PersonRelation.Chair</value>
-			</list>
-		</property>
-		<!--<property name="orgService" ref="orgClient"/>-->
-	</bean>
+    <!-- OrgAdmin Derived role (AdministrativeOfficer of this org) -->
+    <bean id="ksOrgAdminRoleTypeService"
+              class="org.kuali.student.lum.kim.role.type.OrgDerivedRoleTypeServiceImpl">
+        <property name="includedOrgPersonRelationTypes">
+            <list>
+                <value>kuali.org.PersonRelation.Chair</value>
+            </list>
+        </property>
+        <!--<property name="orgService" ref="orgClient"/>-->
+    </bean>
 
-	<!-- Org Derived role (anyone that's related to this org -->
-	<bean id="ksOrgCommitteeRoleTypeService"
-		class="org.kuali.student.lum.kim.role.type.OrgDerivedRoleTypeServiceImpl">
-		<property name="excludedOrgPersonRelationTypes">
-			<list>
-				<value>kuali.org.PersonRelation.Chair</value>
-			</list>
-		</property>
-		<!--<property name="orgService" ref="orgClient"/>-->
-	</bean>
+    <!-- Org Derived role (anyone that's related to this org -->
+    <bean id="ksOrgCommitteeRoleTypeService"
+              class="org.kuali.student.lum.kim.role.type.OrgDerivedRoleTypeServiceImpl">
+        <property name="excludedOrgPersonRelationTypes">
+            <list>
+                <value>kuali.org.PersonRelation.Chair</value>
+            </list>
+        </property>
+        <!--<property name="orgService" ref="orgClient"/>-->
+    </bean>
 
-	<!-- impl for Rice Authentication Service  -->
-	<bean id="ksRiceAuthenticationService" class="org.kuali.student.security.KSRiceAuthenticationServiceImpl"/>
+    <!-- impl for Rice Authentication Service  -->
+    <bean id="ksRiceAuthenticationService" class="org.kuali.student.security.KSRiceAuthenticationServiceImpl"/>
 
     <!-- Action Request Derived role (type - Non Adhoc) (status - ACTIVE) -->
     <bean id="ksNonAdhocActionRequestDerivedRoleTypeServiceImpl" class="org.kuali.student.lum.kim.role.type.KSNonAdhocActionRequestDerivedRoleTypeServiceImpl"/>
@@ -121,15 +127,15 @@
     <!-- Action Request Derived role (type = Adhoc) (status - DONE) -->
     <bean id="ksAdhocDoneActionRequestDerivedRoleTypeServiceImpl" class="org.kuali.student.lum.kim.role.type.KSAdhocDoneActionRequestDerivedRoleTypeServiceImpl"/>
 
-	<!-- Route Log Derived role -->
-	<bean id="ksRouteLogDerivedRoleTypeServiceImpl" class="org.kuali.student.lum.kim.role.type.KSRouteLogDerivedRoleTypeServiceImpl">
+    <!-- Route Log Derived role -->
+    <bean id="ksRouteLogDerivedRoleTypeServiceImpl" class="org.kuali.student.lum.kim.role.type.KSRouteLogDerivedRoleTypeServiceImpl">
         <property name="checkFutureRequests" value="false" />
-	</bean>
+    </bean>
 
-	<bean id="ksCommentOnDocumentRoleTypeService" class="org.kuali.rice.krad.kim.PermissionDerivedRoleTypeServiceImpl">
-	    <property name="permissionTemplateNamespace" value="KS-SYS" />
-	    <property name="permissionTemplateName" value="Comment on Document" />
-	</bean>
+    <bean id="ksCommentOnDocumentRoleTypeService" class="org.kuali.rice.krad.kim.PermissionDerivedRoleTypeServiceImpl">
+        <property name="permissionTemplateNamespace" value="KS-SYS" />
+        <property name="permissionTemplateName" value="Comment on Document" />
+    </bean>
 
     <bean id="ksEditDocumentRoleTypeService" class="org.kuali.rice.krad.kim.PermissionDerivedRoleTypeServiceImpl">
         <property name="permissionTemplateNamespace" value="KS-SYS" />
@@ -140,6 +146,6 @@
     <bean id="ksOrganizationHierarchyRoleTypeService" class="org.kuali.student.lum.kim.role.type.OrganizationHierarchyRoleTypeService"/>
 
     <!-- Use our own custom xml parser which also parses passwords -->
-   	<bean id="enUserXmlService" class="org.kuali.rice.student.kew.xml.KSUserXmlServiceImpl" />
+    <bean id="enUserXmlService" class="org.kuali.rice.student.kew.xml.KSUserXmlServiceImpl" />
 
 </beans>

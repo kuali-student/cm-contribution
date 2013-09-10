@@ -29,7 +29,7 @@
 	<bean id="KS-ResultValueInfo-AdminInquiryView" parent="KS-Uif-InquiryView"
 		p:title="ResultValueInfo Inquiry"
 		p:dataObjectClassName="org.kuali.student.r2.lum.lrc.dto.ResultValueInfo"
-		p:viewHelperServiceClass="org.kuali.student.ui.admin.lrc.ResultValueInfoAdminInquirableImpl">
+		p:viewHelperServiceClass="org.kuali.student.lum.ui.admin.lrc.ResultValueInfoAdminInquirableImpl">
 		
 		<property name="Items">
 		    <list>

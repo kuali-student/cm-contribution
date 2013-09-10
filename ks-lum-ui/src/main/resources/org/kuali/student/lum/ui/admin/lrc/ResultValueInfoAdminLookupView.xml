@@ -33,7 +33,7 @@
 		p:title="ResultValueInfo Lookup"
 		p:header.headerText="ResultValueInfo Lookup"
 		p:dataObjectClassName="org.kuali.student.r2.lum.lrc.dto.ResultValueInfo"
-		p:viewHelperServiceClass="org.kuali.student.ui.admin.lrc.ResultValueInfoAdminLookupableImpl">
+		p:viewHelperServiceClass="org.kuali.student.lum.ui.admin.lrc.ResultValueInfoAdminLookupableImpl">
 		
 		<property name="criteriaFields">
 			<list>

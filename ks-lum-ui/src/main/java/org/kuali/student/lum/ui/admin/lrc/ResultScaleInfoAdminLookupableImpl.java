@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kuali.student.ui.admin.lrc;
+package org.kuali.student.lum.ui.admin.lrc;
 
 
 import java.util.ArrayList;
@@ -29,18 +29,18 @@ import org.kuali.rice.krad.lookup.LookupableImpl;
 import org.kuali.rice.krad.web.form.LookupForm;
 import org.kuali.student.common.util.ContextBuilder;
 import org.kuali.student.r2.common.dto.ContextInfo;
-import org.kuali.student.r2.lum.lrc.dto.ResultValuesGroupInfo;
+import org.kuali.student.r2.lum.lrc.dto.ResultScaleInfo;
 import org.kuali.student.r2.lum.lrc.service.LRCService;
 import org.kuali.student.r2.lum.util.constants.LrcServiceConstants;
 
 
-public class ResultValuesGroupInfoAdminLookupableImpl extends LookupableImpl
+public class ResultScaleInfoAdminLookupableImpl extends LookupableImpl
 {
-	private static final Logger LOG = Logger.getLogger(ResultValuesGroupInfoAdminLookupableImpl.class);
+	private static final Logger LOG = Logger.getLogger(ResultScaleInfoAdminLookupableImpl.class);
 	private transient LRCService lRCService;
     private static final long serialVersionUID = 1L;
 	@Override
-	protected List<ResultValuesGroupInfo> getSearchResults(LookupForm lookupForm, Map<String, String> fieldValues, boolean unbounded)
+	protected List<ResultScaleInfo> getSearchResults(LookupForm lookupForm, Map<String, String> fieldValues, boolean unbounded)
 	{
 		QueryByCriteria.Builder qBuilder = QueryByCriteria.Builder.create();
 		List<Predicate> pList = new ArrayList<Predicate>();
@@ -63,7 +63,7 @@ public class ResultValuesGroupInfoAdminLookupableImpl extends LookupableImpl
 		}
 		try
 		{
-			List<ResultValuesGroupInfo> list = this.getLRCService().searchForResultValuesGroups(qBuilder.build(), getContextInfo());
+			List<ResultScaleInfo> list = this.getLRCService().searchForResultScales(qBuilder.build(), getContextInfo());
 			return list;
 		}
 		catch (Exception ex) {

@@ -36,6 +36,8 @@ import org.kuali.student.core.workflow.ui.client.widgets.WorkflowUtilities;
 import org.kuali.student.lum.common.client.configuration.LUMViews;
 import org.kuali.student.lum.common.client.helpers.RecentlyViewedHelper;
 import org.kuali.student.lum.common.client.widgets.AppLocations;
+import org.kuali.student.lum.lu.ui.course.client.configuration.CourseProposalConfigurer;
+import org.kuali.student.lum.lu.ui.course.client.controllers.CourseRetireByProposalController;
 import org.kuali.student.lum.program.client.*;
 import org.kuali.student.lum.program.client.events.*;
 import org.kuali.student.lum.program.client.major.MajorController;
@@ -98,8 +100,9 @@ public class MajorProposalController extends MajorController implements Workflow
         
         proposalPath = configurer.getProposalPath();
         
-        workflowUtil = new WorkflowUtilities(MajorProposalController.this, proposalPath, "Proposal Actions",
-   				ProgramSections.WF_APPROVE_DIALOG,"Required Fields", ProgramConstants.PROGRAM_MODEL_ID);
+        workflowUtil = GWT.create(WorkflowUtilities.class);
+        workflowUtil.init(MajorProposalController.this, proposalPath, "Proposal Actions",
+                ProgramSections.WF_APPROVE_DIALOG, "Required Fields", ProgramConstants.PROGRAM_MODEL_ID);
 
         sideBar.setState(ProgramSideBar.State.EDIT);
         initHandlers();

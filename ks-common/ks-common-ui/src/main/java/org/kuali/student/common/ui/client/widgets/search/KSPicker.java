@@ -98,6 +98,8 @@ public class KSPicker extends Composite implements HasFocusLostCallbacks, HasVal
         
     private SearchRequestWrapper searchRequestWrapper = new SearchRequestWrapper();
         
+    public KSPicker() {}
+
     public KSPicker(WidgetConfigInfo config) {
         this.config = config;
 		init(config.lookupMeta, config.additionalLookups);
@@ -114,6 +116,11 @@ public class KSPicker extends Composite implements HasFocusLostCallbacks, HasVal
     	}
     	return null;
 
+    }
+
+    public void init(WidgetConfigInfo config) {
+        this.config = config;
+        init(config.lookupMeta, config.additionalLookups);
     }
 
     private void init(LookupMetadata inLookupMetadata, List<LookupMetadata> additionalLookupMetadata) {

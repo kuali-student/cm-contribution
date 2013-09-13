@@ -700,10 +700,13 @@ public class CourseAssembler implements BOAssembler<CourseInfo, CluInfo> {
                         resultValueGroup.setResultValueKeys(resultValues);
                         resultValueGroup.setResultValueRange(resultValueRange);
                         resultValueGroup.setName(creditOption.getName());
-                        RichTextInfo descr = new RichTextInfo();
-                        descr.setPlain(creditOption.getDescr().getPlain());
-                        descr.setFormatted(creditOption.getDescr().getFormatted());
-                        resultValueGroup.setDescr(descr);
+                        RichTextInfo creditOptionDescr = creditOption.getDescr();
+                        if (creditOptionDescr != null) {
+                            RichTextInfo descr = new RichTextInfo();
+                            descr.setPlain(creditOptionDescr.getPlain());
+                            descr.setFormatted(creditOptionDescr.getFormatted());
+                            resultValueGroup.setDescr(descr);
+                        }
                         BaseDTOAssemblyNode<ResultValuesGroupInfo, ResultValuesGroupInfo> node = new BaseDTOAssemblyNode<ResultValuesGroupInfo, ResultValuesGroupInfo>(null);
                         node.setOperation(NodeOperation.CREATE);
                         node.setNodeData(resultValueGroup);

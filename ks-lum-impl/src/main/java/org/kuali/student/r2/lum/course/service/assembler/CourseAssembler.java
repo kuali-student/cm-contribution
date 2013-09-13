@@ -411,7 +411,10 @@ public class CourseAssembler implements BOAssembler<CourseInfo, CluInfo> {
             } catch (Exception e) {
                 throw new AssemblyException("Error getting start term Atp.",e);
             }
+        } else {
+            course.setEffectiveDate(null);
         }
+
         if(course.getEndTerm() != null){
             try {
                 AtpInfo endAtp = atpService.getAtp(course.getEndTerm(), contextInfo);
@@ -419,6 +422,8 @@ public class CourseAssembler implements BOAssembler<CourseInfo, CluInfo> {
             } catch (Exception e) {
                 throw new AssemblyException("Error getting end term Atp.",e);
             }
+        } else {
+            course.setExpirationDate(null);
         }
 
         clu.setEffectiveDate(course.getEffectiveDate());

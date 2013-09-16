@@ -16,9 +16,9 @@
 package org.kuali.student.common.ui.client.application;
 
 import org.kuali.student.common.ui.client.security.AsyncCallbackFailureHandler;
+import org.kuali.student.common.ui.client.service.exceptions.VersionMismatchClientException;
 
 import com.google.gwt.core.client.GWT;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
@@ -41,7 +41,16 @@ public abstract class KSAsyncCallback<T> implements AsyncCallback<T>{
      *  AsyncCallbackFailureHandler. 
      */
     public void onFailure(Throwable caught) {  
-        asyncCallbackFailureHandler.onFailure(caught);
+        if (caught instanceof VersionMismatchClientException) {
+            handleVersionMismatch(caught);
+        } else if (caught instanceof org.kuali.student.common.ui.client.service.exceptions.OperationFailedException) {
+            handleFailure(caught);
+        } else if (asyncCallbackFailureHandler.isSessionTimeout(caught)) {
+            handleTimeout(caught);
+            asyncCallbackFailureHandler.handleSessionTimeout();
+        } else {
+            handleFailure(caught);
+        }
     }
     /**
      *  Allows institution to override this method by implementing its own 

@@ -22,6 +22,6 @@ import org.kuali.rice.core.api.util.KeyValue;
 public class DepartmentCocValuesFinder extends CocValuesFinder {
 
 	public List<KeyValue> getKeyValues() {
-		return findCocOrgs("kuali.org.Department");
+		return findCocOrgs("kuali.org.type.academic.department");
 	}
 }

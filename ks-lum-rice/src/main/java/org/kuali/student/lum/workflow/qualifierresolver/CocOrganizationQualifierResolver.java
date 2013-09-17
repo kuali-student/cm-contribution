@@ -54,7 +54,7 @@ public class CocOrganizationQualifierResolver extends AbstractOrganizationServic
 
     public static final String KUALI_ORG_TYPE_CURRICULUM_PARENT = "kuali.org.CurriculumParent";
     public static final String KUALI_ORG_HIERARCHY_CURRICULUM = "kuali.org.hierarchy.Curriculum";
-    public static final String KUALI_ORG_COC = "kuali.org.COC";
+    public static final String KUALI_ORG_COC = "kuali.org.type.coc";
 
     /**
      * @see org.kuali.rice.kew.role.QualifierResolver#resolve(org.kuali.rice.kew.engine.RouteContext)

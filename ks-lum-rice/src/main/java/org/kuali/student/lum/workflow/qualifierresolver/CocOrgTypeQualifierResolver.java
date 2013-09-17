@@ -72,7 +72,7 @@ public class CocOrgTypeQualifierResolver extends AbstractOrganizationServiceQual
 
     public static final String KUALI_ORG_TYPE_CURRICULUM_PARENT = "kuali.org.CurriculumParent";
     public static final String KUALI_ORG_HIERARCHY_CURRICULUM = "kuali.org.hierarchy.Curriculum";
-    public static final String KUALI_ORG_COC = "kuali.org.COC";
+    public static final String KUALI_ORG_COC = "kuali.org.type.coc";
 
     // below string MUST match
     // org.kuali.student.common.assembly.transform.WorkflowFilter.DOCUMENT_CONTENT_XML_ROOT_ELEMENT_NAME constant

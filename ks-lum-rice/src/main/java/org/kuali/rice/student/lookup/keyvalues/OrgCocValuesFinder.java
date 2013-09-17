@@ -30,9 +30,9 @@ public class OrgCocValuesFinder extends StudentKeyValuesBase {
         List<KeyValue> departments = new ArrayList<KeyValue>();
 
         List<String> types = new ArrayList<String>();
-        types.add("kuali.org.College");
-        types.add("kuali.org.Department");
-        types.add("kuali.org.Division");
+        types.add("kuali.org.type.college");
+        types.add("kuali.org.type.academic.department");
+        types.add("kuali.org.type.division");
         
         List<SearchParamInfo> queryParamValues = new ArrayList<SearchParamInfo>(2);
         SearchParamInfo qpOrgType = new SearchParamInfo();
@@ -47,7 +47,7 @@ public class OrgCocValuesFinder extends StudentKeyValuesBase {
         
         qpOrgType = new SearchParamInfo();
         qpOrgType.setKey("org.queryParam.relatedOrgType");
-        qpOrgType.getValues().add("kuali.org.COC");
+        qpOrgType.getValues().add("kuali.org.type.coc");
         queryParamValues.add(qpOrgType);
 
         SearchRequestInfo searchRequest = new SearchRequestInfo();

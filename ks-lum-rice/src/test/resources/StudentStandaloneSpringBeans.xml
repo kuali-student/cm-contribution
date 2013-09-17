@@ -78,7 +78,7 @@
 		class="org.kuali.student.lum.kim.role.type.OrgDerivedRoleTypeServiceImpl">
 		<property name="includedOrgPersonRelationTypes">
 			<list>
-				<value>kuali.org.PersonRelation.Chair</value>
+				<value>kuali.org.person.relation.type.chair</value>
 			</list>
 		</property>
 		<!--<property name="orgService" ref="orgClient"/>-->
@@ -89,8 +89,8 @@
 		class="org.kuali.student.lum.kim.role.type.OrgDerivedRoleTypeServiceImpl">
 		<property name="excludedOrgPersonRelationTypes">
 			<list>
-				<value>kuali.org.PersonRelation.Chair</value>
-				<value>kuali.org.PersonRelation.CurriculumManager</value>
+				<value>kuali.org.person.relation.type.chair</value>
+				<value>kuali.org.person.relation.type.curriculum.manager</value>
 			</list>
 		</property>
 		<!--<property name="orgService" ref="orgClient"/>-->
@@ -100,7 +100,7 @@
 		class="org.kuali.student.lum.kim.role.type.OrgDerivedRoleTypeServiceImpl">
 		<property name="includedOrgPersonRelationTypes">
 			<list>
-				<value>kuali.org.PersonRelation.CurriculumManager</value>
+				<value>kuali.org.person.relation.type.curriculum.manager</value>
 			</list>
 		</property>
 	</bean>

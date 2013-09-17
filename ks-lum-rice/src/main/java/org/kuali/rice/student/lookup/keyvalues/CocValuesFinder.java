@@ -32,7 +32,7 @@ public abstract class CocValuesFinder extends StudentKeyValuesBase {
 	/**
 	 * Find the curriculum committee Orgs with specified orgType.
 	 * Each org should have a kuali.org.CurriculumParent relationship with
-	 * an org with kuali.org.COC type.
+	 * an org with kuali.org.type.coc type.
 	 * 
 	 * @param orgType
 	 * @return
@@ -43,7 +43,7 @@ public abstract class CocValuesFinder extends StudentKeyValuesBase {
 		SearchRequestInfo searchRequest = new SearchRequestInfo("org.search.orgQuickViewByRelationTypeOrgTypeRelatedOrgType");
 		searchRequest.addParam("org.queryParam.relationType","kuali.org.CurriculumParent");
 		searchRequest.addParam("org.queryParam.orgType",orgType);
-		searchRequest.addParam("org.queryParam.relatedOrgType","kuali.org.COC");
+		searchRequest.addParam("org.queryParam.relatedOrgType","kuali.org.type.coc");
 
 		try {
 			SearchResultInfo results = null;

@@ -81,7 +81,7 @@ public class ProgramManagingBodiesValidator extends DefaultValidatorImpl {
         SearchRequestInfo searchRequest = new SearchRequestInfo("org.search.orgQuickViewByRelationTypeOrgTypeRelatedOrgIds");
 
         List<String> orgTypes = new ArrayList<String>();
-        orgTypes.add("kuali.org.College");
+        orgTypes.add("kuali.org.type.college");
 
         searchRequest.addParam("org.queryParam.optionalOrgTypeList", orgTypes);
         searchRequest.addParam("org.queryParam.optionalRelationType", "kuali.org.Contain");
@@ -123,7 +123,7 @@ public class ProgramManagingBodiesValidator extends DefaultValidatorImpl {
         SearchRequestInfo searchRequest = new SearchRequestInfo("org.search.generic");
 
         List<String> orgTypes = new ArrayList<String>();
-        orgTypes.add("kuali.org.College");
+        orgTypes.add("kuali.org.type.college");
 
         searchRequest.addParam("org.queryParam.orgOptionalType", orgTypes);
         searchRequest.addParam("org.queryParam.orgOptionalId", collegeId);
@@ -147,7 +147,7 @@ public class ProgramManagingBodiesValidator extends DefaultValidatorImpl {
         SearchRequestInfo searchRequest = new SearchRequestInfo("org.search.generic");
 
         List<String> orgTypes = new ArrayList<String>();
-        orgTypes.add("kuali.org.Department");
+        orgTypes.add("kuali.org.type.academic.department");
 
         searchRequest.addParam("org.queryParam.orgOptionalType", orgTypes);
         searchRequest.addParam("org.queryParam.orgOptionalIds", departmentIds);

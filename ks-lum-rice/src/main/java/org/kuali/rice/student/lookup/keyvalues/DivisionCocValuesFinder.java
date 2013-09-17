@@ -22,7 +22,7 @@ import org.kuali.rice.core.api.util.KeyValue;
 public class DivisionCocValuesFinder extends CocValuesFinder {
 
 	public List<KeyValue> getKeyValues() {
-		return findCocOrgs("kuali.org.Division");
+		return findCocOrgs("kuali.org.type.division");
 	}
 
 }

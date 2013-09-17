@@ -1272,8 +1272,8 @@ Questions please contact Norm Wright.
 							<property name="writeAccess" value="NEVER" />
 							<property name="defaultValueList">
 								<list>
-									<value>kuali.org.Department</value>
-									<value>kuali.org.College</value>
+									<value>kuali.org.type.academic.department</value>
+									<value>kuali.org.type.college</value>
 								</list>
 							</property>
 							<property name="caseSensitive" value="true" />
@@ -1370,8 +1370,8 @@ Questions please contact Norm Wright.
 								<property name="writeAccess" value="NEVER"/>
 								<property name="defaultValueList">
 									<list>
-										<value>kuali.org.Department</value>
-										<value>kuali.org.College</value>
+										<value>kuali.org.type.academic.department</value>
+										<value>kuali.org.type.college</value>
 									</list>
 								</property>
 								<property name="optional" value="true"/>
@@ -4227,8 +4227,8 @@ Questions please contact Norm Wright.
 							<property name="writeAccess" value="NEVER" />
 							<property name="defaultValueList">
 								<list>
-									<value>kuali.org.Department</value>
-									<value>kuali.org.College</value>
+									<value>kuali.org.type.academic.department</value>
+									<value>kuali.org.type.college</value>
 								</list>
 							</property>
 							<property name="caseSensitive" value="true" />
@@ -4317,8 +4317,8 @@ Questions please contact Norm Wright.
 								<property name="writeAccess" value="NEVER"/>
 								<property name="defaultValueList">
 									<list>
-										<value>kuali.org.Department</value>
-										<value>kuali.org.College</value>
+										<value>kuali.org.type.academic.department</value>
+										<value>kuali.org.type.college</value>
 									</list>
 								</property>
 								<property name="optional" value="true"/>
@@ -4759,8 +4759,8 @@ Questions please contact Norm Wright.
 							<property name="writeAccess" value="NEVER" />
 							<property name="defaultValueList">
 								<list>
-									<value>kuali.org.Department</value>
-									<value>kuali.org.College</value>
+									<value>kuali.org.type.academic.department</value>
+									<value>kuali.org.type.college</value>
 								</list>
 							</property>
 							<property name="caseSensitive" value="true" />
@@ -4858,8 +4858,8 @@ Questions please contact Norm Wright.
 								<property name="writeAccess" value="NEVER"/>
 								<property name="defaultValueList">
 									<list>
-										<value>kuali.org.Department</value>
-										<value>kuali.org.College</value>
+										<value>kuali.org.type.academic.department</value>
+										<value>kuali.org.type.college</value>
 									</list>
 								</property>
 								<property name="optional" value="true"/>
@@ -5909,8 +5909,8 @@ Questions please contact Norm Wright.
 							<property name="writeAccess" value="NEVER" />
 							<property name="defaultValueList">
 								<list>
-									<value>kuali.org.Department</value>
-									<value>kuali.org.College</value>
+									<value>kuali.org.type.academic.department</value>
+									<value>kuali.org.type.college</value>
 								</list>
 							</property>
 							<property name="caseSensitive" value="true" />
@@ -6007,8 +6007,8 @@ Questions please contact Norm Wright.
 								<property name="writeAccess" value="NEVER"/>
 								<property name="defaultValueList">
 									<list>
-										<value>kuali.org.Department</value>
-										<value>kuali.org.College</value>
+										<value>kuali.org.type.academic.department</value>
+										<value>kuali.org.type.college</value>
 									</list>
 								</property>
 								<property name="optional" value="true"/>
@@ -8404,8 +8404,8 @@ Questions please contact Norm Wright.
 					<property name="writeAccess" value="NEVER" />
 					<property name="defaultValueList">
 						<list>
-							<value>kuali.org.Department</value>
-							<value>kuali.org.College</value>
+							<value>kuali.org.type.academic.department</value>
+							<value>kuali.org.type.college</value>
 						</list>
 					</property>
 					<property name="caseSensitive" value="true" />
@@ -8490,8 +8490,8 @@ Questions please contact Norm Wright.
 					<property name="writeAccess" value="NEVER"/>
 					<property name="defaultValueList">
 						<list>
-							<value>kuali.org.Department</value>
-							<value>kuali.org.College</value>
+							<value>kuali.org.type.academic.department</value>
+							<value>kuali.org.type.college</value>
 						</list>
 					</property>
 					<property name="optional" value="true"/>
@@ -8891,8 +8891,8 @@ Questions please contact Norm Wright.
      <property name="writeAccess" value="NEVER" />
      <property name="defaultValueList">
       <list>
-       <value>kuali.org.College</value>
-       <value>kuali.org.School</value>
+       <value>kuali.org.type.college</value>
+       <value>kuali.org.type.school</value>
       </list>
      </property>
      <property name="caseSensitive" value="true" />
@@ -8981,7 +8981,7 @@ Questions please contact Norm Wright.
      <property name="writeAccess" value="NEVER" />
      <property name="dataType" value="STRING" />
      <property name="optional" value="false" />
-     <property name="defaultValueString" value="kuali.org.Department" />
+     <property name="defaultValueString" value="kuali.org.type.academic.department" />
      <property name="caseSensitive" value="true" />
     </bean>
    </list>

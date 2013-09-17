@@ -44,11 +44,11 @@ public abstract class AbstractOrganizationServiceQualifierResolver implements Qu
 
     public static final String KUALI_ORG_TYPE_CURRICULUM_PARENT = "kuali.org.CurriculumParent";
     public static final String KUALI_ORG_HIERARCHY_CURRICULUM  = "kuali.org.hierarchy.Curriculum";
-    public static final String KUALI_ORG_DEPARTMENT               = "kuali.org.Department";
-    public static final String KUALI_ORG_COLLEGE                  = "kuali.org.College";
-    public static final String KUALI_ORG_COC                      = "kuali.org.COC";
-    public static final String KUALI_ORG_DIVISION                 = "kuali.org.Division";
-    public static final String KUALI_ORG_PROGRAM                  = "kuali.org.Program";
+    public static final String KUALI_ORG_DEPARTMENT               = "kuali.org.type.academic.department";
+    public static final String KUALI_ORG_COLLEGE                  = "kuali.org.type.college";
+    public static final String KUALI_ORG_COC                      = "kuali.org.type.coc";
+    public static final String KUALI_ORG_DIVISION                 = "kuali.org.type.division";
+    public static final String KUALI_ORG_PROGRAM                  = "kuali.org.type.program";
 
     private OrganizationService organizationService;
 

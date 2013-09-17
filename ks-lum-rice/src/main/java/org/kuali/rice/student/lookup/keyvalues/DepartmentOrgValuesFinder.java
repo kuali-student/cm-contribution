@@ -7,7 +7,7 @@ import org.kuali.rice.core.api.util.KeyValue;
 public class DepartmentOrgValuesFinder extends OrgsOfTypeValuesFinder{
 
 	public List<KeyValue> getKeyValues() {
-		return findOrgs("kuali.org.Department");
+		return findOrgs("kuali.org.type.academic.department");
 	}
 
 }

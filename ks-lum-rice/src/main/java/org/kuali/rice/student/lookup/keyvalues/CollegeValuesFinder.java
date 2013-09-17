@@ -8,7 +8,7 @@ public class CollegeValuesFinder extends OrgsOfTypeValuesFinder{
 
 	@Override
 	public List<KeyValue> getKeyValues() {
-		return findOrgs("kuali.org.College");
+		return findOrgs("kuali.org.type.college");
 	}
 
 }

@@ -85,16 +85,16 @@ public class CourseWorkflowActionList extends StylishDropDown {
 	}
 	
 	public void initialise(String label) {
-		super.initialise(label);
-		
-		this.setVisible(false);
-		this.addStyleName("KS-Workflow-DropDown");
+	    super.initialise(label);
+	    	
+	    this.setVisible(false);
+	    this.addStyleName("KS-Workflow-DropDown");
 	}
 	
 	public void initialise(String label, final ViewContext viewContext, final String modifyPath, DataModel model, final Callback<String> stateChangeCallback) {
-    	super.initialise(label);
-    	
-    	this.setVisible(false);
+        super.initialise(label);
+        
+        this.setVisible(false);
         this.addStyleName("KS-Workflow-DropDown");
         
         init(viewContext, modifyPath, model, stateChangeCallback);

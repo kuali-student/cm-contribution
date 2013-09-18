@@ -151,7 +151,6 @@ public class ViewCourseController extends TabMenuController implements DocumentL
     
      
     public Widget generateActionDropDown(){		    	
-//    	CourseWorkflowActionList actionList = new CourseWorkflowActionList(this.getMessage("cluActionsLabel"), getViewContext(), "/HOME/CURRICULUM_HOME/COURSE_PROPOSAL", cluModel, new Callback<String>() {
     	CourseWorkflowActionList actionList = GWT.create(CourseWorkflowActionList.class);
     	actionList.initialise(this.getMessage("cluActionsLabel"), getViewContext(), "/HOME/CURRICULUM_HOME/COURSE_PROPOSAL", cluModel, new Callback<String>() {
 

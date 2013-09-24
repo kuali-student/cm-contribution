@@ -289,9 +289,7 @@ public class StylishDropDown extends Composite{
 	
 	public void setItems(List<KSMenuItemData> items){
 		if(makeButton && items.size() == 1){
-            //Code Changed for JIRA-9075 - SONAR Critical issues - Use get(0) with caution - 5
-            int KSMenuItemData = 0;
-			KSMenuItemData item = items.get(KSMenuItemData);
+			KSMenuItemData item = items.get(0);
 			button = new KSButton();
 			button.addStyleName("ks-button-spacing");
 			button.addClickHandler(item.getClickHandler());

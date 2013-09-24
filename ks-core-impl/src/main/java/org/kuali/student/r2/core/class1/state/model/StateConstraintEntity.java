@@ -19,7 +19,6 @@ package org.kuali.student.r2.core.class1.state.model;
 import org.kuali.student.r2.common.assembler.TransformUtility;
 import org.kuali.student.r2.common.entity.AttributeOwner;
 import org.kuali.student.r2.common.entity.MetaEntity;
-import org.kuali.student.r2.common.infc.Attribute;
 import org.kuali.student.r2.core.class1.state.dto.StateConstraintInfo;
 import org.kuali.student.r2.core.class1.state.infc.StateConstraint;
 import org.kuali.student.r2.core.class1.state.infc.StateConstraintOperator;
@@ -29,8 +28,6 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -47,20 +44,19 @@ import java.util.Set;
 @Entity
 @Table(name = "KSEN_STATE_CNSTRNT")
 public class StateConstraintEntity extends MetaEntity implements AttributeOwner<StateConstraintAttributeEntity> {
-    @Column(name = "AGENDA_ID")
+    @Column(name = "AGENDA_ID:")
     private String agendaId;
-    @Enumerated(EnumType.STRING)
     @Column(name = "STATE_CNSTRNT_OPERATOR", nullable = false)
     private StateConstraintOperator stateConstraintOperator;
     @Column(name = "STATE_CNSTRNT_TYPE", nullable = false)
-    private String stateConstraintTypeKey;
+    private String typeKey;
     @Column(name = "STATE_CNSTRNT_STATE", nullable = false)
-    private String stateConstraintStateKey;
+    private String stateKey;
 
     @ElementCollection
-    @CollectionTable(name ="KSEN_STATE_CNSTRNT_ROS",joinColumns = @JoinColumn(name = "STATE_CNSTRNT_ID"))
-    @Column(name="REL_OBJ_STATE_ID")
-    private List<String> relatedObjectStateKeys = new ArrayList<String>();
+    @CollectionTable(name ="KSEN_STATE_CHG_CNSTRNT",joinColumns = @JoinColumn(name = "STATE_CHG_ID"))
+    @Column(name="STATE_CNSTRNT_ID")
+    private List<String> relatedObjectStateKeys;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner",orphanRemoval=true)
     private Set<StateConstraintAttributeEntity> attributes = new HashSet<StateConstraintAttributeEntity>();
@@ -72,35 +68,33 @@ public class StateConstraintEntity extends MetaEntity implements AttributeOwner<
     public StateConstraintEntity(StateConstraint stateConstraint) {
         super(stateConstraint);
         setId(stateConstraint.getId());
-        fromDto(stateConstraint);
+        fromDTO(stateConstraint);
     }
 
-    public void fromDto(StateConstraint stateConstraint) {
+    public void fromDTO(StateConstraint stateConstraint) {
+        List<Object> orphansToDelete = new ArrayList<Object>();
+
         this.agendaId = stateConstraint.getAgendaId();
         this.stateConstraintOperator = stateConstraint.getStateConstraintOperator();
-        this.stateConstraintTypeKey = stateConstraint.getTypeKey();
-        this.stateConstraintStateKey = stateConstraint.getStateKey();
-
-        getRelatedObjectStateKeys().clear();
-        getRelatedObjectStateKeys().addAll(stateConstraint.getRelatedObjectStateKeys());
-        if (getAttributes() == null){
-            this.setAttributes(new HashSet<StateConstraintAttributeEntity>());
+        this.typeKey = stateConstraint.getTypeKey();
+        this.stateKey = stateConstraint.getStateKey();
+        this.relatedObjectStateKeys = stateConstraint.getRelatedObjectStateKeys();
+        if (stateConstraint.getRelatedObjectStateKeys() != null) {
+            relatedObjectStateKeys = new ArrayList<String>(stateConstraint.getRelatedObjectStateKeys());
         } else {
-            this.getAttributes().clear();
+            relatedObjectStateKeys = null;
         }
 
-        for (Attribute att : stateConstraint.getAttributes()) {
-            this.getAttributes().add(new StateConstraintAttributeEntity(att, this));
-        }
+        // Merge attributes into entity and add leftovers to be deleted
+        orphansToDelete.addAll(TransformUtility.mergeToEntityAttributes(StateConstraintAttributeEntity.class, stateConstraint, this));
     }
 
     public StateConstraintInfo toDto() {
         StateConstraintInfo info = new StateConstraintInfo();
         info.setId(getId());
         info.setAgendaId(getAgendaId());
-        info.setStateConstraintOperator(getStateConstraintOperator());
-        info.setStateKey(getStateConstraintStateKey());
-        info.setTypeKey(getStateConstraintTypeKey());
+        info.setStateKey(getStateKey());
+        info.setTypeKey(getTypeKey());
         info.setMeta(super.toDTO());
         info.setAttributes(TransformUtility.toAttributeInfoList(this));
 
@@ -128,20 +122,20 @@ public class StateConstraintEntity extends MetaEntity implements AttributeOwner<
         this.stateConstraintOperator = stateConstraintOperator;
     }
 
-    public String getStateConstraintTypeKey() {
-        return stateConstraintTypeKey;
+    public String getTypeKey() {
+        return typeKey;
     }
 
-    public void setStateConstraintTypeKey(String stateConstraintTypeKey) {
-        this.stateConstraintTypeKey = stateConstraintTypeKey;
+    public void setTypeKey(String typeKey) {
+        this.typeKey = typeKey;
     }
 
-    public String getStateConstraintStateKey() {
-        return stateConstraintStateKey;
+    public String getStateKey() {
+        return stateKey;
     }
 
-    public void setStateConstraintStateKey(String stateConstraintStateKey) {
-        this.stateConstraintStateKey = stateConstraintStateKey;
+    public void setStateKey(String stateKey) {
+        this.stateKey = stateKey;
     }
 
     public List<String> getRelatedObjectStateKeys() {

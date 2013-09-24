@@ -218,8 +218,7 @@ public class LookupMetadata implements Serializable {
     }
 
     public String toString(){
-        //JIRA FIX : KSENROLL-8731 - Replaced StringBuffer with StringBuilder
-        StringBuilder sb = new StringBuilder();
+        StringBuffer sb = new StringBuffer();
         sb.append(id);
         sb.append(",");        
         sb.append(searchTypeId);

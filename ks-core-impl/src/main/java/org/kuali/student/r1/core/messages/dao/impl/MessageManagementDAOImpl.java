@@ -48,7 +48,7 @@ public class MessageManagementDAOImpl implements MessageManagementDAO {
     	MessageEntity result = null;
     	try{
 	        entityManager.persist(me);
-	        result = this.getMessage(me.getLocale(), me.getGroupName(), me.getMessageId());
+	        result = this.getMessage(me.getLocale(), me.getGroupName(), me.getId());
     	}
 		catch(Exception e){
 		    throw new MessageException("adding message data query failed.", e);

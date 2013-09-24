@@ -205,9 +205,7 @@ public class PermissionServiceMockImpl implements PermissionService, MockService
         if (list.isEmpty()) {
             return null;
         }
-        //Code Changed for JIRA-9075 - SONAR Critical issues - Use get(0) with caution - 5
-        int firstPermission = 0;
-        return list.get(firstPermission);
+        return list.get(0);
     }
 
     /*
@@ -322,22 +320,22 @@ public class PermissionServiceMockImpl implements PermissionService, MockService
     }
 
     @Override
-    public PermissionQueryResults findPermissions(QueryByCriteria queryByCriteria) throws RiceIllegalArgumentException {
+    public PermissionQueryResults findPermissions(@WebParam(name = "query") QueryByCriteria queryByCriteria) throws RiceIllegalArgumentException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public Permission createPermission(Permission permission) throws RiceIllegalArgumentException, RiceIllegalStateException {
+    public Permission createPermission(@WebParam(name = "permission") Permission permission) throws RiceIllegalArgumentException, RiceIllegalStateException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public Permission updatePermission(Permission permission) throws RiceIllegalArgumentException, RiceIllegalStateException {
+    public Permission updatePermission(@WebParam(name = "permission") Permission permission) throws RiceIllegalArgumentException, RiceIllegalStateException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public TemplateQueryResults findPermissionTemplates(QueryByCriteria queryByCriteria) throws RiceIllegalArgumentException {
+    public TemplateQueryResults findPermissionTemplates(@WebParam(name = "query") QueryByCriteria queryByCriteria) throws RiceIllegalArgumentException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

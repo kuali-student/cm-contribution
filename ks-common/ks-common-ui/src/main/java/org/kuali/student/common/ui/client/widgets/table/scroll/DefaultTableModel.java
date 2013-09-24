@@ -171,9 +171,7 @@ public class DefaultTableModel extends AbstractTableModel {
     public void selectFirstRow() {
         if (!rowList.isEmpty()) {
             currentRowIndex = 0;
-            //Code Changed for JIRA-9075 - SONAR Critical issues - Use get(0) with caution - 5
-            int firstRow = 0;
-            rowList.get(firstRow).setHighlighted(true);
+            rowList.get(0).setHighlighted(true);
         }
     }
 }

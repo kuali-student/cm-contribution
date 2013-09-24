@@ -313,9 +313,7 @@ public class ExportUtils {
                         if (child instanceof FlowPanel){
                             List<ExportElement> subset = ExportUtils.getDetailsForWidget(child, viewName, sectionName);
                             if (subset != null && subset.size() > 0){
-                                //Code Changed for JIRA-9075 - SONAR Critical issues - Use get(0) with caution - 5
-                                int firstExportElement = 0;
-                                subset.get(firstExportElement).setPrintType(ExportElement.LIST);
+                                subset.get(0).setPrintType(ExportElement.LIST);
                                 childElements.addAll(subset);
                             }
                             
@@ -381,9 +379,7 @@ public class ExportUtils {
                         if (child instanceof FlowPanel){
                             List<ExportElement> subset = ExportUtils.getDetailsForWidget(child, viewName, sectionName);
                             if (subset != null && subset.size() > 0){
-                                //Code Changed for JIRA-9075 - SONAR Critical issues - Use get(0) with caution - 5
-                                int firstExportElement = 0;
-                                subset.get(firstExportElement).setPrintType(ExportElement.LIST);
+                                subset.get(0).setPrintType(ExportElement.LIST);
                                 childElements.addAll(subset);
                             }
                             

@@ -106,10 +106,9 @@ public class SectionBinding extends ModelWidgetBindingSupport<Section> {
                         }
                     }
         		} else if (selectedData != null && !selectedData.isEmpty()) {
-                    //Code Changed for JIRA-8997 - SONAR Critical issues - Performance - Inefficient use of keySet iterator instead of entrySet iterator
-        		    for (Map.Entry<String, Object>  entry: selectedData.entrySet()) {
-                        setValue(model, entry.getKey(), entry.getValue());
-                    }
+        		    for (String key : selectedData.keySet()) {
+        		        setValue(model, key, selectedData.get(key));
+        		    }
         		}
         	}
         	else{

@@ -26,15 +26,15 @@ public class CommonCssImpl implements CommonCss {
 
 	@Override
 	public String getCssString() {
-       StringBuilder injectString = new StringBuilder("");
+       String injectString = "";
         for(ResourcePrototype r: KSClientBundle.INSTANCE.getResources()){
             if(r instanceof CssResource){
                 if(((CssResource)r).getText() != null && !((CssResource)r).getName().contains("resetCss") && !((CssResource)r).getName().contains("fontCss")){
-                    injectString.append("\n").append((((CssResource)r).getText()));
+                    injectString = injectString + "\n" + (((CssResource)r).getText());
                 }
             }
         }
-        return injectString.toString();
+        return injectString;
 	}
 
 	@Override

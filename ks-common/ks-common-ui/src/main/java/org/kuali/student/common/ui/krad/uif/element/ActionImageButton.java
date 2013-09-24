@@ -18,9 +18,9 @@ package org.kuali.student.common.ui.krad.uif.element;
 
 import org.apache.commons.lang.StringUtils;
 import org.kuali.rice.krad.uif.component.Component;
+import org.kuali.rice.krad.uif.element.Action;
 import org.kuali.rice.krad.uif.element.Image;
 import org.kuali.rice.krad.uif.view.View;
-import org.kuali.student.common.uif.element.KSUifActionButton;
 
 import java.text.MessageFormat;
 
@@ -30,7 +30,7 @@ import java.text.MessageFormat;
  *
  * @author Kuali Student Team
  */
-public class ActionImageButton extends KSUifActionButton {
+public class ActionImageButton extends Action {
 
     private String imageSource;
     private String imageSourceOnHover;
@@ -77,16 +77,4 @@ public class ActionImageButton extends KSUifActionButton {
         this.imageSourceOnHover = imageSourceOnHover;
     }
 
-    /**
-     * @see org.kuali.rice.krad.uif.component.ComponentBase#copy()
-     */
-    @Override
-    protected <T> void copyProperties(T component) {
-        super.copyProperties(component);
-
-        ActionImageButton actionImageButtonCopy = (ActionImageButton) component;
-
-        actionImageButtonCopy.setImageSource(this.imageSource);
-        actionImageButtonCopy.setImageSourceOnHover(this.imageSourceOnHover);
-    }
 }

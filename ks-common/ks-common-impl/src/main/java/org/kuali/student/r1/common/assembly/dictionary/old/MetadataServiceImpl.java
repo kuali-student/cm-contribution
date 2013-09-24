@@ -68,7 +68,7 @@ public class MetadataServiceImpl {
             Integer hits = recursions.get(objectName);
             
             if (hits == null){
-                hits = Integer.valueOf(1);
+                hits = new Integer(1);
             } else {
                 hits++;
             }

@@ -17,7 +17,6 @@ package org.kuali.student.r1.core.statement.service.impl;
 
 import org.junit.After;
 import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.kuali.student.common.test.spring.*;
 import org.kuali.student.r1.common.dictionary.old.dto.FieldDescriptor;
@@ -45,11 +44,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.junit.Assert.*;
-import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 @Daos({@Dao(value = "org.kuali.student.r1.core.statement.dao.impl.StatementDaoImpl")})
 @PersistenceFileLocation("classpath:META-INF/statement-persistence.xml")
-@FixMethodOrder(NAME_ASCENDING)
 public class TestStatementServiceImpl extends AbstractServiceTest {
     SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
 
@@ -130,50 +127,50 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
 
 	@Test
 	// FIXME - Investigate why adding clu1, clu3, clu2 works but adding clu1, clu2, clu3 doesn't work
-	public void test00GetNaturalLanguageForStatement() throws AlreadyExistsException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
+	public void testGetNaturalLanguageForStatement() throws AlreadyExistsException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
     	String nl = statementService.getNaturalLanguageForStatement("STMT-5", "KUALI.RULE", "en");
 //		assertEquals("Requirement for MATH 152 Linear Systems: Student must have completed 1 of MATH 152, MATH 180 or Student must have completed 2 of MATH 152, MATH 221, MATH 180", nl);
 		assertEquals("Student must have completed 1 of MATH 152, MATH 180 or Student must have completed 2 of MATH 152, MATH 221, MATH 180", nl);
 	}
 
 	@Test
-	public void test01GetNaturalLanguageForRefStatementRelation() throws AlreadyExistsException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
+	public void testGetNaturalLanguageForRefStatementRelation() throws AlreadyExistsException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
 		String nl = statementService.getNaturalLanguageForRefStatementRelation("ref-stmt-rel-5", "KUALI.RULE", "en");
 		assertEquals("Student must have completed 1 of MATH 152, MATH 180 or Student must have completed 2 of MATH 152, MATH 221, MATH 180", nl);
 	}
 
 	@Test
-	public void test02GetNaturalLanguageForReqComponent_1ofN() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+	public void testGetNaturalLanguageForReqComponent_1ofN() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
     	String nl = statementService.getNaturalLanguageForReqComponent("REQCOMP-NL-1", "KUALI.RULE", "en");
     	assertEquals("Student must have completed 1 of MATH 152, MATH 180", nl);
     }
 
 	@Test
-	public void test03GetNaturalLanguageForReqComponent_1of1() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+	public void testGetNaturalLanguageForReqComponent_1of1() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
     	String nl = statementService.getNaturalLanguageForReqComponent("REQCOMP-NL-5", "KUALI.RULE", "en");
     	assertEquals("Student must have completed MATH 180", nl);
     }
 
 	@Test
-	public void test04GetNaturalLanguageForReqComponent_GradeCheck() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+	public void testGetNaturalLanguageForReqComponent_GradeCheck() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
     	String nl = statementService.getNaturalLanguageForReqComponent("REQCOMP-NL-2", "KUALI.RULE", "en");
     	assertEquals("Student needs a minimum GPA of 3.5 in MATH 152, MATH 180", nl);
     }
 
 	@Test(expected=DoesNotExistException.class)
-	public void test05GetNaturalLanguageForReqComponent_InvalidNlUsageTypeKey() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+	public void testGetNaturalLanguageForReqComponent_InvalidNlUsageTypeKey() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
 		statementService.getNaturalLanguageForReqComponent("REQCOMP-NL-1", "xxx", "en");
 		fail("Invalid usage type key should have thrown DoesNotExistException");
     }
 
 	@Test
-	public void test06GetNaturalLanguageForReqComponent_DefaultEnglish() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+	public void testGetNaturalLanguageForReqComponent_DefaultEnglish() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
 		String naturalLanguage = statementService.getNaturalLanguageForReqComponent("REQCOMP-NL-1", "KUALI.RULE", null);
         assertEquals("Student must have completed 1 of MATH 152, MATH 180", naturalLanguage);
 	}
 
 	@Test
-	public void test07GetNaturalLanguageForReqComponent_EnglishGerman() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+	public void testGetNaturalLanguageForReqComponent_EnglishGerman() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
 		String naturalLanguage = statementService.getNaturalLanguageForReqComponent("REQCOMP-NL-1", "KUALI.RULE", null);
         assertEquals("Student must have completed 1 of MATH 152, MATH 180", naturalLanguage);
 
@@ -220,7 +217,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
 	}
 
 	@Test
-	public void test08TranslateReqComponentToNL() throws InvalidParameterException, MissingParameterException, OperationFailedException {
+	public void testTranslateReqComponentToNL() throws InvalidParameterException, MissingParameterException, OperationFailedException {
 		ReqComponentInfo reqCompInfo = createReqComponent1();
 		String naturalLanguage = statementService.translateReqComponentToNL(reqCompInfo, "KUALI.RULE", "en");
 		assertEquals("Student must have completed 1 of MATH 152, MATH 180", naturalLanguage);
@@ -268,7 +265,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     /**
      * @deprecated Being moved to ProgramRequirementService
      */
-	public void test09TranslateStatementTreeViewToNL_SimpleStatement() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, VersionMismatchException {
+	public void testTranslateStatementTreeViewToNL_SimpleStatement() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, VersionMismatchException {
 		StatementTreeViewInfo statementInfo = new StatementTreeViewInfo();
 		statementInfo.setType("kuali.statement.type.course.academicReadiness.prereq");
 		statementInfo.setOperator(StatementOperatorTypeKey.OR);
@@ -288,7 +285,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
 	}
 
 	@Test
-    public void test10GetNlUsageType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+    public void testGetNlUsageType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
 		NlUsageTypeInfo info = statementService.getNlUsageType("KUALI.REQCOMP.EXAMPLE");
 
         GregorianCalendar grepEff = new GregorianCalendar(2010, 00, 01, 1, 1, 1);
@@ -304,13 +301,13 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
 	}
 
 	@Test(expected=DoesNotExistException.class)
-    public void test11GetNlUsageType_InvalidType() throws Exception {
+    public void testGetNlUsageType_InvalidType() throws Exception {
 		statementService.getNlUsageType("xxx");
 		fail("Invalid usage type key should have thrown DoesNotExistException");
 	}
 
 	@Test
-    public void test12GetNlUsageTypes() throws OperationFailedException {
+    public void testGetNlUsageTypes() throws OperationFailedException {
 		List<NlUsageTypeInfo> infoList = statementService.getNlUsageTypes();
 		assertTrue(infoList.size() > 0);
 	}
@@ -323,7 +320,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
 	}
 
     @Test
-	public void test13GetStatementTypes() throws OperationFailedException {
+	public void testGetStatementTypes() throws OperationFailedException {
     	List<StatementTypeInfo> types = statementService.getStatementTypes();
 		assertEquals(3, types.size());
 		assertTrue(containsTypeId(types, "kuali.statement.type.course"));
@@ -332,7 +329,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
 	}
 
     @Test
-	public void test14GetStatementType() throws OperationFailedException, DoesNotExistException, InvalidParameterException, MissingParameterException {
+	public void testGetStatementType() throws OperationFailedException, DoesNotExistException, InvalidParameterException, MissingParameterException {
     	StatementTypeInfo type = statementService.getStatementType("kuali.statement.type.course");
 
         GregorianCalendar effDate = new GregorianCalendar(2000, 00, 01, 0, 0, 0);
@@ -351,7 +348,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
 	}
 
     @Test
-    public void test15GetStatementTypesForStatementType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+    public void testGetStatementTypesForStatementType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
     	List<String> allowedTypes = statementService.getStatementTypesForStatementType("kuali.statement.type.course");
 
 		assertEquals(2, allowedTypes.size());
@@ -360,7 +357,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test16GetStatement() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
+    public void testGetStatement() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
         StatementInfo stmt = statementService.getStatement("STMT-2");
 
         assertNotNull(stmt);
@@ -395,7 +392,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test17GetStatementsUsingStatement() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+    public void testGetStatementsUsingStatement() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
     	List<StatementInfo> stmtList = statementService.getStatementsUsingStatement("STMT-101");
 
     	assertNotNull(stmtList);
@@ -405,7 +402,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test18GetStatementsUsingReqComponent() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+    public void testGetStatementsUsingReqComponent() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
     	List<StatementInfo> stmtList = statementService.getStatementsUsingReqComponent("REQCOMP-NL-1");
 
         assertNotNull(stmtList);
@@ -441,7 +438,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test19GetStatements_DetailInfo() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
+    public void testGetStatements_DetailInfo() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
         List<String> statementIdList = Arrays.asList(new String[] {"STMT-2"});
         List<StatementInfo> stmtList = getStatements(statementIdList);
 
@@ -473,7 +470,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test20GetStatementsByType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
+    public void testGetStatementsByType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
         List<StatementInfo> stmtList = statementService.getStatementsByType("kuali.statement.type.course.academicReadiness.prereq");
 
         assertNotNull(stmtList);
@@ -504,19 +501,19 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test(expected=DoesNotExistException.class)
-    public void test21GetStatement_InvalidStatementId() throws InvalidParameterException, MissingParameterException, OperationFailedException, ParseException, DoesNotExistException {
+    public void testGetStatement_InvalidStatementId() throws InvalidParameterException, MissingParameterException, OperationFailedException, ParseException, DoesNotExistException {
         statementService.getStatement("invalid.stmt.id");
         fail("statementService.getStatement should have failed getting a statement by an invalid id");
     }
 
     @Test
-    public void test22GetStatementByType_InvalidType() throws InvalidParameterException, MissingParameterException, OperationFailedException, ParseException, DoesNotExistException {
+    public void testGetStatementByType_InvalidType() throws InvalidParameterException, MissingParameterException, OperationFailedException, ParseException, DoesNotExistException {
         List<StatementInfo> stmtList = statementService.getStatementsByType("invalid.stmttype");
         assertNull(stmtList);
     }
 
     @Test
-    public void test23StatementStatementRelation() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
+    public void testStatementStatementRelation() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
         StatementInfo stmt = statementService.getStatement("STMT-1");
         assertNotNull(stmt);
         assertEquals(stmt.getId(), "STMT-1");
@@ -536,7 +533,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test24GetReqComponentTypes() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
+    public void testGetReqComponentTypes() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
         List<ReqComponentTypeInfo> reqCompTypeInfoList = statementService.getReqComponentTypes();
                 
         assertNotNull(reqCompTypeInfoList);
@@ -554,7 +551,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test25GetReqComponentType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
+    public void testGetReqComponentType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
         ReqComponentTypeInfo rqt = statementService.getReqComponentType("kuali.reqComponent.type.courseList.all");
 
         assertNotNull(rqt);
@@ -566,7 +563,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test26GetReqComponentFieldType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
+    public void testGetReqComponentFieldType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
         ReqComponentTypeInfo rqt = statementService.getReqComponentType("kuali.reqComponent.type.courseList.all");
 
         List<ReqCompFieldTypeInfo> reqftList = rqt.getReqCompFieldTypeInfos();
@@ -583,7 +580,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test27GetReqComponentTypesForStatementType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
+    public void testGetReqComponentTypesForStatementType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
         List<ReqComponentTypeInfo> reqCompTypeInfoList = statementService.getReqComponentTypesForStatementType("kuali.statement.type.course.academicReadiness.prereq");
 
         assertEquals(6, reqCompTypeInfoList.size());
@@ -597,7 +594,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test28GetReqComponent() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
+    public void testGetReqComponent() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
         ReqComponentInfo reqComp = statementService.getReqComponent("REQCOMP-1");
 
         assertNotNull(reqComp);
@@ -627,7 +624,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test29GetReqComponents() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
+    public void testGetReqComponents() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
         List<String> reqComponentIdList = Arrays.asList(new String[] {"REQCOMP-NL-1","REQCOMP-NL-2", "REQCOMP-NL-3", "REQCOMP-NL-4"});
         List<ReqComponentInfo> reqCompList = getReqComponents(reqComponentIdList);
 
@@ -640,7 +637,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test30GetReqComponents_DetailInfo() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
+    public void testGetReqComponents_DetailInfo() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
         List<String> reqComponentIdList = Arrays.asList(new String[] {"REQCOMP-1"});
         List<ReqComponentInfo> reqCompList = getReqComponents(reqComponentIdList);
 
@@ -667,7 +664,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test31GetReqComponentsByType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
+    public void testGetReqComponentsByType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, ParseException {
         List<ReqComponentInfo> reqCompList = statementService.getReqComponentsByType("kuali.reqComponent.type.grdCondCourseList");
 
         assertNotNull(reqCompList);
@@ -693,19 +690,19 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test32GetReqComponentsByType_InvalidType() throws InvalidParameterException, MissingParameterException, OperationFailedException, ParseException, DoesNotExistException {
+    public void testGetReqComponentsByType_InvalidType() throws InvalidParameterException, MissingParameterException, OperationFailedException, ParseException, DoesNotExistException {
         List<ReqComponentInfo> reqCompList = statementService.getReqComponentsByType("invalid.reqcomptype");
         assertNull(reqCompList);
     }
 
     @Test(expected=DoesNotExistException.class)
-    public void test33GetReqComponentType_InvalidType_DoesNotExistException() throws InvalidParameterException, MissingParameterException, OperationFailedException, ParseException, DoesNotExistException {
+    public void testGetReqComponentType_InvalidType_DoesNotExistException() throws InvalidParameterException, MissingParameterException, OperationFailedException, ParseException, DoesNotExistException {
         statementService.getReqComponentType("invalid.reqcomp");
         fail("Invalid ReqComponentType should have thrown DoesNotExistException");
     }
 
     @Test
-    public void test34CreateStatement() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException {
+    public void testCreateStatement() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException {
         StatementInfo stmt = new StatementInfo();
         RichTextInfo statement3 = new RichTextInfo();
         statement3.setPlain("Statement 3");
@@ -734,7 +731,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test35UpdateStatement() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
+    public void testUpdateStatement() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
         StatementInfo stmt = statementService.getStatement("STMT-1");
         RichTextInfo richText = new RichTextInfo();
         richText.setPlain("Statement 3");
@@ -757,7 +754,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test(expected=VersionMismatchException.class)
-    public void test36UpdateStatement_VersionMismatchException() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
+    public void testUpdateStatement_VersionMismatchException() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
         StatementInfo stmt = statementService.getStatement("STMT-1");
         RichTextInfo richText = new RichTextInfo();
         richText.setPlain("Statement 3");
@@ -774,7 +771,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test37DeleteStatement() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
+    public void testDeleteStatement() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
         StatementInfo stmt = statementService.getStatement("STMT-2");
         StatusInfo si = statementService.deleteStatement(stmt.getId());
 		assertNotNull(si);
@@ -789,7 +786,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test38CreateReqComponent() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException {
+    public void testCreateReqComponent() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException {
         ReqComponentInfo req = new ReqComponentInfo();
 
         RichTextInfo richText = new RichTextInfo();
@@ -815,7 +812,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test39UpdateReqComponent() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
+    public void testUpdateReqComponent() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
         ReqComponentInfo req = statementService.getReqComponent("REQCOMP-1");
         RichTextInfo richText = new RichTextInfo();
         richText.setPlain("Req Comp 3");
@@ -836,7 +833,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test(expected=VersionMismatchException.class)
-    public void test40UpdateReqComponent_VersionMismatchException() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
+    public void testUpdateReqComponent_VersionMismatchException() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
         ReqComponentInfo req = statementService.getReqComponent("REQCOMP-1");
         RichTextInfo richText = new RichTextInfo();
         richText.setPlain("Req Comp 3");
@@ -852,7 +849,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test41UpdateReqComponentForField() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
+    public void testUpdateReqComponentForField() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
         ReqComponentInfo req = statementService.getReqComponent("REQCOMP-1");
 
         assertEquals(req.getReqCompFields().size(), 0);
@@ -880,7 +877,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test42DeleteReqComponent() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
+    public void testDeleteReqComponent() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ParseException, CircularReferenceException, VersionMismatchException {
         ReqComponentInfo req = statementService.getReqComponent("REQCOMP-1");
         StatusInfo si = statementService.deleteReqComponent(req.getId());
 		assertNotNull(si);
@@ -889,7 +886,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test43GetRefObjectTypes() throws OperationFailedException {
+    public void testGetRefObjectTypes() throws OperationFailedException {
     	List<String> objectTypeIds = statementService.getRefObjectTypes();
         assertNotNull(objectTypeIds);
         assertEquals(1, objectTypeIds.size());
@@ -897,7 +894,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test44GetRefObjectSubTypes() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+    public void testGetRefObjectSubTypes() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
     	List<String> objectSubTypeIds = statementService.getRefObjectSubTypes("clu");
         assertNotNull(objectSubTypeIds);
         assertEquals(2, objectSubTypeIds.size());
@@ -906,7 +903,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test45CreateRefStatementRelation() throws AlreadyExistsException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
+    public void testCreateRefStatementRelation() throws AlreadyExistsException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
         GregorianCalendar effDate = new GregorianCalendar(2000, 00, 01, 0, 0, 0);
         GregorianCalendar expDate = new GregorianCalendar(2100, 11, 31, 0, 0, 0);
 
@@ -924,7 +921,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
         assertEquals(expDate.getTime(), newDto.getExpirationDate());
     }
     @Test
-    public void test46GetRefStatementRelation() throws AlreadyExistsException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
+    public void testGetRefStatementRelation() throws AlreadyExistsException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
     	RefStatementRelationInfo newDto = createRefStatementRelation();
 
 		GregorianCalendar effDate = new GregorianCalendar(2000, 00, 01, 0, 0, 0);
@@ -945,7 +942,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test47DeleteRefStatementRelation() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, AlreadyExistsException {
+    public void testDeleteRefStatementRelation() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, AlreadyExistsException {
     	RefStatementRelationInfo newDto = createRefStatementRelation();
 
 		StatusInfo status = this.statementService.deleteRefStatementRelation(newDto.getId());
@@ -956,19 +953,19 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test(expected=DoesNotExistException.class)
-    public void test48DeleteRefStatementRelation_InvalidId() throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, DoesNotExistException {
+    public void testDeleteRefStatementRelation_InvalidId() throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, DoesNotExistException {
 		this.statementService.deleteRefStatementRelation("xxx");
 		fail("StatementService.deleteRefStatementRelation should have thrown a DoesNotExistException");
     }
 
     @Test(expected=InvalidParameterException.class)
-    public void test49DeleteRefStatementRelation_InvalidParameter() throws DoesNotExistException, MissingParameterException, OperationFailedException, PermissionDeniedException, InvalidParameterException {
+    public void testDeleteRefStatementRelation_InvalidParameter() throws DoesNotExistException, MissingParameterException, OperationFailedException, PermissionDeniedException, InvalidParameterException {
 		this.statementService.deleteRefStatementRelation("");
 		fail("StatementService.deleteRefStatementRelation should have thrown a InvalidParameterException");
     }
 
     @Test(expected=MissingParameterException.class)
-    public void test50DeleteRefStatementRelation_MissingParameter() throws DoesNotExistException, InvalidParameterException, OperationFailedException, PermissionDeniedException, MissingParameterException {
+    public void testDeleteRefStatementRelation_MissingParameter() throws DoesNotExistException, InvalidParameterException, OperationFailedException, PermissionDeniedException, MissingParameterException {
 		this.statementService.deleteRefStatementRelation(null);
 		fail("StatementService.deleteRefStatementRelation should have thrown a MissingParameterException");
     }
@@ -981,7 +978,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
      * @deprecated Being moved to ProgramRequirementService
      *//*
 
-    public void test51GetStatementTreeView() throws Exception {
+    public void testGetStatementTreeView() throws Exception {
         // Tree structure should be
         //                          STMT-TV-1:OR
         //          STMT-TV-2:AND                   STMT-TV-3:AND
@@ -1017,7 +1014,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
      * @deprecated Being moved to ProgramRequirementService
      *//*
 
-    public void test52GetStatementTreeViewForNlUsageType() throws Exception {
+    public void testGetStatementTreeViewForNlUsageType() throws Exception {
         // Tree structure should be:
         //                          STMT-TV-1:OR
         //          STMT-TV-2:AND                   STMT-TV-3:AND
@@ -1059,7 +1056,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
 
 */
     @Test
-    public void test53UpdateStatementTreeViewFromEmpty() throws CircularReferenceException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, VersionMismatchException, AlreadyExistsException {
+    public void testUpdateStatementTreeViewFromEmpty() throws CircularReferenceException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, VersionMismatchException, AlreadyExistsException {
         //     After tree is updated
         //                          STMT-TV-1:OR
         //          STMT TV 2:AND                   STMT TV 3:AND
@@ -1190,7 +1187,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
      * @deprecated Being moved to ProgramRequirementService
      *//*
 
-    public void test54UpdateStatementTreeView() throws CircularReferenceException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, VersionMismatchException {
+    public void testUpdateStatementTreeView() throws CircularReferenceException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, VersionMismatchException {
         // Before tree is updated
         //                          STMT-TV-1:OR
         //          STMT TV 2:AND                   STMT TV 3:AND
@@ -1236,7 +1233,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
      * @deprecated Being moved to ProgramRequirementService
      *//*
 
-    public void test55UpdateAndGetStatementTreeView() throws CircularReferenceException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, VersionMismatchException {
+    public void testUpdateAndGetStatementTreeView() throws CircularReferenceException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, VersionMismatchException {
         // Before tree is updated
         //                          STMT-TV-1:OR
         //          STMT TV 2:AND                   STMT TV 3:AND
@@ -1295,7 +1292,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test56GetRefStatementRelationType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+    public void testGetRefStatementRelationType() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
     	RefStatementRelationTypeInfo type = this.statementService.getRefStatementRelationType("clu.prerequisites");
 
         GregorianCalendar effDate = new GregorianCalendar(2000, 00, 01, 0, 0, 0);
@@ -1311,7 +1308,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test57GetRefStatementRelationTypes() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+    public void testGetRefStatementRelationTypes() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
     	List<RefStatementRelationTypeInfo> types = this.statementService.getRefStatementRelationTypes();
 
         assertNotNull(types);
@@ -1321,7 +1318,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test
-    public void test58GetRefStatementRelationsByStatement() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+    public void testGetRefStatementRelationsByStatement() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
     	List<RefStatementRelationInfo> list = this.statementService.getRefStatementRelationsByStatement("STMT-1");
 
         assertNotNull(list);
@@ -1330,19 +1327,19 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test(expected=MissingParameterException.class)
-    public void test59GetRefStatementRelationsByStatement_NullStatementId() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+    public void testGetRefStatementRelationsByStatement_NullStatementId() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
 		this.statementService.getRefStatementRelationsByStatement(null);
 		fail("statementService.getRefStatementRelationsByStatement should have thrown a MissingParameterException");
     }
 
     @Test(expected=InvalidParameterException.class)
-    public void test60GetRefStatementRelationsByStatement_EmptyStatementId() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+    public void testGetRefStatementRelationsByStatement_EmptyStatementId() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
 		this.statementService.getRefStatementRelationsByStatement("");
 		fail("statementService.getRefStatementRelationsByStatement should have thrown an InvalidParameterException");
     }
 
     @Test
-    public void test61UpdateRefStatementRelation() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, VersionMismatchException {
+    public void testUpdateRefStatementRelation() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, VersionMismatchException {
         GregorianCalendar effDate = new GregorianCalendar(2100, 00, 01, 0, 0, 0);
         GregorianCalendar expDate = new GregorianCalendar(2200, 11, 31, 0, 0, 0);
 
@@ -1369,7 +1366,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test(expected=DoesNotExistException.class)
-    public void test62UpdateRefStatementRelation_InvalidRefObjectTypeKey() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, VersionMismatchException {
+    public void testUpdateRefStatementRelation_InvalidRefObjectTypeKey() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, VersionMismatchException {
         GregorianCalendar effDate = new GregorianCalendar(2100, 00, 01, 0, 0, 0);
         GregorianCalendar expDate = new GregorianCalendar(2200, 11, 31, 0, 0, 0);
 
@@ -1388,7 +1385,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
     @Test(expected=DoesNotExistException.class)
-    public void test63UpdateRefStatementRelation_InvalidRefStatementRelationType() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, VersionMismatchException {
+    public void testUpdateRefStatementRelation_InvalidRefStatementRelationType() throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, VersionMismatchException {
         GregorianCalendar effDate = new GregorianCalendar(2100, 00, 01, 0, 0, 0);
         GregorianCalendar expDate = new GregorianCalendar(2200, 11, 31, 0, 0, 0);
 
@@ -1439,7 +1436,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
 
     @Test
     // TODO: This should test valid ReqCompFieldInfo types and values, too
-    public void test64ValidateReqComponent() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+    public void testValidateReqComponent() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
     	ReqComponentInfo reqInfo = createBadReqComponent1();
     	List<ValidationResultInfo> resultInfo = statementService.validateReqComponent("SYSTEM", reqInfo);
 
@@ -1468,7 +1465,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
 	}
 
     @Test
-    public void test65ValidateRefStatementRelation() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
+    public void testValidateRefStatementRelation() throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException {
 		RefStatementRelationInfo refRelation = new RefStatementRelationInfo();
 		refRelation.setState("ACTIVE");
 		refRelation.setType("cluStatementRelationType.academicreadiness");
@@ -1480,7 +1477,7 @@ public class TestStatementServiceImpl extends AbstractServiceTest {
     }
 
 	@Test
-	public void test66SearchForCluInReqComponentTypes() throws Exception {
+	public void testSearchForCluInReqComponentTypes() throws Exception {
 		SearchRequestInfo searchRequest = new SearchRequestInfo();
 		searchRequest.setSearchKey("stmt.search.cluInReqComponent");
 

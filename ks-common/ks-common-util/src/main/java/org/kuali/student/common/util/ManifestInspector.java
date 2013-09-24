@@ -146,8 +146,7 @@ public class ManifestInspector {
 		/**
 		 * Build a string out of the build information
 		 */
-        //JIRA FIX : KSENROLL-8731 - Replaced StringBuffer with StringBuilder
-		StringBuilder sb = new StringBuilder();
+		StringBuffer sb = new StringBuffer();
 		if (!isEmpty(bi.getName())) {
 			sb.append(bi.getName());
 			sb.append(" :: ");

@@ -259,9 +259,7 @@ public class DataModel implements Model {
             final Data d = root.query(q);
             d.set(path.get(path.size() - 1), value);
         } else {
-            //Code Changed for JIRA-9075 - SONAR Critical issues - Use get(0) with caution - 5
-            int firstPath = 0;
-            root.set(path.get(firstPath), value);
+            root.set(path.get(0), value);
         }
     }
 

@@ -151,9 +151,6 @@ public class TypeServiceImpl implements TypeService {
         entity.setEntityCreated(contextInfo);
 
         typeDao.persist(entity);
-        
-        typeDao.getEm().flush();
-        
         return entity.toDto();
     }
 
@@ -170,9 +167,6 @@ public class TypeServiceImpl implements TypeService {
         entity.setEntityUpdated(contextInfo);
 
         typeDao.merge(entity);
-        
-        typeDao.getEm().flush();
-        
         return entity.toDto();
     }
 
@@ -260,9 +254,6 @@ public class TypeServiceImpl implements TypeService {
         entity.setEntityCreated(contextInfo);
 
         typeTypeRelationDao.persist(entity);
-        
-        typeTypeRelationDao.getEm().flush();
-        
         return entity.toDto();
     }
 
@@ -280,9 +271,6 @@ public class TypeServiceImpl implements TypeService {
         entity.setEntityUpdated(contextInfo);
 
         typeTypeRelationDao.merge(entity);
-        
-        typeTypeRelationDao.getEm().flush();
-        
         return entity.toDto();
 
     }

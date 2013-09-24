@@ -72,14 +72,14 @@ public class BreadcrumbManager extends Composite{
 		List<BreadcrumbData> breadcrumbs = new ArrayList<BreadcrumbData>();
 
 		if(arr.length == names.size()){
-			StringBuilder path = new StringBuilder("");
+			String path = "";
 			//account for applicationController - skip first item from both
 			for(int i = 1; i < names.size(); i++){
-				path.append("/").append(arr[i]);
+				path = path + "/" + arr[i];
 				String name = names.get(i);
 				//Views with empty names do not appear on the breadcrumbs
 				if(name != null && !name.isEmpty()){
-					breadcrumbs.add(new BreadcrumbData(name, path.toString()));
+					breadcrumbs.add(new BreadcrumbData(name, path));
 				}
 			}
 		}

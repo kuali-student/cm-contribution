@@ -64,7 +64,7 @@ public class MetadataServiceImpl {
             Integer hits = recursions.get(objectName);
 
             if (hits == null) {
-                hits = Integer.valueOf(1);
+                hits = new Integer(1);
             } else {
                 hits++;
             }
@@ -478,9 +478,8 @@ public class MetadataServiceImpl {
      * @return true if workflowNode is first item in values, otherwise returns false
      */
     private boolean isWorkflowNodeFirstConstraintValue(String workflowNode, List<Object> values){
-        int firstValue = 0;
     	if (values != null && !values.isEmpty()){
-    		return values.get(firstValue).equals(workflowNode);
+    		return values.get(0).equals(workflowNode);
     	} else {
     		return false;
     	}

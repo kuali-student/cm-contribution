@@ -64,9 +64,7 @@ public class SearchDispatchRpcGwtServlet extends RemoteServiceServlet implements
             SearchResultInfo searchResult = searchDispatcher.search(searchRequest, ContextUtils.getContextInfo());
             List<SearchParamInfo> params = searchRequest.getParams();
             if (params != null && params.size() > 0) {
-                //Code Changed for JIRA-9075 - SONAR Critical issues - Use get(0) with caution - 5
-                int firstSearchParamInfo = 0 ;
-                SearchParamInfo firstParam = params.get(firstSearchParamInfo);
+                SearchParamInfo firstParam = params.get(0);
                 if (firstParam.getKey().equals("lu.queryParam.cluVersionIndId")) {//FIXME can this special case be handled after this call?
                     doIdTranslation(searchResult);
                 }

@@ -16,22 +16,17 @@
  */
 package org.kuali.student.r2.core.scheduling.service.decorators;
 
-import org.kuali.rice.core.api.resourceloader.GlobalResourceLoader;
 import org.kuali.student.r2.common.constants.CommonServiceConstants;
 import org.kuali.student.r2.common.datadictionary.DataDictionaryValidator;
 import org.kuali.student.r2.common.dto.ContextInfo;
 import org.kuali.student.r2.common.dto.ValidationResultInfo;
 import org.kuali.student.r2.common.exceptions.*;
-import org.kuali.student.r2.core.class1.type.service.TypeService;
 import org.kuali.student.r2.core.class1.util.ValidationUtils;
-import org.kuali.student.r2.core.constants.TypeServiceConstants;
-import org.kuali.student.r2.core.scheduling.constants.SchedulingServiceConstants;
 import org.kuali.student.r2.core.scheduling.dto.ScheduleBatchInfo;
 import org.kuali.student.r2.core.scheduling.dto.ScheduleInfo;
 import org.kuali.student.r2.core.scheduling.dto.ScheduleRequestInfo;
 import org.kuali.student.r2.core.scheduling.dto.TimeSlotInfo;
 
-import javax.xml.namespace.QName;
 import java.util.List;
 
 /**
@@ -43,21 +38,30 @@ public class SchedulingServiceValidationDecorator extends SchedulingServiceDecor
 {
     // validator property w/getter & setter
     private DataDictionaryValidator validator;
-    private TypeService typeService;
+    public DataDictionaryValidator getValidator() {
+        return validator;
+    }
+    public void setValidator(DataDictionaryValidator validator) {
+        this.validator = validator;
+    }
 
     @Override
     public List<ValidationResultInfo> validateSchedule(String validationTypeKey, String scheduleTypeKey, ScheduleInfo scheduleInfo, ContextInfo contextInfo)
             throws DoesNotExistException
-            , InvalidParameterException
-            , MissingParameterException
-            , OperationFailedException
-            , PermissionDeniedException {
-
-        List<ValidationResultInfo> errors = ValidationUtils.validateTypeKey(scheduleTypeKey, SchedulingServiceConstants.REF_OBJECT_URI_SCHEDULE, getTypeService(), contextInfo);
-        errors.addAll(ValidationUtils.validateInfo(validator, validationTypeKey, scheduleInfo, contextInfo));
-        List<ValidationResultInfo> nextDecoratorErrors = getNextDecorator().validateSchedule(validationTypeKey, scheduleTypeKey, scheduleInfo, contextInfo);
-        errors.addAll(nextDecoratorErrors);
-
+            ,InvalidParameterException
+            ,MissingParameterException
+            ,OperationFailedException
+            ,PermissionDeniedException
+    {
+        // validate
+        List<ValidationResultInfo> errors;
+        try {
+            errors = ValidationUtils.validateInfo(validator, validationTypeKey, scheduleInfo, contextInfo);
+            List<ValidationResultInfo> nextDecoratorErrors = getNextDecorator().validateSchedule(validationTypeKey, scheduleTypeKey, scheduleInfo, contextInfo);
+            errors.addAll(nextDecoratorErrors);
+        } catch (DoesNotExistException ex) {
+            throw new OperationFailedException("Error validating", ex);
+        }
         return errors;
     }
 
@@ -98,7 +102,7 @@ public class SchedulingServiceValidationDecorator extends SchedulingServiceDecor
         // update
         try {
             List<ValidationResultInfo> errors =
-                    this.validateSchedule(DataDictionaryValidator.ValidationType.FULL_VALIDATION.toString(), scheduleInfo.getTypeKey(), scheduleInfo, contextInfo);
+                    this.validateSchedule(DataDictionaryValidator.ValidationType.FULL_VALIDATION.toString(), scheduleId, scheduleInfo, contextInfo);
             if (!errors.isEmpty()) {
                 throw new DataValidationErrorException("Error(s) occurred validating", errors);
             }
@@ -116,11 +120,15 @@ public class SchedulingServiceValidationDecorator extends SchedulingServiceDecor
             ,OperationFailedException
             ,PermissionDeniedException
     {
-        List<ValidationResultInfo> errors = ValidationUtils.validateTypeKey(scheduleBatchTypeKey, SchedulingServiceConstants.REF_OBJECT_URI_SCHEDULE_BATCH, getTypeService(), contextInfo);
-        errors.addAll(ValidationUtils.validateInfo(validator, validationTypeKey, scheduleBatchInfo, contextInfo));
-        List<ValidationResultInfo> nextDecoratorErrors = getNextDecorator().validateScheduleBatch(validationTypeKey, scheduleBatchTypeKey, scheduleBatchInfo, contextInfo);
-        errors.addAll(nextDecoratorErrors);
-
+        // validate
+        List<ValidationResultInfo> errors;
+        try {
+            errors = ValidationUtils.validateInfo(validator, validationTypeKey, scheduleBatchInfo, contextInfo);
+            List<ValidationResultInfo> nextDecoratorErrors = getNextDecorator().validateScheduleBatch(validationTypeKey, scheduleBatchTypeKey, scheduleBatchInfo, contextInfo);
+            errors.addAll(nextDecoratorErrors);
+        } catch (DoesNotExistException ex) {
+            throw new OperationFailedException("Error validating", ex);
+        }
         return errors;
     }
 
@@ -183,7 +191,6 @@ public class SchedulingServiceValidationDecorator extends SchedulingServiceDecor
         List<ValidationResultInfo> errors;
         try {
             errors = ValidationUtils.validateInfo(validator, validationTypeKey, scheduleRequestInfo, contextInfo);
-            errors.addAll(ValidationUtils.validateTypeKey(scheduleRequestTypeKey, SchedulingServiceConstants.REF_OBJECT_URI_SCHEDULE_REQUEST, getTypeService(), contextInfo));
             List<ValidationResultInfo> nextDecoratorErrors = getNextDecorator().validateScheduleRequest(validationTypeKey, scheduleRequestTypeKey, scheduleRequestInfo, contextInfo);
             errors.addAll(nextDecoratorErrors);
         } catch (DoesNotExistException ex) {
@@ -229,7 +236,7 @@ public class SchedulingServiceValidationDecorator extends SchedulingServiceDecor
         // update
         try {
             List<ValidationResultInfo> errors =
-                    this.validateScheduleRequest(DataDictionaryValidator.ValidationType.FULL_VALIDATION.toString(), scheduleRequestInfo.getTypeKey(), scheduleRequestInfo, contextInfo);
+                    this.validateScheduleRequest(DataDictionaryValidator.ValidationType.FULL_VALIDATION.toString(), scheduleRequestId, scheduleRequestInfo, contextInfo);
             if (!errors.isEmpty()) {
                 throw new DataValidationErrorException("Error(s) occurred validating", errors);
             }
@@ -251,7 +258,6 @@ public class SchedulingServiceValidationDecorator extends SchedulingServiceDecor
         List<ValidationResultInfo> errors;
         try {
             errors = ValidationUtils.validateInfo(validator, validationTypeKey, timeSlotInfo, contextInfo);
-            errors.addAll(ValidationUtils.validateTypeKey(timeSlotTypeKey, SchedulingServiceConstants.REF_OBJECT_URI_SCHEDULE_TIME_SLOT, getTypeService(), contextInfo));
             List<ValidationResultInfo> nextDecoratorErrors = getNextDecorator().validateTimeSlot(validationTypeKey, timeSlotTypeKey, timeSlotInfo, contextInfo);
             errors.addAll(nextDecoratorErrors);
         } catch (DoesNotExistException ex) {
@@ -312,24 +318,5 @@ public class SchedulingServiceValidationDecorator extends SchedulingServiceDecor
             throw new OperationFailedException("Error validating", ex);
         }
         return getNextDecorator().updateTimeSlot(timeSlotId, timeSlotInfo, contextInfo);
-    }
-
-    public DataDictionaryValidator getValidator() {
-        return validator;
-    }
-
-    public void setValidator(DataDictionaryValidator validator) {
-        this.validator = validator;
-    }
-
-    public TypeService getTypeService() {
-        if(typeService == null){
-            typeService = (TypeService) GlobalResourceLoader.getService(new QName(TypeServiceConstants.NAMESPACE, TypeServiceConstants.SERVICE_NAME_LOCAL_PART));
-        }
-        return typeService;
-    }
-
-    public void setTypeService(TypeService typeService) {
-        this.typeService = typeService;
     }
 }

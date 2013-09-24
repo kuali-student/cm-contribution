@@ -18,6 +18,9 @@ package org.kuali.student.core.messages.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+
 import org.kuali.student.r1.core.messages.dao.MessageManagementDAO;
 import org.kuali.student.r1.core.messages.entity.MessageEntity;
 import org.kuali.student.r2.common.dto.ContextInfo;
@@ -38,6 +41,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+@WebService(endpointInterface = "org.kuali.student.r2.common.messages.service.MessageService", serviceName = "MessageService", portName = "MessageService", targetNamespace = "http://student.kuali.org/wsdl/messages")
+@SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class MessageServiceImpl implements MessageService{
     
 	final static Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
@@ -172,6 +177,18 @@ public class MessageServiceImpl implements MessageService{
         return status;
     }
 
+    @Override
+    public List<ValidationResultInfo> validateProposal(String validationTypeKey,
+            MessageInfo messageInfo,
+            ContextInfo contextInfo)
+            throws DoesNotExistException,
+            InvalidParameterException,
+            MissingParameterException,
+            OperationFailedException {
+        throw new OperationFailedException("Not supported yet.");
+    }
+
+    
 
     @Override
     public StatusInfo deleteMessage(LocaleInfo localeInfo, 
@@ -183,17 +200,8 @@ public class MessageServiceImpl implements MessageService{
             MissingParameterException, 
             OperationFailedException, 
             PermissionDeniedException {
-        throw new UnsupportedOperationException ("not implemented");
+        // TODO pctsw - THIS METHOD NEEDS JAVADOCS
+        throw new OperationFailedException ("not implemented");
     }
-
-	@Override
-	public List<ValidationResultInfo> validateMessage(String validationTypeKey,
-			MessageInfo messageInfo, ContextInfo contextInfo)
-			throws DoesNotExistException, InvalidParameterException,
-			MissingParameterException, OperationFailedException {
-		  throw new UnsupportedOperationException ("not implemented");
-	}
-    
-    
     
 }

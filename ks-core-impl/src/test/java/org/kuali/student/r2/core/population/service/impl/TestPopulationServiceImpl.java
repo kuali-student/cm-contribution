@@ -68,8 +68,6 @@ public class TestPopulationServiceImpl {
         populationRuleInfo.setDescr(richTextInfo);
         populationRuleInfo.setStateKey(PopulationServiceConstants.POPULATION_RULE_ACTIVE_STATE_KEY);
         populationRuleInfo.setTypeKey(popRuleType);
-        populationRuleInfo.setVariesByTime(false);
-        populationRuleInfo.setSupportsGetMembers(false);
         return populationRuleInfo;
     }
 
@@ -82,8 +80,6 @@ public class TestPopulationServiceImpl {
         populationRuleInfo.setDescr(richTextInfo);
         populationRuleInfo.setStateKey(PopulationServiceConstants.POPULATION_RULE_ACTIVE_STATE_KEY);
         populationRuleInfo.setTypeKey(PopulationServiceConstants.POPULATION_RULE_TYPE_EXCLUSION_KEY);
-        populationRuleInfo.setVariesByTime(false);
-        populationRuleInfo.setSupportsGetMembers(false);
         return populationRuleInfo;
     }
 

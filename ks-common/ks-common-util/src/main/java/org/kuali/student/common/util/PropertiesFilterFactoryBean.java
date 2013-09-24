@@ -185,7 +185,7 @@ public class PropertiesFilterFactoryBean implements FactoryBean {
 				value = System.getenv(key);
 			}
 			return value;
-		} catch (Exception ex) {
+		} catch (Throwable ex) {
 			return null;
 		}
 	}

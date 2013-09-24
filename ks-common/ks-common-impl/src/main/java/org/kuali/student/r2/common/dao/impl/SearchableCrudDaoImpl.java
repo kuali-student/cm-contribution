@@ -154,13 +154,8 @@ public class SearchableCrudDaoImpl {
 			int i = 0;
 			
 			//Get an array of the jpql results
-            String lowercaseQueryString = queryString.toLowerCase();
-			int selectIndex = lowercaseQueryString.indexOf("select")+"select".length();
-            int distinctIndex = lowercaseQueryString.indexOf("distinct")+"distinct".length();//Filter out the "distinct"
-			int fromIndex = lowercaseQueryString.indexOf(" from ");
-            if(selectIndex < distinctIndex && distinctIndex < fromIndex){
-                selectIndex = distinctIndex;
-            }
+			int selectIndex = queryString.toLowerCase().indexOf("select")+"select".length();
+			int fromIndex = queryString.toLowerCase().indexOf(" from ");
 			
 			if (selectIndex >= 0 && fromIndex > selectIndex){
 				String[] jpqlResultColumns = queryString.substring(selectIndex, fromIndex).replaceAll("\\s", "").split(",");
@@ -230,7 +225,7 @@ public class SearchableCrudDaoImpl {
                     } catch (ParseException e) {
                         throw new RuntimeException("Failed to parse date value " + searchParam.getValues().get(0),e);
                     }
-			    } else if ("long".equals(paramDataType)){
+			    } if ("long".equals(paramDataType)){
 			    	try{
 			    		List<Long> longList = new ArrayList<Long>();
 			    		if(searchParam.getValues()!=null){
@@ -240,23 +235,10 @@ public class SearchableCrudDaoImpl {
 			    		}
 				      	queryParamValue = longList;
 		            } catch (NumberFormatException e) {
-		                throw new RuntimeException("Failed to parse long value " + searchParam.getValues(),e);
+		                throw new RuntimeException("Failed to parse date value " + searchParam.getValues(),e);
 		            }
 
-			    } else if ("int".equals(paramDataType)){
-                    try{
-                        List<Integer> intList = new ArrayList<Integer>();
-                        if(searchParam.getValues()!=null){
-                            for(String value:searchParam.getValues()){
-                                intList.add(Integer.parseInt(value));
-                            }
-                        }
-                        queryParamValue = intList;
-                    } catch (NumberFormatException e) {
-                        throw new RuntimeException("Failed to parse int value " + searchParam.getValues(),e);
-                    }
-
-                }  else {
+			    } else {
 			        queryParamValue = searchParam.getValues();
 			    }
 			    //Needed to get around Hibernate not supporting IN(:var) where var is null or an empty collection

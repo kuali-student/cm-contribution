@@ -368,9 +368,7 @@ public class DefaultDataBeanMapper implements DataBeanMapper {
      * @return the list converted to a comma delimited StringValue
      */
     protected String convertDataValueToStringValue(Data data) {
-
-        //JIRA FIX : KSENROLL-8731 - Replaced StringBuffer with StringBuilder
-        StringBuilder sbValue = new StringBuilder();
+        StringBuffer sbValue = new StringBuffer();
 
         Iterator<Property> propertyIterator = data.realPropertyIterator();
         while (propertyIterator.hasNext()) {

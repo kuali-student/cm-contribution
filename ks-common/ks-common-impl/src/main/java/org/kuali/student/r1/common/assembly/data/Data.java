@@ -1064,9 +1064,7 @@ public class Data implements Serializable, Iterable<Data.Property>, HasChangeCal
      * @return
      */
     private String _toString(){
-
-        //JIRA FIX : KSENROLL-8731 - Replaced StringBuffer with StringBuilder
-        StringBuilder dataString = new StringBuilder();
+        StringBuffer dataString = new StringBuffer();
 
         dataString.append("{");
         for (Iterator itr = this.iterator(); itr.hasNext();) {
@@ -1086,9 +1084,7 @@ public class Data implements Serializable, Iterable<Data.Property>, HasChangeCal
      * 
      */
     private String _toXmlString(String indent){
-
-        //JIRA FIX : KSENROLL-8731 - Replaced StringBuffer with StringBuilder
-        StringBuilder dataString = new StringBuilder();
+        StringBuffer dataString = new StringBuffer();
                 
     	for (Iterator itr = this.iterator(); itr.hasNext();) {
             Property p = (Property) itr.next();

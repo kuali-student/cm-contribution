@@ -143,13 +143,11 @@ public class PropertiesFactory {
         }
 
         Map<Object, Object> map = new HashMap<Object, Object>();
-        //Code Changed for JIRA-8997 - SONAR Critical issues - Performance - Inefficient use of keySet iterator instead of entrySet iterator
-        for (Map.Entry<Object, Object>  entry: props.entrySet()) {
-            Object key = entry.getKey();
+        for (Object key : props.keySet()) {
             String realPrefix = prefix + ".";
             String keyString = key.toString();
             if (keyString.startsWith(realPrefix)) {
-                map.put(keyString.substring(realPrefix.length()), entry.getValue());
+                map.put(keyString.substring(realPrefix.length()), props.get(key));
             }
         }
 

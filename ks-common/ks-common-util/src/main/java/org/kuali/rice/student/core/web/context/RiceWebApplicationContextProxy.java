@@ -136,11 +136,6 @@ public class RiceWebApplicationContextProxy implements WebApplicationContext {
     }
 
     @Override
-    public String getApplicationName() {
-        return applicationContext.getApplicationName();
-    }
-
-    @Override
     public String getMessage(MessageSourceResolvable resolvable, Locale locale) throws NoSuchMessageException {
         return applicationContext.getMessage(resolvable, locale);
     }

@@ -23,8 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.kuali.student.common.test.spring.AbstractServiceTest;
+import org.kuali.student.common.test.spring.Client;
+import org.kuali.student.common.test.spring.Dao;
+import org.kuali.student.common.test.spring.Daos;
+import org.kuali.student.common.test.spring.PersistenceFileLocation;
 import org.kuali.student.common.test.util.ContextInfoTestUtility;
 import org.kuali.student.r2.common.dto.ContextInfo;
 import org.kuali.student.r2.common.dto.LocaleInfo;
@@ -38,18 +41,13 @@ import org.kuali.student.r2.common.exceptions.ReadOnlyException;
 import org.kuali.student.r2.common.exceptions.VersionMismatchException;
 import org.kuali.student.r2.common.messages.dto.MessageInfo;
 import org.kuali.student.r2.common.messages.service.MessageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:message-test-context.xml"})
-@TransactionConfiguration(transactionManager = "JtaTxManager", defaultRollback = true)
-public class MessageServiceImplTest extends AbstractServiceTest{
+
+@Daos( { @Dao(value = "org.kuali.student.r1.core.messages.dao.impl.MessageManagementDAOImpl", testDataFile = "classpath:messages-test-beans.xml") })
+@PersistenceFileLocation("classpath:META-INF/messages-persistence.xml")
+public class MessageServiceImplTest extends AbstractServiceTest{    
     
-    @Autowired
+    @Client(value = "org.kuali.student.core.messages.service.impl.MessageServiceImpl")
     private MessageService messageService;
     
     
@@ -258,38 +256,25 @@ public class MessageServiceImplTest extends AbstractServiceTest{
             e.printStackTrace();
         }		
 	}
-
-
-    // run this at the end because delete has not been implemented
+	
 	@Test
-    @Transactional
-	public void testCRUDMessage() throws DataValidationErrorException, InvalidParameterException, MissingParameterException, DoesNotExistException, PermissionDeniedException, OperationFailedException {
+	public void testUpdateMessage() throws DataValidationErrorException {
 	    ContextInfo contextInfo = ContextInfoTestUtility.getEnglishContextInfo();
-        MessageInfo m = new MessageInfo();
-        LocaleInfo localeInfo = new LocaleInfo();
-        localeInfo.setLocaleLanguage("US");  // part of the where kry
-        m.setGroupName("Test Group");  // part of the where key
-        m.setMessageKey("Test Key");
-        m.setValue("Test Message Text");
-        m.setLocale(localeInfo);
-        messageService.createMessage(localeInfo, m.getGroupName(), m.getMessageKey(), m, contextInfo);
-        MessageInfo dummyMsg = messageService.getMessage(localeInfo, m.getGroupName(), m.getMessageKey(), contextInfo);
-        assertEquals(m.getLocale().getLocaleLanguage(), dummyMsg.getLocale().getLocaleLanguage());
-        assertEquals(m.getMessageKey(), dummyMsg.getMessageKey());
-        assertEquals(m.getValue(), dummyMsg.getValue());
-        assertEquals(m.getGroupName(), dummyMsg.getGroupName());
-
-        dummyMsg.setMessageKey("Test Key - Updated");
-        dummyMsg.setValue("Modified Text");
-
-        try {
-            messageService.updateMessage(localeInfo, m.getGroupName(), m.getMessageKey(), dummyMsg, contextInfo);
-            MessageInfo result = messageService.getMessage(localeInfo, dummyMsg.getGroupName(), dummyMsg.getMessageKey(), contextInfo );
-            assertEquals(result.getLocale().getLocaleLanguage(), dummyMsg.getLocale().getLocaleLanguage());
-            assertEquals(result.getMessageKey(), dummyMsg.getMessageKey());
-            assertEquals(result.getValue(), dummyMsg.getValue());
-            assertEquals(result.getGroupName(), dummyMsg.getGroupName());
-            result = messageService.getMessage(localeInfo , m.getGroupName(), m.getMessageKey(), contextInfo);
+		MessageInfo m = new MessageInfo();
+		LocaleInfo localeInfo = new LocaleInfo();
+		localeInfo.setLocaleLanguage("US");  // part of the where kry
+		m.setGroupName("Name");  // part of the where key
+		m.setMessageKey("Grading");
+		m.setValue("Grading Scale");
+		m.setLocale(localeInfo);
+		try {
+            messageService.updateMessage(localeInfo, m.getGroupName(), "Last", m, contextInfo);
+            MessageInfo result = messageService.getMessage(localeInfo, "Name", "Grading", contextInfo );
+            assertEquals(result.getLocale().getLocaleLanguage(), m.getLocale().getLocaleLanguage());
+            assertEquals(result.getMessageKey(), m.getMessageKey());
+            assertEquals(result.getValue(), m.getValue());
+            assertEquals(result.getGroupName(), m.getGroupName());
+            result = messageService.getMessage(localeInfo , "Name", "Last", contextInfo);
             assertTrue(result == null);
         } catch (DoesNotExistException e) {
             e.printStackTrace();
@@ -306,8 +291,6 @@ public class MessageServiceImplTest extends AbstractServiceTest{
             e.printStackTrace();
         } catch (VersionMismatchException e) {
             e.printStackTrace();
-        }
-
-        //TODO: add delete and remove @Transactional
-    }
+        }		
+	}
 }

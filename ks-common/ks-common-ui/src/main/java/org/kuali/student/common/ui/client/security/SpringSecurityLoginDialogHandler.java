@@ -112,8 +112,7 @@ public class SpringSecurityLoginDialogHandler implements SessionTimeoutHandler{
         table.setWidget(2,0,(new Button("Login", new ClickHandler() {   
             public void onClick(ClickEvent event) {
                 
-                //JIRA FIX : KSENROLL-8731 - Replaced StringBuffer with StringBuilder
-                StringBuilder postData = new StringBuilder();
+                StringBuffer postData = new StringBuffer();
                 postData.append(URL.encode("j_username")).append("=").append(username.getText());
                 postData.append("&").append(URL.encode("j_password")).append("=").append(password.getText());
                 

@@ -110,9 +110,7 @@ public class KSDocumentHeader extends Composite {
     	
     	// Default to the old way of printing the entire page
     	if(this.printContent == null){
-            //Code Changed for JIRA-9075 - SONAR Critical issues - Use get(0) with caution - 5
-            int firstwidget = 0;
-    		this.setPrintContent(ApplicationPanel.get().getWidget(firstwidget));
+    		this.setPrintContent(ApplicationPanel.get().getWidget(0));
     	}
     	hoverPopup.add(new HTMLPanel("Print Page"));
 		hoverPopup.setStyleName("ks-help-popup");

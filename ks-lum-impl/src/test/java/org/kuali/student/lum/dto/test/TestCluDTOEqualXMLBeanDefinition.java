@@ -1,5 +1,6 @@
 package org.kuali.student.lum.dto.test;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kuali.student.r1.common.dictionary.service.impl.ComplexSubstructuresHelper;
 import org.kuali.student.r2.core.statement.dto.StatementInfo;
@@ -36,6 +37,7 @@ public class TestCluDTOEqualXMLBeanDefinition {
 	}
 
 	@Test
+    @Ignore
 	public void testCluDTOsAgainstDataDictionary() {
 		  System.out.println("testing statement dictionary");
 		  Set<String> startingClasses = new LinkedHashSet();

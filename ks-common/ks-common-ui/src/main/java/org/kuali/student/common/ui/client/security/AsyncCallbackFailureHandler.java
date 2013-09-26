@@ -72,12 +72,4 @@ public class AsyncCallbackFailureHandler {
         Window.alert(message);
     }
     
-    public boolean isSessionTimeout(Throwable caught) {
-        return sessionTimeoutHandler.isSessionTimeout(caught);
-    }
-
-    public void handleSessionTimeout() {
-        sessionTimeoutHandler.handleSessionTimeout();
-    }
-
 }

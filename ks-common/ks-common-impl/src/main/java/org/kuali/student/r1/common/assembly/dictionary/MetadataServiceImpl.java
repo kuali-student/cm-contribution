@@ -232,15 +232,17 @@ public class MetadataServiceImpl {
                 //FIXME/TODO: documentTypeName is only passed here, because it is eventually used in ProgramMetadataServiceImpl's getConstraints() method
                 metadata.setConstraints(getConstraints(fd, type, state, nextState, workflowNode, documentTypeName));
                 metadata.setCanEdit(!fd.isReadOnly());
+                metadata.setCanView(!fd.isHide());
 
                 for (ConstraintMetadata constraintMeta : metadata.getConstraints()) {
                     if (constraintMeta.isReadOnly()) {
                         metadata.setCanEdit(!constraintMeta.isReadOnly());
                     }
+
+                    metadata.setCanView(!constraintMeta.isHide());
                 }
 
                 metadata.setCanUnmask(!fd.isMask());
-                metadata.setCanView(!fd.isHide());
                 metadata.setDynamic(fd.isDynamic());
                 metadata.setLabelKey(fd.getLabelKey());
                 metadata.setDefaultValue(convertDefaultValue(metadata.getDataType(), fd.getDefaultValue()));
@@ -412,6 +414,9 @@ public class MetadataServiceImpl {
         // Readonly
         constraintMetadata.setReadOnly(constraint.isReadOnly());
 
+        // Hide
+        constraintMetadata.setHide(constraint.isHide());
+
         // Case constraints
         if (constraint.getCaseConstraint() != null) {
             processCaseConstraint(constraintMetadata, constraint.getCaseConstraint(), type, state, nextState, workflowNode);
@@ -419,8 +424,8 @@ public class MetadataServiceImpl {
     }
 
     /**
-     * Currently this only handles requiredness and readonly indicators for case
-     * constraints with the following field paths:
+     * Currently this only handles requiredness and readonly and visible indicators for
+     * case constraints with the following field paths:
      * 
      * type, state, and proposal/workflowNode
      */
@@ -429,6 +434,7 @@ public class MetadataServiceImpl {
         fieldPath = (fieldPath != null ? fieldPath.toUpperCase() : fieldPath);
         
         if (workflowNode != null && fieldPath != null && fieldPath.startsWith("PROPOSAL/WORKFLOWNODE")){
+            processHideCaseConstraint(constraintMetadata, caseConstraint, type, state, nextState, workflowNode);
         	processRequiredByNodeCaseConstraint(constraintMetadata, caseConstraint, workflowNode);
             processReadOnlyByNodeCaseConstraint(constraintMetadata, caseConstraint, workflowNode);
           //Both 'stateKey' and 'state' needs to be checked until R1 code is phased out
@@ -505,6 +511,30 @@ public class MetadataServiceImpl {
                     if (values.contains(workflowNode)) {
                         constraintMetadata.setReadOnly(constraint.isReadOnly());
                     }
+                }
+            }
+        }
+    }
+
+    /**
+     * Modifies the constraintMetadata to add hide constraints based on the workflow route
+     * node the proposal is currently in.
+     * 
+     * @param constraintMetadata The fields constraintMetadata to be modified
+     * @param caseConstraint The caseConstraint defined in dictionary for field
+     * @param workflowNode The current node in workflow process
+     */
+    private void processHideCaseConstraint(ConstraintMetadata constraintMetadata, CaseConstraint caseConstraint,
+            String type, String state, String nextState, String workflowNode) {
+        List<WhenConstraint> whenConstraints = caseConstraint.getWhenConstraint();
+
+        if ("EQUALS".equals(caseConstraint.getOperator()) && whenConstraints != null) {
+            for (WhenConstraint whenConstraint : whenConstraints) {
+                List<Object> values = whenConstraint.getValues();
+                Constraint constraint = whenConstraint.getConstraint();
+
+                if (constraint.getErrorLevel() == ErrorLevel.ERROR && values.contains(workflowNode)) {
+                    updateConstraintMetadata(constraintMetadata, constraint, type, state, nextState, workflowNode);
                 }
             }
         }

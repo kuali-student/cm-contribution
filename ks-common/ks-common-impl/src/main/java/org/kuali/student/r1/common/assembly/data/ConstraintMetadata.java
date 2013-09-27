@@ -65,6 +65,8 @@ public class ConstraintMetadata implements Serializable {
 	
 	private String nextState;
 
+    protected boolean readOnly = false;
+
 	public List<ConstraintMetadata> getChildConstraints() {
 		return childConstraints;
 	}
@@ -193,6 +195,14 @@ public class ConstraintMetadata implements Serializable {
 		this.nextState = nextState;
 	}	
 	
+    public boolean isReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -231,6 +241,8 @@ public class ConstraintMetadata implements Serializable {
         sb.append(Boolean.toString(requiredForNextState));
         sb.append(", nextState: ");
         sb.append(nextState);
+        sb.append(", readOnly: ");
+        sb.append(Boolean.toString(readOnly));
         sb.append(", ChildConstraints: {");
         if (null != childConstraints) {
             for (ConstraintMetadata constraint : childConstraints) {

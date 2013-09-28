@@ -1,0 +1,8 @@
+# module = ks-api branch Path = contrib/CM/ks-api/tags/builds/ks-api-2.0/2.0.2-cm-contrib/build-15 revision = 56778
+ks-api::contrib_CM_ks-api_tags_builds_ks-api-2.0_2.0.2-cm-contrib_build-15::c44787f67537146255cfde7ccff334b4a093e9fd
+# module = ks-core branch Path = contrib/CM/ks-core/tags/builds/ks-core-2.0/2.0.2-cm-contrib/build-15 revision = 56778
+ks-core::contrib_CM_ks-core_tags_builds_ks-core-2.0_2.0.2-cm-contrib_build-15::9cf724e68769228ad785d4cc8460b452f71ece63
+# module = ks-deployments branch Path = contrib/CM/ks-deployments/tags/builds/ks-deployments-2.0/2.0.2-cm-contrib/build-15 revision = 56778
+ks-deployments::contrib_CM_ks-deployments_tags_builds_ks-deployments-2.0_2.0.2-cm-contrib_build-15::7ce1aa864a73e260e28f9e423226f1fff88d6a7b
+# module = ks-lum branch Path = contrib/CM/ks-lum/tags/builds/ks-lum-2.0/2.0.2-cm-contrib/build-15 revision = 56778
+ks-lum::contrib_CM_ks-lum_tags_builds_ks-lum-2.0_2.0.2-cm-contrib_build-15::49a52d57de56420f5e2e442bc47f91341fce729d

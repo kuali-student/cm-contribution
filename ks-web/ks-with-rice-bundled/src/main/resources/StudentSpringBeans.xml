@@ -78,12 +78,16 @@
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgHierarchyInfoAdminLookupView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgInfoAdminInquiryView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgInfoAdminLookupView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgInfoAdminMaintenanceView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgOrgRelationInfoAdminInquiryView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgOrgRelationInfoAdminLookupView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgOrgRelationInfoAdminMaintenanceView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminInquiryView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminLookupView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminMaintenanceView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminInquiryView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminLookupView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminMaintenanceView.xml</value>
             </list>
         </property>
         <property name="packagePrefixes">

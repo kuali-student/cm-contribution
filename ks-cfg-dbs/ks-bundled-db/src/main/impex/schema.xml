@@ -4584,8 +4584,8 @@
         <column name="SORT_NAME" size="255" type="VARCHAR"/>
         <column name="SHORT_DESCR_PLAIN" size="4000" type="VARCHAR"/>
         <column name="SHORT_DESCR_FORMATTED" size="4000" type="VARCHAR"/>
-        <column name="EXPIR_DT" required="true" type="TIMESTAMP"/>
-        <column name="EFF_DT" required="true" type="TIMESTAMP"/>
+        <column name="EFF_DT" type="TIMESTAMP"/>
+        <column name="EXPIR_DT" type="TIMESTAMP"/>
         <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
         <column name="CREATETIME" required="true" type="TIMESTAMP"/>
         <column name="CREATEID" required="true" size="255" type="VARCHAR"/>
@@ -4654,8 +4654,8 @@
         <column name="DESCR_PLAIN" size="4000" type="VARCHAR"/>
         <column name="DESCR_FORMATTED" size="255" type="VARCHAR"/>
         <column name="ROOT_ORG_ID" size="255" type="VARCHAR"/>
-        <column name="EXPIR_DT" required="true" type="TIMESTAMP"/>
-        <column name="EFF_DT" required="true" type="TIMESTAMP"/>
+        <column name="EFF_DT" type="TIMESTAMP"/>
+        <column name="EXPIR_DT" type="TIMESTAMP"/>
         <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
         <column name="CREATETIME" required="true" type="TIMESTAMP"/>
         <column name="CREATEID" required="true" size="255" type="VARCHAR"/>
@@ -4702,8 +4702,8 @@
         <column name="ORG_RELTN_STATE" required="true" size="255" type="VARCHAR"/>
         <column name="ORG_ID" required="true" size="255" type="VARCHAR"/>
         <column name="RELATED_ORG_ID" required="true" size="255" type="VARCHAR"/>
-        <column name="EXPIR_DT" required="true" type="TIMESTAMP"/>
         <column name="EFF_DT" type="TIMESTAMP"/>
+        <column name="EXPIR_DT" type="TIMESTAMP"/>
         <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
         <column name="CREATETIME" required="true" type="TIMESTAMP"/>
         <column name="CREATEID" required="true" size="255" type="VARCHAR"/>
@@ -4754,8 +4754,8 @@
         <column name="ORG_PERS_RELTN_STATE" required="true" size="255" type="VARCHAR"/>
         <column name="ORG_ID" required="true" size="255" type="VARCHAR"/>
         <column name="PERS_ID" required="true" size="255" type="VARCHAR"/>
-        <column name="EXPIR_DT" required="true" type="TIMESTAMP"/>
-        <column name="EFF_DT" required="true" type="TIMESTAMP"/>
+        <column name="EFF_DT" type="TIMESTAMP"/>
+        <column name="EXPIR_DT" type="TIMESTAMP"/>
         <column name="VER_NBR" required="true" size="19" type="DECIMAL"/>
         <column name="CREATETIME" required="true" type="TIMESTAMP"/>
         <column name="CREATEID" required="true" size="255" type="VARCHAR"/>

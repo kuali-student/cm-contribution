@@ -24,8 +24,8 @@
         ROLE_NM="Kuali Orgainzation Membership" VER_NBR="2"/>
     <KRIM_ROLE_T ACTV_IND="Y"
         DESC_TXT="This role maintains KRMS agendas and rules."
-        KIM_TYP_ID="1" LAST_UPDT_DT="20131001010456" NMSPC_CD="KR-RULE"
-        OBJ_ID="E7A4812AF3E0B4F6E040440A9B9A1FBB" ROLE_ID="10003"
+        KIM_TYP_ID="1" LAST_UPDT_DT="20131002215946" NMSPC_CD="KR-RULE"
+        OBJ_ID="E7CA261D3BE54B41E040440A9B9A6E14" ROLE_ID="10003"
         ROLE_NM="Kuali Rules Management System Administrator" VER_NBR="1"/>
     <KRIM_ROLE_T ACTV_IND="Y" KIM_TYP_ID="10002"
         LAST_UPDT_DT="20120509163854" NMSPC_CD="KS-SYS"
@@ -135,18 +135,18 @@
         ROLE_NM="Kuali Student CM User" VER_NBR="1"/>
     <KRIM_ROLE_T ACTV_IND="Y"
         DESC_TXT="This role is used for no login guest users."
-        KIM_TYP_ID="1" LAST_UPDT_DT="20131001010501" NMSPC_CD="KUALI"
-        OBJ_ID="E7A4812AF436B4F6E040440A9B9A1FBB" ROLE_ID="10026"
+        KIM_TYP_ID="1" LAST_UPDT_DT="20131002215951" NMSPC_CD="KUALI"
+        OBJ_ID="E7CA261D3C3B4B41E040440A9B9A6E14" ROLE_ID="10026"
         ROLE_NM="GuestRole" VER_NBR="1"/>
     <KRIM_ROLE_T ACTV_IND="Y"
         DESC_TXT="This role grants a user the ability to maintain organizations"
         KIM_TYP_ID="1" LAST_UPDT_DT="20130901000000" NMSPC_CD="KS-SYS"
-        OBJ_ID="E7A4812AF45DB4F6E040440A9B9A1FBB" ROLE_ID="10027"
+        OBJ_ID="E7CA261D3C624B41E040440A9B9A6E14" ROLE_ID="10027"
         ROLE_NM="KS Org Maintenance" VER_NBR="1"/>
     <KRIM_ROLE_T ACTV_IND="Y"
         DESC_TXT="A student grants a user the ability to view an organizations"
         KIM_TYP_ID="1" LAST_UPDT_DT="20130901000000" NMSPC_CD="KS-SYS"
-        OBJ_ID="E7A4812AF45EB4F6E040440A9B9A1FBB" ROLE_ID="10028"
+        OBJ_ID="E7CA261D3C634B41E040440A9B9A6E14" ROLE_ID="10028"
         ROLE_NM="KS Org View" VER_NBR="1"/>
     <KRIM_ROLE_T ACTV_IND="Y"
         DESC_TXT="This role derives its members from users with that have received an action request for a given document."
@@ -288,8 +288,8 @@
         ROLE_NM="Initiator" VER_NBR="1"/>
     <KRIM_ROLE_T ACTV_IND="Y"
         DESC_TXT="This role derives its members from users with the Route Document permission for a given document type."
-        KIM_TYP_ID="139" LAST_UPDT_DT="20131001010458"
-        NMSPC_CD="KR-WKFLW" OBJ_ID="E7A4812AF426B4F6E040440A9B9A1FBB"
+        KIM_TYP_ID="139" LAST_UPDT_DT="20131002215948"
+        NMSPC_CD="KR-WKFLW" OBJ_ID="E7CA261D3C2B4B41E040440A9B9A6E14"
         ROLE_ID="936" ROLE_NM="Document Router" VER_NBR="1"/>
     <KRIM_ROLE_T ACTV_IND="Y"
         DESC_TXT="This role derives its members from users with the Initiate Document permission for a given document type."

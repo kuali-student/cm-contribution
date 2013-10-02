@@ -1930,19 +1930,17 @@
         SERVICE_URI="http://student.kuali.org/wsdl/organization/OrganizationService"
         TYPE_KEY="kuali.org.Supervise" VER_NBR="0"/>
     <KSEN_TYPE CREATEID="SYSTEMLOADER" CREATETIME="20130731000000"
-        EFF_DT="20000101000000" EXPIR_DT="20500731000000"
-        NAME="Curriculum"
+        EFF_DT="20000101000000" NAME="Curriculum"
         REF_OBJECT_URI="http://student.kuali.org/wsdl/organization/OrgHierarchyInfo"
         SERVICE_URI="http://student.kuali.org/wsdl/organization/OrganizationService"
         TYPE_KEY="kuali.org.hierarchy.Curriculum" VER_NBR="1"/>
     <KSEN_TYPE CREATEID="SYSTEMLOADER" CREATETIME="20130731000000"
-        EFF_DT="20000101000000" EXPIR_DT="20500731000000" NAME="Main"
+        EFF_DT="20000101000000" NAME="Main"
         REF_OBJECT_URI="http://student.kuali.org/wsdl/organization/OrgHierarchyInfo"
         SERVICE_URI="http://student.kuali.org/wsdl/organization/OrganizationService"
         TYPE_KEY="kuali.org.hierarchy.Main" VER_NBR="1"/>
     <KSEN_TYPE CREATEID="SYSTEMLOADER" CREATETIME="20130731000000"
-        EFF_DT="20120501000000" EXPIR_DT="20500731000000"
-        NAME="Curriculum"
+        EFF_DT="20120501000000" NAME="Curriculum"
         REF_OBJECT_URI="http://student.kuali.org/wsdl/organization/OrgHierarchyInfo"
         SERVICE_URI="http://student.kuali.org/wsdl/organization/OrganizationService"
         TYPE_KEY="kuali.org.hierarchy.type.academic.curriculum" VER_NBR="1"/>

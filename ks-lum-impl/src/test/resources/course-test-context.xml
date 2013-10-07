@@ -513,7 +513,6 @@
                 <ref bean="loServiceImpl"/>
                 <ref bean="cluServiceImpl"/>
                 <ref bean="lrcServiceImpl"/>
-                <ref bean="orgServiceImpl"/>
                 <ref bean="emServiceImpl"/>
             </list>
         </property>

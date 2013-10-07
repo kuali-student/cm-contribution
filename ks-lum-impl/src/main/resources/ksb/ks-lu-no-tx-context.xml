@@ -160,7 +160,7 @@
         <property name="searchManager" ref="luSearchManager"/>
         <property name="dictionaryServiceDelegate" ref="lumDictionaryService"/>
 		<property name="validatorFactory" ref="lumValidatorFactory"/>
-		<property name="searchDispatcher" ref="lumSearchDispatcher"/>
+		<property name="searchDispatcher" ref="searchClient"/>
     </bean>
 
     <bean id="ks.exp.cluService" class="org.kuali.rice.ksb.api.bus.support.ServiceBusExporter">
@@ -244,25 +244,53 @@
 
     <bean id="lumCrossServiceSearchManager"
           class="org.kuali.student.r2.common.class1.search.CrossSearchManager">
-        <property name="searchDispatcher" ref="lumSearchDispatcher"/>
+        <property name="searchDispatcher" ref="searchClient"/>
     </bean>
 
-    <bean id="lumSearchDispatcher"
+    <bean id="searchServiceImpl"
           class="org.kuali.student.r2.common.class1.search.SearchServiceDispatcherImpl">
         <property name="searchServices">
             <list>
                 <ref bean="loClient"/>
                 <ref bean="cluClient"/>
                 <ref bean="lrcClient"/>
-                <ref bean="orgSearchClient"/>
+                <!--Defined in ks-core-no-tx-context.xml-->
+                <ref bean="orgSearchServiceImpl"/>
                 <ref bean="enumServiceClient"/>
                 <ref bean="atpClient"/>
+                <ref bean="personSearchClient"/>
                 <ref bean="statementServiceClient"/>
                 <ref bean="subjectCodeClient"/>
                 <ref bean="proposalClient"/>
                 <ref bean="typeSearchService"/>
             </list>
         </property>
+    </bean>
+
+    <bean id="ks.exp.searchService" class="org.kuali.rice.ksb.api.bus.support.ServiceBusExporter">
+        <property name="serviceDefinition">
+            <bean class="org.kuali.rice.ksb.api.bus.support.SoapServiceDefinition">
+                <property name="jaxWsService" value="true" />
+                <property name="service" ref="searchServiceImpl" />
+                <property name="serviceInterface" value="org.kuali.student.r2.core.search.service.SearchService" />
+                <property name="localServiceName" value="SearchService" />
+                <property name="serviceNameSpaceURI" value="http://student.kuali.org/wsdl/search" />
+                <property name="busSecurity" value="${ks.lum.bus.security}" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="searchClient"
+          class="org.kuali.rice.ksb.messaging.KSBClientProxyFactoryBean">
+        <property name="serviceEndpointInterface"
+                  value="org.kuali.student.r2.core.search.service.SearchService"/>
+        <property name="serviceQName"
+                  value="{http://student.kuali.org/wsdl/search}SearchService"/>
+    </bean>
+
+    <bean id="personSearchClient" class="org.kuali.rice.ksb.messaging.KSBClientProxyFactoryBean">
+        <property name="serviceEndpointInterface" value="org.kuali.student.r2.core.search.service.SearchService"/>
+        <property name="serviceQName" value="{http://student.kuali.org/wsdl/personsearch}PersonSearchService"/>
     </bean>
 
     <bean id="lrcClient"
@@ -344,11 +372,6 @@
                   value="{http://student.kuali.org/wsdl/organization}OrganizationService"/>
     </bean>
 
-    <bean id="orgSearchClient" class="org.kuali.rice.ksb.messaging.KSBClientProxyFactoryBean">
-        <property name="serviceEndpointInterface" value="org.kuali.student.r2.core.search.service.SearchService" />
-        <property name="serviceQName" value="{http://student.kuali.org/wsdl/organizationsearch}OrganizationSearchService" />
-    </bean>
-
     <bean id="enumServiceClient"
           class="org.kuali.rice.ksb.messaging.KSBClientProxyFactoryBean">
         <property name="serviceEndpointInterface"
@@ -424,7 +447,7 @@
 
     <bean id="lumServiceValidator" class="org.kuali.student.r2.common.validator.DefaultValidatorImpl">
         <property name="messageService" ref="ks.messageServiceMock"/>
-        <property name="searchDispatcher" ref="lumSearchDispatcher"/>
+        <property name="searchDispatcher" ref="searchClient"/>
     </bean>
 
     <bean id="lumValidatorFactory-parent"
@@ -435,7 +458,7 @@
 				<!--  Add Custom Validators Here -->
 				<bean class="org.kuali.student.r2.lum.program.service.validation.ProgramManagingBodiesValidator" >
         			<property name="messageService" ref="ks.messageServiceMock"/>
-       				<property name="searchDispatcher" ref="lumSearchDispatcher"/>
+       				<property name="searchDispatcher" ref="searchClient"/>
 				</bean>
 
 				<!--  Custom Validator for Revenue. Checks to see if the sum of all the orgs adds up to 100% -->
@@ -445,7 +468,7 @@
 					<property name="atpService" ref="atpClient"/>
 				</bean>
 				<bean class="org.kuali.student.r2.lum.course.service.utils.SubjectAreaUnitOwnerValidator">
-					<property name="searchDispatcher" ref="lumSearchDispatcher"/>
+					<property name="searchDispatcher" ref="searchClient"/>
 				</bean>
 				<bean class="org.kuali.student.r2.lum.course.service.utils.ActivityTypeValidator"/>
 			</list>
@@ -473,7 +496,6 @@
         <property name="loService" ref="loServiceImpl"/>
         <property name="cluAssemblerUtils" ref="cluAssemblerUtils"/>
         <property name="programAssemblerUtils" ref="programAssemblerUtils"/>
-
     </bean>
 
     <bean id="loAssembler"

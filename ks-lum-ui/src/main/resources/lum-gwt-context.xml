@@ -793,7 +793,7 @@
     </bean>
 
     <bean id="idTranslator" class="org.kuali.student.r1.common.assembly.util.IdTranslator">
-        <constructor-arg ref="searchDispatcher"/>
+        <constructor-arg ref="searchClient"/>
     </bean>
 
     <bean id="cluSetManagementIdTranslatorAssemblerFilter" class="org.kuali.student.lum.lu.assembly.CluSetManagementIdTranslatorAssemblerFilter">
@@ -863,25 +863,17 @@
     </bean>
 
     <bean id="SearchDispatchRpcGwtServlet" class="org.kuali.student.common.ui.server.gwt.SearchDispatchRpcGwtServlet">
-        <property name="searchDispatcher" ref="searchDispatcher"/>
+        <property name="searchDispatcher" ref="searchClient"/>
         <property name="idTranslatorFilter" ref="idTranslatorFilter"/>
         <property name="cachingEnabled" value="true"/>
     </bean>
-    <bean id="searchDispatcher" class="org.kuali.student.r2.common.class1.search.SearchServiceDispatcherImpl">
-        <property name="searchServices">
-            <list>
-                <ref bean="cluClient"/>
-                <ref bean="loClient"/>
-                <ref bean="orgSearchClient"/>
-                <ref bean="atpClient"/>
-                <ref bean="personSearchClient"/>
-                <ref bean="proposalClient"/>
-                <ref bean="enumServiceClient"/>
-                <ref bean="lrcClient"/>
-                <ref bean="subjectCodeClient"/>
-                <ref bean="typeSearchService"/>
-            </list>
-        </property>
+
+    <bean id="searchClient"
+          class="org.kuali.rice.ksb.messaging.KSBClientProxyFactoryBean">
+        <property name="serviceEndpointInterface"
+                  value="org.kuali.student.r2.core.search.service.SearchService"/>
+        <property name="serviceQName"
+                  value="{http://student.kuali.org/wsdl/search}SearchService"/>
     </bean>
 
     <bean id="LogRpcGwtServlet" class="org.kuali.student.common.ui.server.gwt.LogRpcGwtServlet"/>
@@ -919,11 +911,6 @@
         <property name="serviceEndpointInterface"
                   value="org.kuali.student.r2.core.organization.service.OrganizationService"/>
         <property name="serviceQName" value="{http://student.kuali.org/wsdl/organization}OrganizationService"/>
-    </bean>
-
-    <bean id="orgSearchClient" class="org.kuali.rice.ksb.messaging.KSBClientProxyFactoryBean">
-        <property name="serviceEndpointInterface" value="org.kuali.student.r2.core.search.service.SearchService" />
-        <property name="serviceQName" value="{http://student.kuali.org/wsdl/organizationsearch}OrganizationSearchService" />
     </bean>
 
     <bean id="atpClient" class="org.kuali.rice.ksb.messaging.KSBClientProxyFactoryBean">

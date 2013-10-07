@@ -47,7 +47,7 @@ public abstract class CocValuesFinder extends StudentKeyValuesBase {
 
 		try {
 			SearchResultInfo results = null;
-			results = getOrganizationService().search(searchRequest, ContextUtils.getContextInfo());
+			results = getSearchService().search(searchRequest, ContextUtils.getContextInfo());
 			for (SearchResultRowInfo result : results.getRows()) {
 				String orgId = "";
 				String orgShortName = "";

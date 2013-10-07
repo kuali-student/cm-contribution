@@ -20,9 +20,11 @@ import org.kuali.rice.kew.rule.xmlrouting.XPathHelper;
 import org.kuali.rice.kew.api.KewApiConstants;
 import org.kuali.rice.student.bo.KualiStudentKimAttributes;
 import org.kuali.student.r2.common.dto.ContextInfo;
+import org.kuali.student.r2.core.constants.SearchServiceConstants;
 import org.kuali.student.r2.core.search.dto.*;
 import org.kuali.student.r2.core.search.dto.SearchParamInfo;
 import org.kuali.student.r2.core.organization.service.OrganizationService;
+import org.kuali.student.r2.core.search.service.SearchService;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -51,6 +53,7 @@ public abstract class AbstractOrganizationServiceQualifierResolver implements Qu
     public static final String KUALI_ORG_PROGRAM                  = "kuali.org.type.program";
 
     private OrganizationService organizationService;
+    private SearchService searchService;
 
     protected OrganizationService getOrganizationService() {
         if (null == organizationService) {
@@ -62,6 +65,18 @@ public abstract class AbstractOrganizationServiceQualifierResolver implements Qu
     protected void setOrganizationService(OrganizationService orgSvc) {
         organizationService = orgSvc;
     }
+
+    protected SearchService getSearchService() {
+        if(searchService == null) {
+            searchService = (SearchService)GlobalResourceLoader.getService(new QName(SearchServiceConstants.NAMESPACE, SearchServiceConstants.SERVICE_NAME_LOCAL_PART));
+        }
+        return searchService;
+    }
+
+    protected void setSearchService(SearchService searchService) {
+        this.searchService = searchService;
+    }
+
 
     /**
      * Method to fetch the organization ids from the KEW document content XML
@@ -130,7 +145,7 @@ public abstract class AbstractOrganizationServiceQualifierResolver implements Qu
             try {
                 SearchResultInfo result = null;
                 // TODO: Fix the ContextInfo.
-                result = getOrganizationService().search(searchRequest, new ContextInfo());
+                result = getSearchService().search(searchRequest, new ContextInfo());
                 results = result.getRows();
             } catch (Exception e) {
                 LOG.error("Error calling org service");

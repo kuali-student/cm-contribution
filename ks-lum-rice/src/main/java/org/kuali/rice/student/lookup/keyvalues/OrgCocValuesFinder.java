@@ -55,7 +55,7 @@ public class OrgCocValuesFinder extends StudentKeyValuesBase {
         searchRequest.setParams(queryParamValues);
         
         try {
-            SearchResultInfo results = getOrganizationService().search(searchRequest, ContextUtils.getContextInfo());
+            SearchResultInfo results = getSearchService().search(searchRequest, ContextUtils.getContextInfo());
             for (SearchResultRowInfo result : results.getRows()) {
                 String orgId = "";
                 String orgShortName = "";

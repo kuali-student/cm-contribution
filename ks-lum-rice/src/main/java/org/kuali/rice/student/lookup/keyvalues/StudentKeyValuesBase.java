@@ -25,7 +25,10 @@ import org.kuali.rice.core.api.resourceloader.GlobalResourceLoader;
 import org.kuali.rice.core.api.util.ConcreteKeyValue;
 import org.kuali.rice.core.api.util.KeyValue;
 import org.kuali.rice.krad.keyvalues.KeyValuesBase;
+import org.kuali.student.r2.core.constants.SearchServiceConstants;
 import org.kuali.student.r2.core.organization.service.OrganizationService;
+import org.kuali.student.r2.core.search.service.SearchService;
+
 /**
  * Convenience class used to help out key values classes
  *
@@ -34,6 +37,8 @@ public abstract class StudentKeyValuesBase extends KeyValuesBase {
 
 	private static OrganizationService organizationService;
 
+    private static SearchService searchService;
+
 	protected static OrganizationService getOrganizationService() {
 		if (organizationService == null) {
 	        organizationService = (OrganizationService) GlobalResourceLoader
@@ -41,6 +46,13 @@ public abstract class StudentKeyValuesBase extends KeyValuesBase {
 		}
 		return organizationService;
 	}
+
+    protected static SearchService getSearchService() {
+        if(searchService == null) {
+            searchService = (SearchService)GlobalResourceLoader.getService(new QName(SearchServiceConstants.NAMESPACE, SearchServiceConstants.SERVICE_NAME_LOCAL_PART));
+        }
+        return searchService;
+    }
 
 	/**
 	 * Builds a valid {@link KeyValue} object for use in Student system KeyValue classes. Will throw an {@link IllegalArgumentException}

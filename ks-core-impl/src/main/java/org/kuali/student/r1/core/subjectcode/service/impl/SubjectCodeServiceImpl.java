@@ -13,12 +13,14 @@ import org.kuali.student.r1.core.subjectcode.model.SubjectCodeJoinOrg;
 import org.kuali.student.r1.core.subjectcode.service.SubjectCodeService;
 import org.kuali.student.r2.common.dto.ContextInfo;
 import org.kuali.student.r2.common.exceptions.*;
+import org.kuali.student.r2.core.constants.SearchServiceConstants;
 import org.kuali.student.r2.core.search.dto.*;
 import org.kuali.student.r2.core.search.dto.SearchParamInfo;
 import org.kuali.student.r2.core.search.dto.SearchResultInfo;
 import org.kuali.student.r2.core.search.service.SearchManager;
 import org.kuali.student.r2.core.class1.type.dto.TypeInfo;
 import org.kuali.student.r2.core.organization.service.OrganizationService;
+import org.kuali.student.r2.core.search.service.SearchService;
 import org.springframework.beans.factory.InitializingBean;
 
 import javax.jws.WebService;
@@ -36,6 +38,7 @@ public class SubjectCodeServiceImpl implements SubjectCodeService, InitializingB
 
 	private static OrganizationService organizationService;
 	private static LookupService lookupService;
+    private static SearchService searchService;
 	private SearchManager searchManager;
     private SubjectCodeDao subjectCodeDao;
     private SubjectCodeJoinOrgDao subjectCodeJoinOrgDao;
@@ -146,7 +149,7 @@ public class SubjectCodeServiceImpl implements SubjectCodeService, InitializingB
 			//Perform the Org search
 			SearchRequestInfo orgIdTranslationSearchRequest = new SearchRequestInfo("org.search.generic");
 			orgIdTranslationSearchRequest.addParam("org.queryParam.orgOptionalIds", new ArrayList<String>(orgIdToRowMapping.keySet()));
-			SearchResultInfo orgIdTranslationSearchResult = getOrganizationService().search(orgIdTranslationSearchRequest, contextInfo);
+			SearchResultInfo orgIdTranslationSearchResult = getSearchService().search(orgIdTranslationSearchRequest, contextInfo);
             			
 			//For each translation, update the result cell with the translated org name
 			for(SearchResultRowInfo row:orgIdTranslationSearchResult.getRows()){
@@ -226,6 +229,13 @@ public class SubjectCodeServiceImpl implements SubjectCodeService, InitializingB
 		}
 		return organizationService;
 	}
+
+    protected static SearchService getSearchService() {
+        if(searchService == null) {
+            searchService = (SearchService)GlobalResourceLoader.getService(new QName(SearchServiceConstants.NAMESPACE, SearchServiceConstants.SERVICE_NAME_LOCAL_PART));
+        }
+        return searchService;
+    }
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {

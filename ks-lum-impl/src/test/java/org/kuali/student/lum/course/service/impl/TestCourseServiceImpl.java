@@ -109,6 +109,7 @@ public class TestCourseServiceImpl{
             assertEquals("kuali.lu.type.CreditCourse", createdCourse.getTypeKey());
             assertEquals(cInfo.getStartTerm(), createdCourse.getStartTerm());
             assertEquals(cInfo.getEndTerm(), createdCourse.getEndTerm());
+            assertEquals("plain-20", createdCourse.getCreditOptions().get(0).getDescr().getPlain());
         } catch (DataValidationErrorException e) {
             dumpValidationErrors(cInfo);
             fail("DataValidationError: " + e.getMessage());
@@ -472,6 +473,7 @@ public class TestCourseServiceImpl{
         }            
 
         assertEquals(2, updatedCourse.getCreditOptions().size());
+        assertEquals("plain-20", updatedCourse.getCreditOptions().get(0).getDescr().getPlain());
         // assertTrue(updatedCourse.getCreditOptions().contains("creditOptions-18"));
         // assertTrue(updatedCourse.getCreditOptions().contains("NewCreditOption"));
 
@@ -631,13 +633,25 @@ public class TestCourseServiceImpl{
             rv.add("1.5");
             rv.add("2.0");
             rc3.setResultValueKeys(rv);
-            
+
+            // Check to see if fixed w/ description is accepted
+            ResultValuesGroupInfo rc4 = new ResultValuesGroupInfo();
+            rc4.setTypeKey(CourseAssemblerConstants.COURSE_RESULT_COMP_TYPE_CREDIT_FIXED);
+            ResultValueRangeInfo rv4 = new ResultValueRangeInfo();
+            rv4.setMinValue("1.0");
+            rv4.setMaxValue("1.0");
+            rc4.setResultValueRange(rv4);
+            RichTextInfo descr = new RichTextInfo();
+            descr.setPlain("plain-descr");
+            descr.setFormatted("formatted-descr");
+            rc4.setDescr(descr);
 
             List<ResultValuesGroupInfo> creditOptions = new ArrayList<ResultValuesGroupInfo>();
             creditOptions.add(rc1);
             creditOptions.add(rc2);
             creditOptions.add(rc3);
-                        
+            creditOptions.add(rc4);
+
             cInfo.setCreditOptions(creditOptions);
                         
             try {
@@ -654,7 +668,7 @@ public class TestCourseServiceImpl{
             
             List<ResultValuesGroupInfo> co = rcInfo.getCreditOptions(); 
             
-            assertEquals(3, co.size());
+            assertEquals(creditOptions.size(), co.size());
 
             // Check to see if multiple was set properly
             for(ResultValuesGroupInfo rc : co) { 
@@ -673,7 +687,13 @@ public class TestCourseServiceImpl{
                         assertEquals(5, rc.getResultValueKeys().size());
                         assertTrue(rc.getResultValueKeys().contains("kuali.result.value.credit.degree.3.0"));
                     }
-                }                
+                }
+                if(CourseAssemblerConstants.COURSE_RESULT_COMP_TYPE_CREDIT_FIXED.equals(rc.getTypeKey())){
+                    assertEquals("1.0", rc.getResultValueRange().getMaxValue());
+
+                    assertEquals("plain-descr",  rc.getDescr().getPlain());
+                    assertEquals("formatted-descr",  rc.getDescr().getFormatted());
+                }
             }
                         
             

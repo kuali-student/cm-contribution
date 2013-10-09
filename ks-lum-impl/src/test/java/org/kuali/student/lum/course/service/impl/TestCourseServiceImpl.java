@@ -109,7 +109,8 @@ public class TestCourseServiceImpl{
             assertEquals("kuali.lu.type.CreditCourse", createdCourse.getTypeKey());
             assertEquals(cInfo.getStartTerm(), createdCourse.getStartTerm());
             assertEquals(cInfo.getEndTerm(), createdCourse.getEndTerm());
-            assertEquals("plain-20", createdCourse.getCreditOptions().get(0).getDescr().getPlain());
+            assertEquals(cInfo.getCreditOptions().get(0).getName(), createdCourse.getCreditOptions().get(0).getName());
+            assertEquals(cInfo.getCreditOptions().get(0).getDescr().getPlain(), createdCourse.getCreditOptions().get(0).getDescr().getPlain());
         } catch (DataValidationErrorException e) {
             dumpValidationErrors(cInfo);
             fail("DataValidationError: " + e.getMessage());
@@ -474,6 +475,8 @@ public class TestCourseServiceImpl{
 
         assertEquals(2, updatedCourse.getCreditOptions().size());
         assertEquals("plain-20", updatedCourse.getCreditOptions().get(0).getDescr().getPlain());
+        assertEquals("name-23", updatedCourse.getCreditOptions().get(0).getName());
+
         // assertTrue(updatedCourse.getCreditOptions().contains("creditOptions-18"));
         // assertTrue(updatedCourse.getCreditOptions().contains("NewCreditOption"));
 
@@ -634,10 +637,11 @@ public class TestCourseServiceImpl{
             rv.add("2.0");
             rc3.setResultValueKeys(rv);
 
-            // Check to see if fixed w/ description is accepted
+            // Check to see if fixed w/ description & name is accepted
             ResultValuesGroupInfo rc4 = new ResultValuesGroupInfo();
             rc4.setTypeKey(CourseAssemblerConstants.COURSE_RESULT_COMP_TYPE_CREDIT_FIXED);
             ResultValueRangeInfo rv4 = new ResultValueRangeInfo();
+            rc4.setName( "rvg-name" );
             rv4.setMinValue("1.0");
             rv4.setMaxValue("1.0");
             rc4.setResultValueRange(rv4);
@@ -689,8 +693,8 @@ public class TestCourseServiceImpl{
                     }
                 }
                 if(CourseAssemblerConstants.COURSE_RESULT_COMP_TYPE_CREDIT_FIXED.equals(rc.getTypeKey())){
+                    assertEquals( "rvg-name", rc.getName());
                     assertEquals("1.0", rc.getResultValueRange().getMaxValue());
-
                     assertEquals("plain-descr",  rc.getDescr().getPlain());
                     assertEquals("formatted-descr",  rc.getDescr().getFormatted());
                 }

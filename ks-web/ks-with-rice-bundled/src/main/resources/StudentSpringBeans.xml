@@ -88,11 +88,12 @@
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminInquiryView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminLookupView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminMaintenanceView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminSearchView.xml</value>
             </list>
         </property>
         <property name="packagePrefixes">
             <list>
-                <value>org.kuali.rice.student.</value>
+                <value>org.kuali.rice.student</value>
             </list>
         </property>
         <!-- add in the student attributes to the kim module configuration -->
@@ -104,6 +105,8 @@
         </property>
     </bean>
 
+    <bean id="organizationLookupHelperService" class="org.kuali.student.core.organization.ui.utils.OrganizationServiceHelper" scope="prototype" />
+    
     <!-- OrgAdmin Derived role (AdministrativeOfficer of this org) -->
     <bean id="ksOrgAdminRoleTypeService"
           class="org.kuali.student.lum.kim.role.type.OrgDerivedRoleTypeServiceImpl">

@@ -88,7 +88,9 @@
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminInquiryView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminLookupView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminMaintenanceView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminManageView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminSearchView.xml</value>
+				<value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminDetailView.xml</value>
             </list>
         </property>
         <property name="packagePrefixes">

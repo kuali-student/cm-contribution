@@ -71,7 +71,7 @@
 	<li><portal:portalLink displayTitle="true" title="OrgOrgRelationInfo Lookup" url="${ConfigProperties.application.url}/kr-krad/lookup?methodToCall=start&dataObjectClassName=org.kuali.student.r2.core.organization.dto.OrgOrgRelationInfo&viewId=KS-OrgOrgRelationInfo-AdminLookupView&returnLocation=${ConfigProperties.application.url}/portal.do&hideReturnLink=true&showMaintenanceLinks=true" /></li>
 	<li><portal:portalLink displayTitle="true" title="OrgPersonRelationInfo Lookup" url="${ConfigProperties.application.url}/kr-krad/lookup?methodToCall=start&dataObjectClassName=org.kuali.student.r2.core.organization.dto.OrgPersonRelationInfo&viewId=KS-OrgPersonRelationInfo-AdminLookupView&returnLocation=${ConfigProperties.application.url}/portal.do&hideReturnLink=true&showMaintenanceLinks=true" /></li>
 	<li><portal:portalLink displayTitle="true" title="OrgPositionRestrictionInfo Lookup" url="${ConfigProperties.application.url}/kr-krad/lookup?methodToCall=start&dataObjectClassName=org.kuali.student.r2.core.organization.dto.OrgPositionRestrictionInfo&viewId=KS-OrgPositionRestrictionInfo-AdminLookupView&returnLocation=${ConfigProperties.application.url}/portal.do&hideReturnLink=true&showMaintenanceLinks=true" /></li>
-	<li><portal:portalLink displayTitle="true" title="Manage OrgPerson Relations" url="${ConfigProperties.application.url}/kr-krad/orgPersonRelationInfoAdminSearch?viewId=orgPersonRelationInfoSearchView&methodToCall=start"/></li>
+	<li><portal:portalLink displayTitle="true" title="Manage OrgPerson Relations" url="${ConfigProperties.application.url}/kr-krad/orgPersonRelationInfoAdminManage?viewId=orgPersonRelationInfoManageView&methodToCall=start"/></li>
     </ul>
 </div>
 <channel:portalChannelBottom />

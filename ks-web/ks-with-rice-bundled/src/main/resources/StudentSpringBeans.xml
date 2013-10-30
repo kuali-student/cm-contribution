@@ -88,6 +88,11 @@
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminInquiryView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminLookupView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPositionRestrictionInfoAdminMaintenanceView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgInfoAdminManageView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgInfoAdminSearchView.xml</value>
+                <value>classpath:org/kuali/student/core/ui/admin/organization/OrgInfoAdminDetailView.xml</value>
+				<value>classpath:org/kuali/student/core/ui/admin/organization/OrgInfoAdminEditView.xml</value>
+				<value>classpath:org/kuali/student/core/ui/admin/organization/OrgInfoAdminCreateView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminManageView.xml</value>
                 <value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminSearchView.xml</value>
 				<value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminDetailView.xml</value>

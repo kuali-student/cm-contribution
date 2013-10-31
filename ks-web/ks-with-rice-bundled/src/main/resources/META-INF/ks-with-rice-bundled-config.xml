@@ -173,4 +173,5 @@
     <param name="config.location">${user.home}/kuali/main/${environment}/ks-with-rice-bundled-config.xml</param>
     <param name="config.location">${additional.config.locations}</param>
     
+    <param name="resourceBundleNames">org.kuali.rice.krad.KRADApplicationResources,org.kuali.rice.krad.ApplicationResources,org.kuali.rice.core.web.cache.CacheApplicationResources,org.kuali.student.core.ui.admin.organization.OrganizationResource</param>
 </config>

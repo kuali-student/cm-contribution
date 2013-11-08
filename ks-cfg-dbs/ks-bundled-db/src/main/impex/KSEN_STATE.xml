@@ -244,48 +244,48 @@
         DESCR_PLAIN="Org-Person relation is active"
         ID="kuali.org.hierarchy.state.active"
         LIFECYCLE_KEY="kuali.org.person.relation.lifecycle"
-        NAME="Active" OBJ_ID="EA78B8BD6F690A28E040440A9B9A384A" VER_NBR="0"/>
+        NAME="Active" OBJ_ID="EAA316EE04458D9FE040440A9B9A7592" VER_NBR="0"/>
     <KSEN_STATE CREATEID="SYSTEMLOADER" CREATETIME="20130101000000"
         DESCR_FORMATTED="Org-Person relation is no longer active, i.e. the person is no longer in that position"
         DESCR_PLAIN="Org-Person relation is no longer active, i.e. the person is no longer in that position"
         ID="kuali.org.hierarchy.state.inactive"
         LIFECYCLE_KEY="kuali.org.person.relation.lifecycle"
-        NAME="Inactive" OBJ_ID="EA78B8BD6F6A0A28E040440A9B9A384A" VER_NBR="0"/>
+        NAME="Inactive" OBJ_ID="EAA316EE04468D9FE040440A9B9A7592" VER_NBR="0"/>
     <KSEN_STATE CREATEID="SYSTEMLOADER" CREATETIME="20130101000000"
         DESCR_FORMATTED="Org-Org relation is active"
         DESCR_PLAIN="Org-Org relation is active"
         ID="kuali.org.org.relation.state.active"
         LIFECYCLE_KEY="kuali.org.org.relation.lifecycle" NAME="Active"
-        OBJ_ID="EA78B8BD6F650A28E040440A9B9A384A" VER_NBR="0"/>
+        OBJ_ID="EAA316EE04418D9FE040440A9B9A7592" VER_NBR="0"/>
     <KSEN_STATE CREATEID="SYSTEMLOADER" CREATETIME="20130101000000"
         DESCR_FORMATTED="Org-Org relation is no longer active"
         DESCR_PLAIN="Org-Org relation is no longer active"
         ID="kuali.org.org.relation.state.inactive"
         LIFECYCLE_KEY="kuali.org.org.relation.lifecycle" NAME="Inactive"
-        OBJ_ID="EA78B8BD6F660A28E040440A9B9A384A" VER_NBR="0"/>
+        OBJ_ID="EAA316EE04428D9FE040440A9B9A7592" VER_NBR="0"/>
     <KSEN_STATE CREATEID="SYSTEMLOADER" CREATETIME="20130101000000"
         DESCR_FORMATTED="Org-Person relation is active"
         DESCR_PLAIN="Org-Person relation is active"
         ID="kuali.org.person.relation.state.active"
         LIFECYCLE_KEY="kuali.org.person.relation.lifecycle"
-        NAME="Active" OBJ_ID="EA78B8BD6F670A28E040440A9B9A384A" VER_NBR="0"/>
+        NAME="Active" OBJ_ID="EAA316EE04438D9FE040440A9B9A7592" VER_NBR="0"/>
     <KSEN_STATE CREATEID="SYSTEMLOADER" CREATETIME="20130101000000"
         DESCR_FORMATTED="Org-Person relation is no longer active, i.e. the person is no longer in that position"
         DESCR_PLAIN="Org-Person relation is no longer active, i.e. the person is no longer in that position"
         ID="kuali.org.person.relation.state.inactive"
         LIFECYCLE_KEY="kuali.org.person.relation.lifecycle"
-        NAME="Inactive" OBJ_ID="EA78B8BD6F680A28E040440A9B9A384A" VER_NBR="0"/>
+        NAME="Inactive" OBJ_ID="EAA316EE04448D9FE040440A9B9A7592" VER_NBR="0"/>
     <KSEN_STATE CREATEID="SYSTEMLOADER" CREATETIME="20130101000000"
         DESCR_FORMATTED="Organization is active"
         DESCR_PLAIN="Organization is active" ID="kuali.org.state.active"
         LIFECYCLE_KEY="kuali.org.lifecycle" NAME="Active"
-        OBJ_ID="EA78B8BD6F630A28E040440A9B9A384A" VER_NBR="0"/>
+        OBJ_ID="EAA316EE043F8D9FE040440A9B9A7592" VER_NBR="0"/>
     <KSEN_STATE CREATEID="SYSTEMLOADER" CREATETIME="20130101000000"
         DESCR_FORMATTED="Organization is inactive"
         DESCR_PLAIN="Organization is inactive"
         ID="kuali.org.state.inactive"
-        LIFECYCLE_KEY="kuali.org.lifecycle" NAME="Active"
-        OBJ_ID="EA78B8BD6F640A28E040440A9B9A384A" VER_NBR="0"/>
+        LIFECYCLE_KEY="kuali.org.lifecycle" NAME="Inactive"
+        OBJ_ID="EAA316EE04408D9FE040440A9B9A7592" VER_NBR="0"/>
     <KSEN_STATE CREATEID="SYSTEMLOADER" CREATETIME="20120716000000"
         DESCR_FORMATTED="A default state for this Population Rule"
         DESCR_PLAIN="A default state for this Population Rule"

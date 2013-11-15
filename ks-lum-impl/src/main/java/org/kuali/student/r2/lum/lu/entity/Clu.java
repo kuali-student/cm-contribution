@@ -200,7 +200,7 @@ public class Clu extends VersionEntity implements AttributeOwner<CluAttribute> {
     @JoinColumn(name = "ACCT_ID")
     private CluAccounting accounting;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
     private List<CluAttribute> attributes;
 
     @ManyToOne

@@ -86,9 +86,9 @@ public class ProposalServiceImpl implements ProposalService {
         }
         
         
-        if (proposalInfo.getProposerPerson() != null && !proposalInfo.getProposerPerson().isEmpty() && proposalInfo.getProposerOrg() != null && !proposalInfo.getProposerOrg().isEmpty()) {
-            throw new InvalidParameterException("Not allowed to have both Person and Organization propsers");
-        }
+//        if (proposalInfo.getProposerPerson() != null && !proposalInfo.getProposerPerson().isEmpty() && proposalInfo.getProposerOrg() != null && !proposalInfo.getProposerOrg().isEmpty()) {
+//            throw new InvalidParameterException("Not allowed to have both Person and Organization propsers");
+//        }
        try {
            Proposal proposal = ProposalAssembler.toProposal(proposalTypeKey, proposalInfo, proposalDao);
            proposalDao.create(proposal);
@@ -271,9 +271,9 @@ public class ProposalServiceImpl implements ProposalService {
         
         
         proposalInfo.setId(proposalId);
-        if (proposalInfo.getProposerPerson() != null && !proposalInfo.getProposerPerson().isEmpty() && proposalInfo.getProposerOrg() != null && !proposalInfo.getProposerOrg().isEmpty()) {
-            throw new InvalidParameterException("Not allowed to have both Person and Organization propsers");
-        }
+//        if (proposalInfo.getProposerPerson() != null && !proposalInfo.getProposerPerson().isEmpty() && proposalInfo.getProposerOrg() != null && !proposalInfo.getProposerOrg().isEmpty()) {
+//            throw new InvalidParameterException("Not allowed to have both Person and Organization propsers");
+//        }
 
         Proposal proposal = ProposalAssembler.toProposal(proposalInfo.getType(), proposalInfo, proposalDao);
         Proposal updated = proposalDao.update(proposal);

@@ -49,5 +49,55 @@
   	 <property name="defaultValidator" ref="proposalServiceValidator"/>
   	</bean>
 
-	
+
+    <bean id="criterialookupDaoJpaCore" class="org.kuali.student.r2.common.criteria.impl.CriteriaLookupDaoJpaImpl">
+        <property name="entityManager" ref="entityManager"/>
+    </bean>
+
+    <bean id="proposalCriteriaLookupService" class="org.kuali.student.r2.common.criteria.impl.CriteriaLookupServiceImpl">
+        <property name="criteriaLookupDao" ref="criterialookupDaoJpaCore"/>
+        <property name="predicateTransforms">
+            <list>
+                <ref bean="proposalLkeyword2LikeTransform"/>
+                <ref bean="proposalDescrTransform"/>
+                <ref bean="proposalRationaleTransform"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="proposalLkeyword2LikeTransform" class="org.kuali.student.r2.common.criteria.transform.Keyword2LikeTransform">
+        <property name="keywordAttribute" value="keywordSearch" />
+        <property name="likeAttributes">
+            <list>
+                <value>name</value>
+                <value>detailDesc</value>
+                <value>rationale</value>
+            </list>
+        </property>
+    </bean>
+<!-- commenting this out because I cannot get it to work (norm wright)
+    <bean id="proposerPersonAndOrgTransform" class="org.kuali.student.r2.common.criteria.transform.RenameTransform">
+        <property name="renameAttributes">
+            <map>
+                <entry key="proposerPerson" value="proposerPerson.personId"/>
+                <entry key="proposerOrg" value="proposerOrg.orgId"/>
+            </map>
+        </property>
+    </bean>-->
+    <bean id="proposalDescrTransform" class="org.kuali.student.r2.common.criteria.transform.RenameTransform">
+        <property name="renameAttributes">
+            <map>
+                <entry key="descr.plain" value="detailDesc"/>
+                <entry key="descr.formatted" value="detailDesc"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="proposalRationaleTransform" class="org.kuali.student.r2.common.criteria.transform.RenameTransform">
+        <property name="renameAttributes">
+            <map>
+                <entry key="rationale.plain" value="rationale"/>
+                <entry key="rationale.formatted" value="rationale"/>
+            </map>
+        </property>
+    </bean>
 </beans>

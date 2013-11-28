@@ -98,7 +98,8 @@
 				<value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminDetailView.xml</value>
 				<value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminEditView.xml</value>
 				<value>classpath:org/kuali/student/core/ui/admin/organization/OrgPersonRelationInfoAdminCreateView.xml</value>
-				<value>classpath:org/kuali/student/core/ui/admin/organization/PersonAuthRequestView.xml</value>				
+				<value>classpath:org/kuali/student/core/ui/admin/organization/PersonAuthRequestView.xml</value>
+				<value>classpath:org/kuali/student/core/ui/admin/organization/PersonAuthSearchView.xml</value>				
             </list>
         </property>
         <property name="packagePrefixes">

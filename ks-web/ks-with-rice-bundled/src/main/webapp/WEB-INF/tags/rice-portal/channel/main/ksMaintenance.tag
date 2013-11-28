@@ -73,7 +73,8 @@
 	<li><portal:portalLink displayTitle="true" title="OrgPositionRestrictionInfo Lookup" url="${ConfigProperties.application.url}/kr-krad/lookup?methodToCall=start&dataObjectClassName=org.kuali.student.r2.core.organization.dto.OrgPositionRestrictionInfo&viewId=KS-OrgPositionRestrictionInfo-AdminLookupView&returnLocation=${ConfigProperties.application.url}/portal.do&hideReturnLink=true&showMaintenanceLinks=true" /></li>
 	<li><portal:portalLink displayTitle="true" title="Organization Maintenance" url="${ConfigProperties.application.url}/kr-krad/orgInfoAdminManage?viewId=orgInfoManageView&methodToCall=start"/></li>
 	<li><portal:portalLink displayTitle="true" title="OrgPerson Relation Maintenance" url="${ConfigProperties.application.url}/kr-krad/orgPersonRelationInfoAdminManage?viewId=orgPersonRelationInfoManageView&methodToCall=start"/></li>
-	<li><portal:portalLink displayTitle="true" title="Person Authorization Request" url="${ConfigProperties.application.url}/kr-krad/personAuthorizationRequest?viewId=personAuthorizationRequestView&methodToCall=start"/></li>
+	<li><portal:portalLink displayTitle="true" title="Person Authorization Request" url="${ConfigProperties.application.url}/kr-krad/personAuthorization?viewId=personAuthorizationRequestView&methodToCall=start"/></li>
+	<li><portal:portalLink displayTitle="true" title="Person Authorization Request Search" url="${ConfigProperties.application.url}/kr-krad/personAuthorization?viewId=personAuthorizationSearchView&methodToCall=start"/></li>
     </ul>
 </div>
 <channel:portalChannelBottom />

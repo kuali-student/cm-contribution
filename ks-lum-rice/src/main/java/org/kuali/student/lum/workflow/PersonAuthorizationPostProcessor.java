@@ -15,6 +15,7 @@ import org.kuali.rice.kew.api.WorkflowDocumentFactory;
 import org.kuali.rice.kew.api.action.ActionTaken;
 import org.kuali.rice.kew.api.action.ActionType;
 import org.kuali.rice.kew.api.document.WorkflowDocumentService;
+import org.kuali.rice.kew.engine.node.RouteNodeInstance;
 import org.kuali.rice.kew.framework.postprocessor.ActionTakenEvent;
 import org.kuali.rice.kew.framework.postprocessor.AfterProcessEvent;
 import org.kuali.rice.kew.framework.postprocessor.BeforeProcessEvent;
@@ -25,15 +26,17 @@ import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
 import org.kuali.rice.kew.framework.postprocessor.IDocumentEvent;
 import org.kuali.rice.kew.framework.postprocessor.PostProcessor;
 import org.kuali.rice.kew.framework.postprocessor.ProcessDocReport;
+import org.kuali.rice.kew.service.KEWServiceLocator;
 import org.kuali.rice.kim.api.identity.principal.Principal;
 import org.kuali.rice.kim.api.services.KimApiServiceLocator;
 import org.kuali.rice.student.StudentWorkflowConstants;
-import org.kuali.rice.student.bo.KualiStudentKimAttributes;
 import org.kuali.student.r1.common.rice.StudentIdentityConstants;
-import org.kuali.student.r1.core.proposal.ProposalConstants;
 import org.kuali.student.r2.common.exceptions.OperationFailedException;
 import org.kuali.student.r2.common.util.ContextUtils;
+import org.kuali.student.r2.core.constants.OrganizationServiceConstants;
 import org.kuali.student.r2.core.constants.ProposalServiceConstants;
+import org.kuali.student.r2.core.organization.dto.OrgPersonRelationInfo;
+import org.kuali.student.r2.core.organization.service.OrganizationService;
 import org.kuali.student.r2.core.proposal.dto.ProposalInfo;
 import org.kuali.student.r2.core.proposal.service.ProposalService;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,14 +48,34 @@ public class PersonAuthorizationPostProcessor  implements PostProcessor{
 	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(PersonAuthorizationPostProcessor.class);
 
     private ProposalService proposalService;  
+    private OrganizationService organizationService;     
     
-    protected ProposalService getProposalService() {
+    public void setProposalService(ProposalService proposalService) {
+		this.proposalService = proposalService;
+	}
+
+	protected ProposalService getProposalService() {
         if (this.proposalService == null) {
             this.proposalService = (ProposalService) GlobalResourceLoader.getService(new QName("http://student.kuali.org/wsdl/proposal","ProposalService"));
         }
         return this.proposalService;
     }
-
+    
+    public void setOrganizationService(OrganizationService organizationService)
+	{
+	    this.organizationService = organizationService;
+	}
+	
+	public OrganizationService getOrganizationService()
+	{
+		if (organizationService == null)
+		{
+			QName qname = new QName(OrganizationServiceConstants.NAMESPACE,OrganizationServiceConstants.SERVICE_NAME_LOCAL_PART);
+			organizationService = (OrganizationService) GlobalResourceLoader.getService(qname);
+		}
+		return this.organizationService;
+	}
+	
     protected WorkflowDocumentService getWorkflowDocumentService() {
 		return KewApiServiceLocator.getWorkflowDocumentService();
 	}
@@ -61,6 +84,8 @@ public class PersonAuthorizationPostProcessor  implements PostProcessor{
 	public ProcessDocReport doRouteStatusChange(DocumentRouteStatusChange statusChangeEvent) throws Exception {
 		boolean success = true;
 		LOG.info("Route status is : " + statusChangeEvent.getNewRouteStatus());
+		LOG.info("Old status is : " + statusChangeEvent.getOldRouteStatus());
+		LOG.info("Event code is : " + statusChangeEvent.getDocumentEventCode());
 		// if document is transitioning from INITIATED to SAVED then transaction prevents us from retrieving the proposal
         if (StringUtils.equals(KewApiConstants.ROUTE_HEADER_INITIATED_CD, statusChangeEvent.getOldRouteStatus()) && 
                 StringUtils.equals(KewApiConstants.ROUTE_HEADER_SAVED_CD, statusChangeEvent.getNewRouteStatus())) {
@@ -71,7 +96,7 @@ public class PersonAuthorizationPostProcessor  implements PostProcessor{
             
             // update the proposal state if the proposalState value is not null (allows for clearing of the state)
             String proposalState = getProposalStateForRouteStatus(proposalInfo.getState(), statusChangeEvent.getNewRouteStatus());
-            updateProposal(statusChangeEvent, proposalState, proposalInfo);
+        	updateProposal(statusChangeEvent, proposalState, proposalInfo);
             success = true;
         }
         return new ProcessDocReport(success);
@@ -95,18 +120,35 @@ public class PersonAuthorizationPostProcessor  implements PostProcessor{
 		boolean success = true;
         ActionTaken actionTaken = event.getActionTaken();
         String actionTakeCode = event.getActionTaken().getActionTaken().getCode();
+        LOG.info("Action taken :" + actionTakeCode);
+        LOG.info("Action label :" + event.getActionTaken().getActionTaken().getLabel());
 		// on a save action we may not have access to the proposal object because the transaction may not have committed
 		if (!StringUtils.equals(KewApiConstants.ROUTE_HEADER_SAVED_CD, actionTakeCode)) {
             ProposalInfo proposalInfo = getProposalService().getProposalByWorkflowId(event.getDocumentId().toString(), ContextUtils.getContextInfo());
+
+            
+            LOG.info("-----------------------------------------");
+            RouteNodeInstance currentNode = null;
+            List<RouteNodeInstance> currentNodes = KEWServiceLocator.getRouteNodeService().getCurrentNodeInstances(event.getDocumentId());
+            for(RouteNodeInstance routeNode : currentNodes){
+            	LOG.info("Name " + routeNode.getName());            	
+            	LOG.info("routenode.name : " + routeNode.getRouteNode().getName());
+            	currentNode = routeNode;
+            	break;
+            }             
+            LOG.info("-----------------------------------------");
+            
             if (actionTaken == null) {
                 throw new OperationFailedException("No action taken found for document id " + event.getDocumentId());
             }
-    	    if (StringUtils.equals(KewApiConstants.ACTION_TAKEN_APPROVED, actionTakeCode)) {
+    	    if (StringUtils.equals(KewApiConstants.ACTION_TAKEN_APPROVED_CD, actionTakeCode) && "Kuali Student CM Admin".equals(currentNode.getName())) {
     	        processApproveActionTaken(event, actionTaken, proposalInfo);
-    	    } else if(StringUtils.equals(KewApiConstants.ACTION_TAKEN_DENIED, actionTakeCode)){
+    	    } else if(StringUtils.equals(KewApiConstants.ACTION_TAKEN_DENIED_CD, actionTakeCode)){
     	    	processDisApproveActionTaken(event, actionTaken, proposalInfo);
-    	    } else if(StringUtils.equals(KewApiConstants.ACTION_TAKEN_COMPLETED, actionTakeCode)){
-    	    	processClarificationActionTaken(event, actionTaken, proposalInfo);
+    	    } else if(StringUtils.equals(KewApiConstants.ACTION_TAKEN_RETURNED_TO_PREVIOUS_CD, actionTakeCode)){
+    	    	LOG.info("Document send back for clarification " + event.getDocumentId());
+    	    	// No action is required
+    	    	//processClarificationActionTaken(event, actionTaken, proposalInfo);
     	    } else {
     	    	LOG.info("Action taken :" + actionTakeCode);
     	    }
@@ -146,14 +188,10 @@ public class PersonAuthorizationPostProcessor  implements PostProcessor{
             return getProposalStateFromNewState(currentProposalState, ProposalServiceConstants.PROPOSAL_STATE_DRAFT);
         } else if (KewApiConstants.ROUTE_HEADER_ENROUTE_CD.equals(newWorkflowStatusCode)) {
             return getProposalStateFromNewState(currentProposalState, ProposalServiceConstants.PROPOSAL_STATE_SUBMITTED);
-        } else if (KewApiConstants.ROUTE_HEADER_CANCEL_CD .equals(newWorkflowStatusCode)) {
-            return getProposalStateFromNewState(currentProposalState, ProposalConstants.PROPOSAL_STATE_CANCELLED);
-        } else if (KewApiConstants.ROUTE_HEADER_DISAPPROVED_CD.equals(newWorkflowStatusCode)) {
+        }  else if (KewApiConstants.ROUTE_HEADER_DISAPPROVED_CD.equals(newWorkflowStatusCode)) {
             return getProposalStateFromNewState(currentProposalState, ProposalServiceConstants.PROPOSAL_STATE_NOT_APPROVED);
         } else if (KewApiConstants.ROUTE_HEADER_PROCESSED_CD.equals(newWorkflowStatusCode)) {
             return getProposalStateFromNewState(currentProposalState, ProposalServiceConstants.PROPOSAL_STATE_APPROVED);
-        } else if (KewApiConstants.ROUTE_HEADER_EXCEPTION_CD.equals(newWorkflowStatusCode)) {
-            return getProposalStateFromNewState(currentProposalState, ProposalConstants.PROPOSAL_STATE_EXCEPTION);
         } else {
             // no status to set
             return null;
@@ -206,29 +244,38 @@ public class PersonAuthorizationPostProcessor  implements PostProcessor{
     }
     
     protected void processApproveActionTaken(ActionTakenEvent actionTakenEvent, ActionTaken actionTaken, ProposalInfo proposalInfo) throws Exception {
-        LOG.info("Action taken was 'Super User Disapprove' which is a 'Withdraw' in Kuali Student");
+        LOG.info("Action taken was 'Approve' which is a 'Approve' in Kuali Student");
         LOG.info("Will set proposal state to '" + ProposalServiceConstants.PROPOSAL_STATE_APPROVED + "'");
         WorkflowDocument doc = WorkflowDocumentFactory.loadDocument(getPrincipalIdForSystemUser(), proposalInfo.getWorkflowId());
         addPersonToUserRole(proposalInfo.getProposerPerson().get(0), doc);
-        LOG.info("Clearing EDIT permissions added via adhoc requests to principal id: " + actionTaken.getPrincipalId());
-        updateProposal(actionTakenEvent, ProposalServiceConstants.PROPOSAL_STATE_APPROVED, proposalInfo);
+        
+        OrgPersonRelationInfo orgPersonRelation = new OrgPersonRelationInfo();
+        orgPersonRelation.setPersonId(proposalInfo.getProposerPerson().get(0));
+        orgPersonRelation.setOrgId(proposalInfo.getProposerOrg().get(0));
+        orgPersonRelation.setEffectiveDate(proposalInfo.getEffectiveDate());
+        orgPersonRelation.setTypeKey("kuali.org.person.relation.type.member");
+        orgPersonRelation.setStateKey("kuali.org.person.relation.state.active");        
+        getOrganizationService().createOrgPersonRelation(orgPersonRelation.getOrgId(),orgPersonRelation.getPersonId(), orgPersonRelation.getTypeKey(), orgPersonRelation, ContextUtils.getContextInfo());
+        
+        LOG.info("Adding Kuali Student CM User Role to principal id: " + proposalInfo.getProposerPerson().get(0));
 	}
     protected void addPersonToUserRole(String principalId, WorkflowDocument doc) {
         Map<String,String> qualifications = new LinkedHashMap<String,String>();
-        qualifications.put(KualiStudentKimAttributes.DOCUMENT_TYPE_NAME,doc.getDocumentTypeName());
-        qualifications.put(KualiStudentKimAttributes.QUALIFICATION_DATA_ID,doc.getApplicationDocumentId());
+        //qualifications.put(KualiStudentKimAttributes.DOCUMENT_TYPE_NAME,doc.getDocumentTypeName());
+        //qualifications.put(KualiStudentKimAttributes.QUALIFICATION_DATA_ID,doc.getApplicationDocumentId());
         KimApiServiceLocator.getRoleService().assignPrincipalToRole(principalId, StudentWorkflowConstants.ROLE_NAME_ADHOC_EDIT_PERMISSIONS_ROLE_NAMESPACE, ProposalServiceConstants.ROLENAME_STUDENT_CM_USER, qualifications);
     }
     protected void processDisApproveActionTaken(ActionTakenEvent actionTakenEvent, ActionTaken actionTaken, ProposalInfo proposalInfo) throws Exception {
         LOG.info("Action taken was 'Super User Disapprove' which is a 'Withdraw' in Kuali Student");
         LOG.info("Will set proposal state to '" + ProposalServiceConstants.PROPOSAL_STATE_NOT_APPROVED + "'");
-        updateProposal(actionTakenEvent, ProposalServiceConstants.PROPOSAL_STATE_NOT_APPROVED, proposalInfo);
 	}
+    /*
+     * TODO: Remove this commented code
     protected void processClarificationActionTaken(ActionTakenEvent actionTakenEvent, ActionTaken actionTaken, ProposalInfo proposalInfo) throws Exception {
         LOG.info("Action taken was 'Super User Disapprove' which is a 'Withdraw' in Kuali Student");
         LOG.info("Will set proposal state to '" + ProposalServiceConstants.PROPOSAL_STATE_DRAFT + "'");
-        updateProposal(actionTakenEvent, ProposalServiceConstants.PROPOSAL_STATE_DRAFT, proposalInfo);
+        updateProposal(actionTakenEvent, ProposalServiceConstants.PROPOSAL_STATE_CLARIFICATION, proposalInfo);
 	}
+	*/
 }
-
 

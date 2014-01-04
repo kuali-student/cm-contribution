@@ -8,12 +8,16 @@ import javax.xml.namespace.QName;
 
 import org.apache.commons.lang.StringUtils;
 import org.kuali.rice.core.api.resourceloader.GlobalResourceLoader;
+import org.kuali.rice.kew.actionrequest.ActionRequestFactory;
+import org.kuali.rice.kew.actionrequest.ActionRequestValue;
 import org.kuali.rice.kew.api.KewApiConstants;
 import org.kuali.rice.kew.api.KewApiServiceLocator;
 import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kew.api.WorkflowDocumentFactory;
+import org.kuali.rice.kew.api.action.ActionRequestType;
 import org.kuali.rice.kew.api.action.ActionTaken;
 import org.kuali.rice.kew.api.action.ActionType;
+import org.kuali.rice.kew.api.document.Document;
 import org.kuali.rice.kew.api.document.WorkflowDocumentService;
 import org.kuali.rice.kew.engine.node.RouteNodeInstance;
 import org.kuali.rice.kew.framework.postprocessor.ActionTakenEvent;
@@ -26,6 +30,7 @@ import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
 import org.kuali.rice.kew.framework.postprocessor.IDocumentEvent;
 import org.kuali.rice.kew.framework.postprocessor.PostProcessor;
 import org.kuali.rice.kew.framework.postprocessor.ProcessDocReport;
+import org.kuali.rice.kew.routeheader.DocumentRouteHeaderValue;
 import org.kuali.rice.kew.service.KEWServiceLocator;
 import org.kuali.rice.kim.api.identity.principal.Principal;
 import org.kuali.rice.kim.api.services.KimApiServiceLocator;
@@ -256,6 +261,10 @@ public class PersonAuthorizationPostProcessor  implements PostProcessor{
         orgPersonRelation.setTypeKey("kuali.org.person.relation.type.member");
         orgPersonRelation.setStateKey("kuali.org.person.relation.state.active");        
         getOrganizationService().createOrgPersonRelation(orgPersonRelation.getOrgId(),orgPersonRelation.getPersonId(), orgPersonRelation.getTypeKey(), orgPersonRelation, ContextUtils.getContextInfo());
+       
+        WorkflowDocument document = WorkflowDocumentFactory.loadDocument(proposalInfo.getMeta().getCreateId(), proposalInfo.getWorkflowId());
+        String organizationName = getOrganizationService().getOrg(orgPersonRelation.getOrgId(), ContextUtils.getContextInfo()).getLongName();
+        document.adHocToPrincipal(ActionRequestType.FYI, "Your request for department " + organizationName + " has been approved", orgPersonRelation.getPersonId(), null, false);
         
         LOG.info("Adding Kuali Student CM User Role to principal id: " + proposalInfo.getProposerPerson().get(0));
 	}

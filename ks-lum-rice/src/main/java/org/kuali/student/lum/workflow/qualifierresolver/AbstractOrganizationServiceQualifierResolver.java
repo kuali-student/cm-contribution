@@ -19,7 +19,7 @@ import org.kuali.rice.kew.role.QualifierResolver;
 import org.kuali.rice.kew.rule.xmlrouting.XPathHelper;
 import org.kuali.rice.kew.api.KewApiConstants;
 import org.kuali.rice.student.bo.KualiStudentKimAttributes;
-import org.kuali.student.r2.common.dto.ContextInfo;
+import org.kuali.student.r2.common.util.ContextUtils;
 import org.kuali.student.r2.core.constants.SearchServiceConstants;
 import org.kuali.student.r2.core.search.dto.*;
 import org.kuali.student.r2.core.search.dto.SearchParamInfo;
@@ -145,7 +145,7 @@ public abstract class AbstractOrganizationServiceQualifierResolver implements Qu
             try {
                 SearchResultInfo result = null;
                 // TODO: Fix the ContextInfo.
-                result = getSearchService().search(searchRequest, new ContextInfo());
+                result = getSearchService().search(searchRequest, ContextUtils.getContextInfo());
                 results = result.getRows();
             } catch (Exception e) {
                 LOG.error("Error calling org service");

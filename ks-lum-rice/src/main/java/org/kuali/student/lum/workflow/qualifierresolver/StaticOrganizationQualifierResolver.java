@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.kuali.student.r2.common.util.ContextUtils;
 
 /**
  * A QualifierResolver class that takes one or more organization ids from the Route Node configuration XML on the
@@ -116,7 +117,7 @@ public class StaticOrganizationQualifierResolver extends AbstractOrganizationSer
                 Node organizationElement = organizationElements.item(i);
                 orgId = "";
                 orgId = organizationElement.getTextContent();
-                OrgInfo orgInfo = getOrganizationService().getOrg(orgId, new ContextInfo());
+                OrgInfo orgInfo = getOrganizationService().getOrg(orgId, ContextUtils.getContextInfo());
                 Map<String,String> attrSet = new LinkedHashMap<String,String>();
                 attrSet.put(KualiStudentKimAttributes.QUALIFICATION_ORG_ID, orgInfo.getId());
                 attributeSets.add(attrSet);

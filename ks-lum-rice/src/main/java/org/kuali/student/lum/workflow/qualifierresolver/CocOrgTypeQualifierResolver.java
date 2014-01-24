@@ -172,7 +172,7 @@ public class CocOrgTypeQualifierResolver extends AbstractOrganizationServiceQual
                 orgIds.add(orgId);
                 orgIds.addAll(getOrganizationService().getAllAncestors(orgId, getOrganizationHierarchyTypeCode(), ContextUtils.getContextInfo()));	
                 orgsForRouting = null;
-                orgsForRouting = getOrganizationService().getOrgsByIds(orgIds, null);
+                orgsForRouting = getOrganizationService().getOrgsByIds(orgIds, ContextUtils.getContextInfo());
             } catch (Exception e) {
                 LOG.error("Error calling org service");
                 throw new RuntimeException(e);

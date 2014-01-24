@@ -44,6 +44,7 @@ import javax.xml.namespace.QName;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import org.kuali.student.common.util.security.SecurityUtils;
 
 /**
  * @author Matthew S Edgren
@@ -105,7 +106,7 @@ public class OrganizationServiceAuthorizationDecorator extends OrganizationServi
             throws OperationFailedException {
         return Collections.emptyMap();
     }
-
+  
     /**
      * Check OrgHierarchy permission
      *
@@ -180,6 +181,12 @@ public class OrganizationServiceAuthorizationDecorator extends OrganizationServi
         checkPermission(permService, info, addPermissionDetails(info, context), permission, context);
     }
 
+    private void fixContext (ContextInfo contextInfo) {
+        if (contextInfo.getPrincipalId() == null) {
+            contextInfo.setPrincipalId(SecurityUtils.getCurrentUserId());
+        }        
+    }
+    
     /*
      * Check permissions to any object that implements HasId.  If null only the permission is checked.
      */
@@ -188,6 +195,7 @@ public class OrganizationServiceAuthorizationDecorator extends OrganizationServi
                                  Map<String, String> details,
                                  String permission,
                                  ContextInfo context) throws PermissionDeniedException, OperationFailedException {
+        fixContext(context);
         if (!permService.isAuthorized(context.getPrincipalId(),
                 PermissionServiceConstants.KS_SYS_NAMESPACE, permission,
                 details)) {
@@ -236,61 +244,61 @@ public class OrganizationServiceAuthorizationDecorator extends OrganizationServi
 
     @Override
     public OrgHierarchyInfo getOrgHierarchy(String orgHierarchyId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgHierarchy(orgHierarchyId, contextInfo);
     }
 
     @Override
     public List<OrgHierarchyInfo> getOrgHierarchiesByIds(List<String> orgHierarchyIds, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgHierarchiesByIds(orgHierarchyIds, contextInfo);
     }
 
     @Override
     public List<String> getOrgHierarchyIdsByType(String orgHierarchyTypeKey, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgHierarchyIdsByType(orgHierarchyTypeKey, contextInfo);
     }
 
     @Override
     public List<OrgHierarchyInfo> getOrgHierarchies(ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgHierarchies(contextInfo);
     }
 
     @Override
     public List<String> searchForOrgHierarchyIds(QueryByCriteria criteria, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().searchForOrgHierarchyIds(criteria, contextInfo);
     }
 
     @Override
     public List<OrgHierarchyInfo> searchForOrgHierarchies(QueryByCriteria criteria, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().searchForOrgHierarchies(criteria, contextInfo);
     }
 
     @Override
     public List<ValidationResultInfo> validateOrgHierarchy(String validationTypeKey, String orgHierarchyTypeKey, OrgHierarchyInfo orgHierarchyInfo, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().validateOrgHierarchy(validationTypeKey, orgHierarchyTypeKey, orgHierarchyInfo, contextInfo);
     }
 
     @Override
     public OrgHierarchyInfo createOrgHierarchy(String orgHierarchyTypeKey, OrgHierarchyInfo orgHierarchyInfo, ContextInfo contextInfo) throws DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ReadOnlyException {
-        checkPermission(permissionService, orgHierarchyInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgHierarchyInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().createOrgHierarchy(orgHierarchyTypeKey, orgHierarchyInfo, contextInfo);
     }
 
     @Override
     public OrgHierarchyInfo updateOrgHierarchy(String orgHierarchyId, OrgHierarchyInfo orgHierarchyInfo, ContextInfo contextInfo) throws DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ReadOnlyException, VersionMismatchException {
-        checkPermission(permissionService, orgHierarchyInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgHierarchyInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().updateOrgHierarchy(orgHierarchyId, orgHierarchyInfo, contextInfo);
     }
 
     @Override
     public StatusInfo deleteOrgHierarchy(String orgHierarchyId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_DELETE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_DELETE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().deleteOrgHierarchy(orgHierarchyId, contextInfo);
     }
 
@@ -304,55 +312,55 @@ public class OrganizationServiceAuthorizationDecorator extends OrganizationServi
 
     @Override
     public OrgInfo getOrg(String orgId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrg(orgId, contextInfo);
     }
 
     @Override
     public List<OrgInfo> getOrgsByIds(List<String> orgIds, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgsByIds(orgIds, contextInfo);
     }
 
     @Override
     public List<String> getOrgIdsByType(String orgTypeKey, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgIdsByType(orgTypeKey, contextInfo);
     }
 
     @Override
     public List<String> searchForOrgIds(QueryByCriteria criteria, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().searchForOrgIds(criteria, contextInfo);
     }
 
     @Override
     public List<OrgInfo> searchForOrgs(QueryByCriteria criteria, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().searchForOrgs(criteria, contextInfo);
     }
 
     @Override
     public List<ValidationResultInfo> validateOrg(String validationTypeKey, String orgTypeKey, OrgInfo orgInfo, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, orgInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().validateOrg(validationTypeKey, orgTypeKey, orgInfo, contextInfo);
     }
 
     @Override
     public OrgInfo createOrg(String orgTypeKey, OrgInfo orgInfo, ContextInfo contextInfo) throws DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ReadOnlyException {
-        checkPermission(permissionService, orgInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().createOrg(orgTypeKey, orgInfo, contextInfo);
     }
 
     @Override
     public OrgInfo updateOrg(String orgId, OrgInfo orgInfo, ContextInfo contextInfo) throws DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ReadOnlyException, VersionMismatchException {
-        checkPermission(permissionService, orgInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().updateOrg(orgId, orgInfo, contextInfo);
     }
 
     @Override
     public StatusInfo deleteOrg(String orgId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_DELETE_ORGANIZATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_DELETE_ORGANIZATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().deleteOrg(orgId, contextInfo);
     }
 
@@ -374,91 +382,91 @@ public class OrganizationServiceAuthorizationDecorator extends OrganizationServi
 
     @Override
     public List<TypeInfo> getOrgOrgRelationTypesForOrgHierarchy(String orgHierarchyId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgOrgRelationTypesForOrgHierarchy(orgHierarchyId, contextInfo);
     }
 
     @Override
     public Boolean hasOrgOrgRelation(String orgId, String comparisonOrgId, String orgOrgRelationTypeKey, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().hasOrgOrgRelation(orgId, comparisonOrgId, orgOrgRelationTypeKey, contextInfo);
     }
 
     @Override
     public OrgOrgRelationInfo getOrgOrgRelation(String orgOrgRelationId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgOrgRelation(orgOrgRelationId, contextInfo);
     }
 
     @Override
     public List<OrgOrgRelationInfo> getOrgOrgRelationsByIds(List<String> orgOrgRelationIds, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgOrgRelationsByIds(orgOrgRelationIds, contextInfo);
     }
 
     @Override
     public List<String> getOrgOrgRelationIdsByType(String orgOrgRelationTypeKey, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgOrgRelationIdsByType(orgOrgRelationTypeKey, contextInfo);
     }
 
     @Override
     public List<OrgOrgRelationInfo> getOrgOrgRelationsByOrg(String orgId, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgOrgRelationsByOrg(orgId, contextInfo);
     }
 
     @Override
     public List<OrgOrgRelationInfo> getOrgOrgRelationsByOrgs(String orgId, String peerOrgId, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgOrgRelationsByOrgs(orgId, peerOrgId, contextInfo);
     }
 
     @Override
     public List<OrgOrgRelationInfo> getOrgOrgRelationsByTypeAndOrg(String orgId, String orgOrgRelationTypeKey, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgOrgRelationsByTypeAndOrg(orgId, orgOrgRelationTypeKey, contextInfo);
     }
 
     @Override
     public List<OrgOrgRelationInfo> getOrgOrgRelationsByTypeAndRelatedOrg(String relatedOrgId, String orgOrgRelationTypeKey, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgOrgRelationsByTypeAndRelatedOrg(relatedOrgId, orgOrgRelationTypeKey, contextInfo);
     }
 
     @Override
     public List<String> searchForOrgOrgRelationIds(QueryByCriteria criteria, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().searchForOrgOrgRelationIds(criteria, contextInfo);
     }
 
     @Override
     public List<OrgOrgRelationInfo> searchForOrgOrgRelations(QueryByCriteria criteria, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().searchForOrgOrgRelations(criteria, contextInfo);
     }
 
     @Override
     public List<ValidationResultInfo> validateOrgOrgRelation(String validationTypeKey, String orgId, String orgPeerId, String orgOrgRelationTypeKey, OrgOrgRelationInfo orgOrgRelationInfo, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, orgOrgRelationInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgOrgRelationInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().validateOrgOrgRelation(validationTypeKey, orgId, orgPeerId, orgOrgRelationTypeKey, orgOrgRelationInfo, contextInfo);
     }
 
     @Override
     public OrgOrgRelationInfo createOrgOrgRelation(String orgId, String orgPeerId, String orgOrgRelationTypeKey, OrgOrgRelationInfo orgOrgRelationInfo, ContextInfo contextInfo) throws DoesNotExistException, DataValidationErrorException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ReadOnlyException {
-        checkPermission(permissionService, orgOrgRelationInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgOrgRelationInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().createOrgOrgRelation(orgId, orgPeerId, orgOrgRelationTypeKey, orgOrgRelationInfo, contextInfo);
     }
 
     @Override
     public OrgOrgRelationInfo updateOrgOrgRelation(String orgOrgRelationId, OrgOrgRelationInfo orgOrgRelationInfo, ContextInfo contextInfo) throws DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ReadOnlyException, VersionMismatchException {
-        checkPermission(permissionService, orgOrgRelationInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgOrgRelationInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().updateOrgOrgRelation(orgOrgRelationId, orgOrgRelationInfo, contextInfo);
     }
 
     @Override
     public StatusInfo deleteOrgOrgRelation(String orgOrgRelationId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_DELETE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgOrgRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_DELETE_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().deleteOrgOrgRelation(orgOrgRelationId, contextInfo);
     }
 
@@ -480,181 +488,181 @@ public class OrganizationServiceAuthorizationDecorator extends OrganizationServi
 
     @Override
     public Boolean hasOrgPersonRelation(String orgId, String personId, String orgPersonRelationTypeKey, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().hasOrgPersonRelation(orgId, personId, orgPersonRelationTypeKey, contextInfo);
     }
 
     @Override
     public OrgPersonRelationInfo getOrgPersonRelation(String orgPersonRelationId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPersonRelation(orgPersonRelationId, contextInfo);
     }
 
     @Override
     public List<OrgPersonRelationInfo> getOrgPersonRelationsByIds(List<String> orgPersonRelationIds, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPersonRelationsByIds(orgPersonRelationIds, contextInfo);
     }
 
     @Override
     public List<String> getOrgPersonRelationIdsByType(String orgPersonRelationTypeKey, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPersonRelationIdsByType(orgPersonRelationTypeKey, contextInfo);
     }
 
     @Override
     public List<OrgPersonRelationInfo> getOrgPersonRelationsByOrg(String orgId, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPersonRelationsByOrg(orgId, contextInfo);
     }
 
     @Override
     public List<OrgPersonRelationInfo> getOrgPersonRelationsByTypeAndOrg(String orgPersonRelationTypeKey, String orgId, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPersonRelationsByTypeAndOrg(orgPersonRelationTypeKey, orgId, contextInfo);
     }
 
     @Override
     public List<OrgPersonRelationInfo> getOrgPersonRelationsByPerson(String personId, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPersonRelationsByPerson(personId, contextInfo);
     }
 
     @Override
     public List<OrgPersonRelationInfo> getOrgPersonRelationsByTypeAndPerson(String orgPersonRelationTypeKey, String personId, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPersonRelationsByTypeAndPerson(orgPersonRelationTypeKey, personId, contextInfo);
     }
 
     @Override
     public List<OrgPersonRelationInfo> getOrgPersonRelationsByOrgAndPerson(String orgId, String personId, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPersonRelationsByOrgAndPerson(orgId, personId, contextInfo);
     }
 
     @Override
     public List<OrgPersonRelationInfo> getOrgPersonRelationsByTypeAndOrgAndPerson(String orgPersonRelationTypeKey, String orgId, String personId, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPersonRelationsByTypeAndOrgAndPerson(orgPersonRelationTypeKey, orgId, personId, contextInfo);
     }
 
     @Override
     public List<String> searchForOrgPersonRelationIds(QueryByCriteria criteria, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().searchForOrgPersonRelationIds(criteria, contextInfo);
     }
 
     @Override
     public List<OrgPersonRelationInfo> searchForOrgPersonRelations(QueryByCriteria criteria, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().searchForOrgPersonRelations(criteria, contextInfo);
     }
 
     @Override
     public List<ValidationResultInfo> validateOrgPersonRelation(String validationTypeKey, String orgId, String personId, String orgPersonRelationTypeKey, OrgPersonRelationInfo orgPersonRelationInfo, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().validateOrgPersonRelation(validationTypeKey, orgId, personId, orgPersonRelationTypeKey, orgPersonRelationInfo, contextInfo);
     }
 
     @Override
     public OrgPersonRelationInfo createOrgPersonRelation(String orgId, String personId, String orgPersonRelationTypeKey, OrgPersonRelationInfo orgPersonRelationInfo, ContextInfo contextInfo) throws DoesNotExistException, DataValidationErrorException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ReadOnlyException {
-        checkPermission(permissionService, orgPersonRelationInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgPersonRelationInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().createOrgPersonRelation(orgId, personId, orgPersonRelationTypeKey, orgPersonRelationInfo, contextInfo);
     }
 
     @Override
     public OrgPersonRelationInfo updateOrgPersonRelation(String orgPersonRelationId, OrgPersonRelationInfo orgPersonRelationInfo, ContextInfo contextInfo) throws DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ReadOnlyException, VersionMismatchException {
-        checkPermission(permissionService, orgPersonRelationInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgPersonRelationInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().updateOrgPersonRelation(orgPersonRelationId, orgPersonRelationInfo, contextInfo);
     }
 
     @Override
     public StatusInfo deleteOrgPersonRelation(String orgPersonRelationId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_DELETE_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPersonRelationInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_DELETE_ORGANIZATION_PERSON_RELATION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().deleteOrgPersonRelation(orgPersonRelationId, contextInfo);
     }
 
     @Override
     public OrgPositionRestrictionInfo getOrgPositionRestriction(String orgPositionRestrictionId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPositionRestriction(orgPositionRestrictionId, contextInfo);
     }
 
     @Override
     public List<OrgPositionRestrictionInfo> getOrgPositionRestrictionsByIds(List<String> orgPositionRestrictionIds, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPositionRestrictionsByIds(orgPositionRestrictionIds, contextInfo);
     }
 
     @Override
     public List<String> getOrgPositionRestrictionIdsByType(String orgPersonRelationTypeKey, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPositionRestrictionIdsByType(orgPersonRelationTypeKey, contextInfo);
     }
 
     @Override
     public List<String> getOrgPositionRestrictionIdsByOrg(String orgId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgPositionRestrictionIdsByOrg(orgId, contextInfo);
     }
 
     @Override
     public List<String> searchForOrgPositionRestrictionIds(QueryByCriteria criteria, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().searchForOrgPositionRestrictionIds(criteria, contextInfo);
     }
 
     @Override
     public List<OrgPositionRestrictionInfo> searchForOrgPositionRestrictions(QueryByCriteria criteria, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().searchForOrgPositionRestrictions(criteria, contextInfo);
     }
 
     @Override
     public List<ValidationResultInfo> validateOrgPositionRestriction(String validationTypeKey, String orgId, String orgPersonRelationTypeKey, OrgPositionRestrictionInfo orgPositionRestrictionInfo, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, orgPositionRestrictionInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgPositionRestrictionInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().validateOrgPositionRestriction(validationTypeKey, orgId, orgPersonRelationTypeKey, orgPositionRestrictionInfo, contextInfo);
     }
 
     @Override
     public OrgPositionRestrictionInfo createOrgPositionRestriction(String orgId, String orgPersonRelationTypeKey, OrgPositionRestrictionInfo orgPositionRestrictionInfo, ContextInfo contextInfo) throws AlreadyExistsException, DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ReadOnlyException {
-        checkPermission(permissionService, orgPositionRestrictionInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgPositionRestrictionInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().createOrgPositionRestriction(orgId, orgPersonRelationTypeKey, orgPositionRestrictionInfo, contextInfo);
     }
 
     @Override
     public OrgPositionRestrictionInfo updateOrgPositionRestriction(String orgPositionRestrictionId, OrgPositionRestrictionInfo orgPositionRestrictionInfo, ContextInfo contextInfo) throws DataValidationErrorException, DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException, ReadOnlyException, VersionMismatchException {
-        checkPermission(permissionService, orgPositionRestrictionInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), orgPositionRestrictionInfo, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_UPDATE_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().updateOrgPositionRestriction(orgPositionRestrictionId, orgPositionRestrictionInfo, contextInfo);
     }
 
     @Override
     public StatusInfo deleteOrgPositionRestriction(String orgPositionRestrictionId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_DELETE_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgPositionRestrictionInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_DELETE_ORGANIZATION_POSITION_RESTRICTION_DATA_PERMISSION, contextInfo);
         return getNextDecorator().deleteOrgPositionRestriction(orgPositionRestrictionId, contextInfo);
     }
 
     @Override
     public Boolean isDescendant(String orgId, String descendantOrgId, String orgHierarchyId, ContextInfo contextInfo) throws InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().isDescendant(orgId, descendantOrgId, orgHierarchyId, contextInfo);
     }
 
     @Override
     public List<String> getAllDescendants(String orgId, String orgHierarchyId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getAllDescendants(orgId, orgHierarchyId, contextInfo);
     }
 
     @Override
     public List<String> getAllAncestors(String orgId, String orgHierarchyId, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getAllAncestors(orgId, orgHierarchyId, contextInfo);
     }
 
     @Override
     public OrgTreeViewInfo getOrgTree(String rootOrgId, String orgHierarchyId, int maxLevels, ContextInfo contextInfo) throws DoesNotExistException, InvalidParameterException, MissingParameterException, OperationFailedException, PermissionDeniedException {
-        checkPermission(permissionService, (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
+        checkPermission(getPermissionService(), (OrgHierarchyInfo)null, KimPermissionConstants.CAN_INVOKE_SERVICE_METHOD_READ_ORGANIZATION_HIERARCHY_DATA_PERMISSION, contextInfo);
         return getNextDecorator().getOrgTree(rootOrgId, orgHierarchyId, maxLevels, contextInfo);
     }
 }

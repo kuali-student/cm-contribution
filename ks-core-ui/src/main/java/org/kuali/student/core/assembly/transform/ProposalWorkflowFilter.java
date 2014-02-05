@@ -42,6 +42,7 @@ import org.kuali.student.r2.common.util.AttributeHelper;
 import org.kuali.student.r2.common.util.ContextUtils;
 import org.kuali.student.r2.core.proposal.dto.ProposalInfo;
 import org.kuali.student.r2.core.proposal.service.ProposalService;
+import org.kuali.student.r2.lum.clu.CLUConstants;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -140,12 +141,14 @@ public class ProposalWorkflowFilter extends AbstractDataFilter implements Metada
                 proposalInfo.setProposalReferenceType(getProposalReferenceType());
                 proposalInfo.getProposalReference().add(referenceId);
                 
-                // TODO: this needs to be defined as a constant where all references will resolve
-                if ("kuali.proposal.type.course.modify".equals(proposalInfo.getTypeKey())||
-                    "kuali.proposal.type.course.modify.admin".equals(proposalInfo.getTypeKey())||
-                    "kuali.proposal.type.course.retire".equals(proposalInfo.getTypeKey())||
-                    "kuali.proposal.type.majorDiscipline.modify".equals(proposalInfo.getTypeKey())) {
+                // TODO ajani added CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION.equals(proposalInfo.getTypeKey()
+                if (CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY.equals(proposalInfo.getTypeKey())||
+                	CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION.equals(proposalInfo.getTypeKey())||
+                	CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_ADMIN.equals(proposalInfo.getTypeKey())||
+                	CLUConstants.PROPOSAL_TYPE_COURSE_RETIRE.equals(proposalInfo.getTypeKey())||
+                	CLUConstants.PROPOSAL_TYPE_MAJOR_DISCIPLINE_MODIFY.equals(proposalInfo.getTypeKey())) {                	
                     proposalInfo.setName(getDefaultDocumentTitle(docTypeConfig, data));
+                    LOG.info("proposalInfo.getName : " + proposalInfo.getName());
                 }
                 
                 Map<String, String> proposalAttributes = (Map<String, String>) properties.get(ProposalWorkflowFilter.PROPOSAL_ATTRIBUTES);

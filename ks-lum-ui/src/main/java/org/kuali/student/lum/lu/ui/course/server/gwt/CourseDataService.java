@@ -102,7 +102,8 @@ public class CourseDataService extends AbstractDataService {
         courseInfo = calculateCourseDerivedFields(courseInfo);
 
         if (properties != null && (CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY.equals((String) properties.get(ProposalWorkflowFilter.WORKFLOW_DOC_TYPE)) ||
-                CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_ADMIN.equals((String) properties.get(ProposalWorkflowFilter.WORKFLOW_DOC_TYPE)))) {
+                CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_ADMIN.equals((String) properties.get(ProposalWorkflowFilter.WORKFLOW_DOC_TYPE))) ||
+                (CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION.equals((String) properties.get(ProposalWorkflowFilter.WORKFLOW_DOC_TYPE)))) {
             //For Modify Course, see if we need to create a new version instead of create
             if (courseInfo.getId() == null) {
 

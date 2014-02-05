@@ -115,7 +115,7 @@ public class CoursePostProcessorBase extends KualiStudentPostProcessorBase {
                  // Change the state using the effective date as the version start date
                  // update course and save it for retire if state = retire           
                  getCourseStateChangeService().changeState(courseId, newCourseState, prevEndTermAtpId, ContextUtils.getContextInfo());
-             } else
+             } else {
                  
                  // Retire By Proposal will come through here, extra data will need 
                  // to be copied from the proposalInfo to the courseInfo fields before 
@@ -123,10 +123,10 @@ public class CoursePostProcessorBase extends KualiStudentPostProcessorBase {
                  if(DtoConstants.STATE_RETIRED.equals(newCourseState)){
                      retireCourseByProposalCopyAndSave(newCourseState, courseInfo, proposalInfo);
                      getCourseStateChangeService().changeState(courseId, newCourseState, prevEndTermAtpId, ContextUtils.getContextInfo());
+                 } else { // newCourseState of null comes here, is this desired?
+                	 updateCourse(statusChangeEvent, newCourseState, courseInfo, proposalInfo);
+                 }   
              }
-               else{ // newCourseState of null comes here, is this desired?
-                 updateCourse(statusChangeEvent, newCourseState, courseInfo, proposalInfo);
-             }                  
          }
          return true;
      }
@@ -217,6 +217,9 @@ public class CoursePostProcessorBase extends KualiStudentPostProcessorBase {
                 return DtoConstants.STATE_RETIRED;
             }   
             return null;  // returning null indicates no change in course state required
+        } else if (CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION.equals(docType) && 
+        		KewApiConstants.ROUTE_HEADER_PROCESSED_CD.equals(newWorkflowStatusCode)){
+        	return getCourseStateFromNewState(currentCluState, DtoConstants.STATE_PROCESSED);
         } else {
             //  The following is for Create, Modify, and Admin Modify proposals.    
             if (StringUtils.equals(KewApiConstants.ROUTE_HEADER_SAVED_CD, newWorkflowStatusCode)) {

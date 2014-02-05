@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.kuali.student.common.ui.client.application.Application;
 import org.kuali.student.common.ui.client.application.KSAsyncCallback;
@@ -254,6 +255,8 @@ public class CourseProposalController extends MenuEditableSectionController impl
             getCluProposalFromProposalId(getViewContext().getId(), callback, workCompleteCallback);
         } else if (getViewContext().getIdType() == IdType.COPY_OF_OBJECT_ID){
         	if(CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY.equals(getViewContext().getAttribute(StudentIdentityConstants.DOCUMENT_TYPE_NAME))||
+        		// TODO ajani
+        		CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION.equals(getViewContext().getAttribute(StudentIdentityConstants.DOCUMENT_TYPE_NAME))||	
        			CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_ADMIN.equals(getViewContext().getAttribute(StudentIdentityConstants.DOCUMENT_TYPE_NAME))){
         		createModifyCluProposalModel("versionComment", callback, workCompleteCallback);
         	}else{
@@ -318,6 +321,12 @@ public class CourseProposalController extends MenuEditableSectionController impl
 		    			currentDocType = CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_ADMIN;
 		    		}
 		    		
+		    		// TODO ajani
+		    		//Check for change to this version type
+		    		if(CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION.equals(cluProposalModel.get(cfg.getProposalPath()+"/type"))){
+		    			currentDocType = CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION;
+		    		}
+		    		
 		    		//Get the state for save action
 		    		String dtoState = getStateforSaveAction(cluProposalModel); 
 		    		
@@ -333,6 +342,8 @@ public class CourseProposalController extends MenuEditableSectionController impl
 		    		idAttributes.put(DtoConstants.DTO_STATE, dtoState);		    		
 		    		idAttributes.put(DtoConstants.DTO_NEXT_STATE, cfg.getNextState());
 		    		if (CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY.equalsIgnoreCase(currentDocType) ||
+		    			// TODO ajani
+		    			CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION.equalsIgnoreCase(currentDocType) ||	
 		    			CLUConstants.PROPOSAL_TYPE_COURSE_CREATE.equals(currentDocType)){		    			
 		    			idAttributes.put(DtoConstants.DTO_WORKFLOW_NODE, workflowNode);
 		    		}
@@ -447,7 +458,8 @@ public class CourseProposalController extends MenuEditableSectionController impl
                         public void onModelReady(DataModel model) {
                             //Only display if this is a modification
                             String proposalType = model.get("proposal/type");
-                            if ((proposalType != null) && (proposalType.equals(CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY))) {
+                            if ((proposalType != null) && ((proposalType.equals(CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY))|| 
+                            		(proposalType.equals(CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION)))) {
                                 KSLabel descLabel = new KSLabel();
                                 descLabel.setText(Application.getApplicationContext().getUILabel("course", LUUIConstants.FINAL_APPROVAL_DIALOG));
                                 if (workflowUtil.getApproveDialogue() != null) {
@@ -1084,6 +1096,10 @@ public class CourseProposalController extends MenuEditableSectionController impl
             //Copy id provided, so creating a proposal for modification or retire           
             else if (currentDocType.equals(CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY)) {
                 attributes.put(StudentIdentityConstants.DOCUMENT_TYPE_NAME, CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY);
+            }
+            // TODO ajani
+            else if (currentDocType.equals(CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION)) {
+                attributes.put(StudentIdentityConstants.DOCUMENT_TYPE_NAME, CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION);
             } else if (currentDocType.equals(CLUConstants.PROPOSAL_TYPE_COURSE_RETIRE)) {
                 attributes.put(StudentIdentityConstants.DOCUMENT_TYPE_NAME, CLUConstants.PROPOSAL_TYPE_COURSE_RETIRE);
             } else {
@@ -1246,7 +1262,8 @@ public class CourseProposalController extends MenuEditableSectionController impl
 	}
 	
     public KSButton getSaveButton(){
-    	if(currentDocType != CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY && currentDocType != CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_ADMIN){
+    	if(currentDocType != CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY && currentDocType != CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_ADMIN
+    			&& currentDocType != CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION){
 	        return new KSButton("Save and Continue", new ClickHandler(){
 	                    public void onClick(ClickEvent event) {
 	                    	CourseProposalController.this.fireApplicationEvent(new SaveActionEvent(true));

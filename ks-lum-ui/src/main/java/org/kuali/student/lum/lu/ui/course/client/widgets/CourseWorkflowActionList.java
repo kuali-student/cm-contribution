@@ -253,6 +253,9 @@ public class CourseWorkflowActionList extends StylishDropDown {
         
         final KSRadioButton radioOptionModifyNoVersion = new KSRadioButton("modifyCreditCourseButtonGroup", getMessage("modifyCourseNoVersion"));
         final KSRadioButton radioOptionModifyWithVersion = new KSRadioButton("modifyCreditCourseButtonGroup", getMessage("modifyCourseWithVersion"));
+        // TODO ajani
+        final KSRadioButton radioOptionModifyWithCurrentVersion = new KSRadioButton("modifyCreditCourseButtonGroup", getMessage("modifyCourseCurrentVersion"));
+        
         final KSCheckBox curriculumReviewOption = new KSCheckBox(getMessage("useCurriculumReview"));
         
         radioOptionModifyNoVersion.addValueChangeHandler(new ValueChangeHandler<Boolean>(){
@@ -274,6 +277,16 @@ public class CourseWorkflowActionList extends StylishDropDown {
 			}
         });
         
+        // TODO ajani
+        radioOptionModifyWithCurrentVersion.addValueChangeHandler(new ValueChangeHandler<Boolean>(){
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				if(event.getValue()){
+					curriculumReviewOption.setEnabled(false);
+	            	curriculumReviewOption.setValue(true);
+				}
+			}
+        });
+        
         continueButton.addClickHandler(new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
@@ -285,6 +298,10 @@ public class CourseWorkflowActionList extends StylishDropDown {
 				    checkLatestVersion(viewContext, modifyPath, model, curriculumReviewOption.getValue());			    
 				    
 				}
+				// TODO ajani
+				else if(radioOptionModifyWithCurrentVersion.getValue()){ 
+					checkLatestVersionForCurrent(viewContext, modifyPath, model, curriculumReviewOption.getValue());
+				}
 		    	modifyDialog.hide();
 			}        	
         });
@@ -294,6 +311,8 @@ public class CourseWorkflowActionList extends StylishDropDown {
         layout.add(radioOptionModifyNoVersion);
         if(isCurrentVersion){
         	layout.add(radioOptionModifyWithVersion);
+        	// TODO ajani
+            layout.add(radioOptionModifyWithCurrentVersion);
             layout.add(curriculumReviewOption);
         }
         modifyDialog.setWidget(layout);
@@ -399,6 +418,46 @@ public class CourseWorkflowActionList extends StylishDropDown {
 
                         Application.navigate(AppLocations.Locations.COURSE_ADMIN.getLocation(), viewContext);
                     }
+                } else {
+                    isCurrentVersion = false;
+                    doUpdateCourseActionItems(model);
+                    KSNotifier.add(new KSNotification("Error creating new version for course, this course is currently under modification.", false, 5000));
+                }
+            }
+        });
+    }
+    
+    // TODO ajani
+    /**
+     * Do a latest version check, if successful, call the modify action current with workflow else display an error message that the current
+     * version of the selected course is under modification. 
+     * 
+     * @param viewContext
+     * @param modifyPath
+     * @param model
+     * @param reviewOption
+     */
+    private void checkLatestVersionForCurrent(final ViewContext viewContext, final String modifyPath, final DataModel model, final boolean reviewOption){
+        String courseVerIndId = getCourseVersionIndId(model);
+        Long courseVersionSequence = getCourseVersionSequenceNumber(model);
+    
+        courseServiceAsync.isLatestVersion(courseVerIndId, courseVersionSequence, new AsyncCallback<Boolean>(){
+        
+            public void onFailure(Throwable caught) {
+                KSNotifier.add(new KSNotification("Error determining latest version of course", false, 5000));
+            }
+        
+            public void onSuccess(Boolean result) {
+            	if (result){
+                    if (reviewOption){
+                    	if(hasCourseId(viewContext)){
+                			viewContext.setId(getCourseVersionIndId(model));
+                			viewContext.setIdType(IdType.COPY_OF_OBJECT_ID);
+                            viewContext.setAttribute(StudentIdentityConstants.DOCUMENT_TYPE_NAME, CLUConstants.PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION);
+                        }
+
+                		HistoryManager.navigate(modifyPath, viewContext);
+                    } 
                 } else {
                     isCurrentVersion = false;
                     doUpdateCourseActionItems(model);

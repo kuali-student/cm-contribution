@@ -30,6 +30,7 @@ public class CLUConstants {
     public final static String COURSE_GROUP_NAME = "course";
     public final static String PROPOSAL_TYPE_COURSE_CREATE = "kuali.proposal.type.course.create";
     public final static String PROPOSAL_TYPE_COURSE_MODIFY = "kuali.proposal.type.course.modify";
+    public final static String PROPOSAL_TYPE_COURSE_MODIFY_CURRENT_VERSION = "kuali.proposal.type.course.modify.current.version";
     public final static String PROPOSAL_TYPE_COURSE_RETIRE = "kuali.proposal.type.course.retire";    
     public final static String PROPOSAL_TYPE_COURSE_CREATE_ADMIN = "kuali.proposal.type.course.create.admin";    
     public final static String PROPOSAL_TYPE_COURSE_MODIFY_ADMIN = "kuali.proposal.type.course.modify.admin";  

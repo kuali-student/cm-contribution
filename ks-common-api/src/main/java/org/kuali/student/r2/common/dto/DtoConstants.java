@@ -9,6 +9,7 @@ public class DtoConstants {
     public final static String STATE_NOT_APPROVED = "NotApproved";
     public final static String STATE_ACTIVE = "Active";
     public final static String STATE_SUPERSEDED  = "Superseded";
+    public final static String STATE_PROCESSED = "Processed"; // TODO ajani
     public final static String STATE_SUSPENDED  = "Suspended";
     public final static String STATE_RETIRED = "Retired";
 

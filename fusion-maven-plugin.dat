@@ -1,8 +1,8 @@
 # module = ks-api branch Path = contrib/CM/ks-api/branches/org-service revision = 60190
-ks-api::contrib_CM_ks-api_branches_org-service::48b43b85f552298fe9a01d6c2496bab12eee33b5
+ks-api::contrib_CM_ks-api_branches_org-service::7a825cedd8324e8495438bd8b787f979259849ce
 # module = ks-core branch Path = contrib/CM/ks-core/branches/org-service revision = 60190
-ks-core::contrib_CM_ks-core_branches_org-service::5f9882d9afa3f5e8a7b6de50f7efe11ea0810b5f
+ks-core::contrib_CM_ks-core_branches_org-service::72fb994ae85ff52053c72f5148010eab895f4fc8
 # module = ks-lum branch Path = contrib/CM/ks-lum/branches/org-service revision = 60190
-ks-lum::contrib_CM_ks-lum_branches_org-service::8e68d54c993582b739a01c7c49c1031c48970545
+ks-lum::contrib_CM_ks-lum_branches_org-service::1a4e992696a43cee2fdb05d5d67f12d9ed8f540d
 # module = ks-deployments branch Path = contrib/CM/ks-deployments/branches/org-service revision = 60190
-ks-deployments::contrib_CM_ks-deployments_branches_org-service::e20671cce18b5ff7e1b175418345755287f3be23
+ks-deployments::contrib_CM_ks-deployments_branches_org-service::379b7aa0eef9e1fb4fe8b541c9b883adf65ba05e
